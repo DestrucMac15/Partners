@@ -121,8 +121,8 @@ function cotizacion(ruta){
 
         tabulador += `
             <li class="list-group-item d-flex justify-content-between"><b>Subtotal:</b> ${respuesta.tabulador.subtotal.toFixed(2)}</li>
-            <li class="list-group-item d-flex justify-content-between"><b>Cargo de envió:</b> <input class="form-control type="number" value="${respuesta.tabulador.envio.toFixed(2)}"></li>
-            <li class="list-group-item d-flex justify-content-between"><input type="text" class="form-control" value="Ajuste"><input type="number" class="form-control mx-1" value="${respuesta.tabulador.impuesto.toFixed(2)}"></li>
+            <li class="list-group-item d-flex justify-content-between"><b>Cargo de envió:</b> <input class="form-control cargoEnvio" type="number" value="${respuesta.tabulador.envio.toFixed(2)}"></li>
+            <li class="list-group-item d-flex justify-content-between"><input type="text" class="form-control nombreImpuesto" value="${respuesta.tabulador.nombre_impuesto}"><input type="number" class="form-control mx-1 valorImpuesto" value="${respuesta.tabulador.impuesto.toFixed(2)}"></li>
             <li class="list-group-item d-flex justify-content-between"><b>Total (MXN)</b> ${respuesta.tabulador.total.toFixed(2)}</li>
         `;
 
@@ -263,6 +263,67 @@ function cotizacion(ruta){
                     cabecera: cabecera,
                     TipoDescuento: TipoDescuento,
                     item: item
+                }
+            }).done(function(respuesta){
+
+                cotizacion(ruta);
+
+            });
+
+        });
+
+
+        //Agregar Cargo de envío
+        $('.cargoEnvio').on('focusout',function(){
+
+            let shipment = $(this).val();
+
+            $.ajax({
+                url: ruta+'books/editShipment', 
+                method: 'POST',
+                dataType: 'JSON',
+                data: {
+                    shipment: shipment
+                }
+            }).done(function(respuesta){
+
+                cotizacion(ruta);
+
+            });
+
+        });
+
+        //Editar nombre del Impuesto
+        $('.nombreImpuesto').on('focusout',function(){
+
+            let nameTax = $(this).val();
+
+            $.ajax({
+                url: ruta+'books/editNameTax', 
+                method: 'POST',
+                dataType: 'JSON',
+                data: {
+                    nameTax: nameTax
+                }
+            }).done(function(respuesta){
+
+                cotizacion(ruta);
+
+            });
+
+        });
+
+        //Editar Impuesto
+        $('.valorImpuesto').on('focusout',function(){
+
+            let tax = $(this).val();
+
+            $.ajax({
+                url: ruta+'books/editTax', 
+                method: 'POST',
+                dataType: 'JSON',
+                data: {
+                    tax: tax
                 }
             }).done(function(respuesta){
 

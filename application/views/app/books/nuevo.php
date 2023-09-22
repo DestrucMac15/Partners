@@ -151,8 +151,19 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-3">
+            <div class="row my-5">
                 <div class="col-md-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox"> Create a retainer invioce for this estimación automaticaly
+                        </label>
+                    </div> 
+                    <div class="form-group form-check">
+                        <?php var_dump($opportunitie); ?>
+                        <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox"> 
+                        </label>
+                    </div> 
                     <div class="form-group form-check">
                         <label class="form-check-label">
                         <input class="form-check-input" type="checkbox"> Create a retainer invioce for this estimación automaticaly
@@ -168,6 +179,11 @@
                         <label class="">Términos y condiciones</label>
                         <textarea class="form-control" placeholder="Mencione los términos y condiciones de la empresa."></textarea>
                     </div>      
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-success">Guardar</button>
                 </div>
             </div>
         </div>

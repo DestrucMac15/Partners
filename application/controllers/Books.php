@@ -58,6 +58,7 @@ class Books extends CI_Controller{
                 'tabulador' => array(
                     'subtotal' => 0,
                     'envio' => 0,
+                    'nombre_impuesto' => 'Ajuste',
                     'impuesto' => 0,
                     'total' => 0
                 ),
@@ -244,6 +245,36 @@ class Books extends CI_Controller{
 
         echo json_encode($_SESSION['book']);
 
+
+    }
+
+    public function editShipment(){
+
+        $_SESSION['book']['tabulador']['envio'] = floatval($this->input->post('shipment'));
+
+        $this->createTabulador();
+
+        echo json_encode($_SESSION['book']);
+
+    }
+
+    public function editNameTax(){
+
+        $_SESSION['book']['tabulador']['nombre_impuesto'] = $this->input->post('nameTax');
+
+        $this->createTabulador();
+
+        echo json_encode($_SESSION['book']);
+
+    }
+
+    public function editTax(){
+
+        $_SESSION['book']['tabulador']['impuesto'] = floatval($this->input->post('tax'));
+
+        $this->createTabulador();
+
+        echo json_encode($_SESSION['book']);
 
     }
 
