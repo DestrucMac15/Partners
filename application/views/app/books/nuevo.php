@@ -158,15 +158,15 @@
                         <input class="form-check-input" type="checkbox"> Create a retainer invioce for this estimación automaticaly
                         </label>
                     </div> 
+                    <p class="font-weight-bold">Enviar por correo eletrónico</p>
                     <div class="form-group form-check">
-                        <?php var_dump($opportunitie); ?>
                         <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"> 
+                        <input class="form-check-input" type="checkbox" value="<?= $contact['id']; ?>"> <?= $contact['Email']; ?>
                         </label>
                     </div> 
                     <div class="form-group form-check">
                         <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"> Create a retainer invioce for this estimación automaticaly
+                        <input class="form-check-input" type="checkbox" value="<?= $this->session->userdata('email'); ?>"> <?= $this->session->userdata('email'); ?>
                         </label>
                     </div>      
                 </div>
