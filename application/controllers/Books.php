@@ -248,7 +248,71 @@ class Books extends CI_Controller{
     }
 
     public function save(){
-        $_SESSION['book'];
+
+        $dataSessions = $_SESSION['book'];
+        
+        foreach($dataSessions as $dataSession){
+            echo $dataSession['articulos'];
+        }
+
+        $data = array(
+            'customer_id' => $customer,//ESTIMACIONES ID DE CLIENTE
+            'currency_id' => $currency_id,//ID DE CLIENTE
+            //'contact_persons' => array(),//SE ENVIA A UNA PERSONA O PERSONAS DE CONTACTO PARA EL ENVIO DE LA ESTIMACION.
+            'template_id' => $template_id,//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.
+            //'place_of_supply' => $place_of_supply,//Lugar donde se suministran los bienes/servicios a
+            //'estimate_number' => $estimate_number,//Buscar estimaciones por número estimado
+            //'reference_number' => $reference_number,//Estimaciones de búsqueda por número de referencia
+            'date' => date(Y-m-d),
+            'expiry_date' => $expiry_date, //FECHA DE EXPIRACION DE LA COTIZACION
+            'exchange_rate' => $exchange_rate,//Tipo de cambio de la moneda.
+            'discount' => $discount,//Descuento aplicado a la factura. Puede ser en % o en cantidad
+            'is_discount_before_tax' => $is_discount_before_tax,//Se utiliza para especificar cómo debe aplicarse el descuento. Ya sea antes o después del cálculo del impuesto.
+            'discount_type' => $discount_type,//Cómo se especifica el descuento. Los valores permitidos son entity_level o item_level.
+            'custom_body' => $custom_body,//
+            'custom_subject' => $custom_subject,
+            'salesperson_name' => $salesperson_name,//Nombre del vendedor
+            //'custom_fields' => $custom_fields,//Campos personalizados para un presupuesto
+            'line_items' => $line_items array(
+                'item_id' => $item_id,
+                'line_item_id' => $line_item_id,
+                'name' => $name,
+                'description' => $description,
+                'product_type' => $product_type,
+                'sat_item_key_code' => $sat_item_key_code,
+                'unitkey_code' => $unitkey_code,
+                'item_order' => $item_order,
+                'bcy_rate' => $bcy_rate,
+                'rate' => $rate,
+                'quantity' => $quantity,
+                'unit' => $unit,
+                'discount_amount' => $discount_amount,
+                'discount' => $discount,
+                'tax_id' => $tax_id,
+                'tds_tax_id' => $tds_tax_id,
+                'tax_name' => $tax_name,
+                'tax_type' => $tax_type,
+                'tax_percentage' => $tax_percentage,
+                'tax_treatment_code' => $tax_treatment_code,
+                'item_total' => $item_total,
+            ),//Partidas de un presupuesto.
+            'notes' => $notes,
+            'terms' => $terms,
+            'adjustment' => $adjustment,
+            'adjustment_description' => $adjustment_description,
+            'tax_id' => $tax_id,
+            'tax_treatment' => $tax_treatment,//Tratamiento del IVA para el Estimado.Valor permitidos
+            'item_id' => $item_id,
+            'line_item_id' => $line_item_id,//Identificador de la línea de pedido. Obligatorio, si es necesario actualizar la línea de pedido existente. Si está vacío, se creará una nueva línea de pedido.
+            'name' => $name,//El nombre del elemento de línea
+            'description' => $description,
+            'rate' => $rate,
+            'unit' => $unit,
+            'quantity' => $quantity,//La cantidad de línea de pedido
+            'project_id' => $project_id//ID del proyecto
+
+        );
+
     }
 
 
