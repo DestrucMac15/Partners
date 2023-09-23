@@ -17,13 +17,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Propietario de presupuesto</label>
-                            <input type="text" class="form-control" value="Nacir Coronado" readonly>
+                            <input type="text" class="form-control" value="Nacir Coronado" name="propietarioPresupuesto" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Cuenta nombre</label>
-                            <input type="text" class="form-control" value="<?= $opportunitie['Account_Name']['name']; ?>" readonly>
+                            <input type="text" class="form-control" name="cuentaNombre" value="<?= $opportunitie['Account_Name']['name']; ?>" readonly>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -53,55 +53,55 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Oportunidad nombre</label>
-                            <input type="text" class="form-control" value="<?= $opportunitie['Deal_Name']; ?>" readonly>
+                            <input type="text" class="form-control" name="oportunidadNombre" value="<?= $opportunitie['Deal_Name']; ?>" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Número del presupuesto</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="numeroPresupuesto" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">No. de referencia</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="numeroReferencia" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha del presupuesto</label>
-                            <input type="text" class="form-control">
+                            <input type="date" name="fechaPresupuesto" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha de vencimiento</label>
-                            <input type="date" class="form-control" readonly value="<?php echo date('Y-m-d'); ?>">
+                            <input type="date" name="fechaVencimiento" class="form-control" readonly value="<?php echo date('Y-m-d'); ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Nombre del proyecto</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="nombreProyecto" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Lista de precios</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="listaPrecios" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Descripción del proyecto</label>
-                            <input type="text" class="form-control">
+                            <input type="text" name="descripcionProyecto" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Asunto</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" name="asunto" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -151,39 +151,43 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-5">
-                <div class="col-md-6">
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"> Create a retainer invioce for this estimación automaticaly
-                        </label>
-                    </div> 
-                    <p class="font-weight-bold">Enviar por correo eletrónico</p>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" value="<?= $contact['id']; ?>"> <?= $contact['Email']; ?>
-                        </label>
-                    </div> 
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" value="<?= $this->session->userdata('email'); ?>"> <?= $this->session->userdata('email'); ?>
-                        </label>
-                    </div>      
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="">Notas del cliente</label>
-                        <textarea class="form-control"></textarea>
+            <form id="footerForm">
+                <div class="card my-5">
+                    <div class="card-body row">
+                        <div class="col-md-6">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" name="create"> Create a retainer invioce for this estimación automaticaly
+                                </label>
+                            </div> 
+                            <p class="font-weight-bold">Enviar por correo eletrónico</p>
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="<?= $contact['id']; ?>" name="emailContacto"> <?= $contact['Email']; ?>
+                                </label>
+                            </div> 
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="<?= $this->session->userdata('id_partner'); ?>" name="emailPropietario"> <?= $this->session->userdata('email'); ?>
+                                </label>
+                            </div>      
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="">Notas del cliente</label>
+                                <textarea class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="">Términos y condiciones</label>
+                                <textarea class="form-control" placeholder="Mencione los términos y condiciones de la empresa."></textarea>
+                            </div>      
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="">Términos y condiciones</label>
-                        <textarea class="form-control" placeholder="Mencione los términos y condiciones de la empresa."></textarea>
-                    </div>      
                 </div>
-            </div>
+            </form>
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-success">Guardar</button>
+                    <button class="btn btn-success" type="submit" form="formLeads">Guardar</button>
                 </div>
             </div>
         </div>

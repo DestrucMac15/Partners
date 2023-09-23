@@ -4,6 +4,91 @@ $(document).ready(function(){
 
     $('#buscador').select2();
 
+    $('#formLeads').submit(function(event){
+
+        event.preventDefault();
+
+        let data = new FormData(this);
+        let emails = new FormData(document.getElementById("footerForm"));
+
+        // Obtienes las entradas del formulario X para meterlos al fomulario Y.
+        for (let [key, value] of emails.entries()) {
+            data.append(key, value);
+        }
+
+        let boton = $(this).find(':submit');
+        boton.text('Enviando..');
+        boton.prop('disabled', true);
+
+        iziToast.success({
+            timeout: 5000,
+            overlay: true,
+            displayMode: 'once',
+            id: 'inputs',
+            zindex: 999,
+            title: 'Atención!',
+            message: '¿Estás seguro de guardar?',
+            position: 'topRight',
+            drag: false,
+            buttons: [
+                ['<button>Guardar</button>', function (instance, toast) {
+
+                    $.ajax({
+                        url: ruta+'Books/save',
+                        dataType: 'JSON',
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST'
+                    }).done(function(respuesta){
+                            
+                            if(respuesta.estatus){
+
+                                iziToast.success({
+                                    timeout: 3000,
+                                    overlay: true,
+                                    displayMode: 'once',
+                                    id: 'inputs',
+                                    zindex: 999,
+                                    title: 'Correcto!',
+                                    message: respuesta.mensaje,
+                                    position: 'topRight',
+                                    drag: false
+                                });
+
+                                setInterval(function(){
+                                    location.href = ruta+"accounts";
+                                },1500);
+
+                            }else{
+
+                                iziToast.error({
+                                    title: 'Alerta!',
+                                    message: respuesta.mensaje,
+                                    position: 'topRight',
+                                });
+
+                            }
+
+                    }).always(function(){
+                        boton.prop('disabled', false);
+                        boton.text('Guardar');
+                    });
+                    
+                }, true],
+                ['<button>Cancelar</button>', function (instance, toast) {
+
+                    iziToast.hide({
+                        transitionOut: 'fadeOutUp'
+                    }, toast);
+                    
+                }, true],
+            ]
+        });
+
+    });
+
     $('#form_buscador').submit(function(event){
 
         event.preventDefault();

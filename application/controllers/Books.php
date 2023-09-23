@@ -280,6 +280,23 @@ class Books extends CI_Controller{
 
     public function save(){
 
+        $data = array(
+            'propietarioPresupuesto' => $this->input->post('propietarioPresupuesto'),
+            'cuentaNombre' => $this->input->post('cuentaNombre'),
+            'oportunidadNombre' => $this->input->post('oportunidadNombre'),
+            'numeroPresupuesto' => $this->input->post('numeroPresupuesto'),
+            'numeroReferencia' => $this->input->post('numeroReferencia'),
+            'fechaPresupuesto' => $this->input->post('fechaPresupuesto'),
+            'fechaVencimiento' => $this->input->post('fechaVencimiento'),
+            'nombreProyecto' => $this->input->post('nombreProyecto'),
+            'listaPrecios' => $this->input->post('listaPrecios'),
+            'descripcionProyecto' => $this->input->post('descripcionProyecto'),
+            'asunto' => $this->input->post('asunto'),
+            'create' => $this->input->post('create'),
+            'emailContacto' => $this->input->post('emailContacto'),
+            'emailPropietario' => $this->input->post('emailPropietario'),
+        );
+
         $dataSessions = $_SESSION['book'];
         
         foreach($dataSessions as $dataSession){
