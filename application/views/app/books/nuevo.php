@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>opportunities">Opportunities</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>books">Books</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>books/?opp=<?= $id; ?>">Books</a></li>
                 <li class="breadcrumb-item active">Nuevo Presupuesto</li>
             </ul>
         </div>

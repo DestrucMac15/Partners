@@ -16,11 +16,39 @@ class Books extends CI_Controller{
 
 	}
 
-    public function nuevo($id){
+    public function index(){
 
         if($this->session->userdata('is_logged')){
 
             $this->template->title = 'Books';
+
+            $token = comprobarToken();
+
+            $books = $this->Books_model->get_listEstimates($token, $_GET['opp']);
+
+            //var_dump($books);
+
+            $data = array(
+                'books' => $books
+            );
+    
+            $this->template->content->view('app/books', $data);
+    
+            $this->template->publish();
+
+        }else{
+
+            redirect(base_url('login'), 'refresh'); 
+
+        }
+
+    }
+
+    public function nuevo($id){
+
+        if($this->session->userdata('is_logged')){
+
+            $this->template->title = 'Crear Books';
 
             $token = comprobarToken();
 
@@ -31,7 +59,8 @@ class Books extends CI_Controller{
             $data = array(
                 'opportunitie' => $opportunitie,
                 'account' => $account,
-                'contact' => $contact
+                'contact' => $contact,
+                'id' => $id
             );
     
             $this->template->content->view('app/books/nuevo', $data);

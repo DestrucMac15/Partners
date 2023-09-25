@@ -32,7 +32,7 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="<?php echo base_url(); ?>opportunities/editar/<?= $info['id']; ?>">Editar</a>
-                                            <a class="dropdown-item" href="<?php echo base_url(); ?>books/nuevo/<?= $info['id']; ?>">Nuevo Presupuesto</a>
+                                            <a class="dropdown-item" href="<?php echo base_url(); ?>books/?opp=<?= $info['id']; ?>">Presupuestos</a>
                                             <a class="dropdown-item btn_upload" href="" data-id="<?= $info['id']; ?>">Subir Archivo</a>
                                         </div>
                                     </div>
