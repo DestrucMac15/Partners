@@ -26,8 +26,6 @@ class Books extends CI_Controller{
 
             $books = $this->Books_model->get_listEstimates($token, $_GET['opp']);
 
-            //var_dump($books);
-
             $data = array(
                 'books' => $books
             );
@@ -72,6 +70,18 @@ class Books extends CI_Controller{
             redirect(base_url('login'), 'refresh'); 
 
         }
+
+    }
+
+    public function downloadBook($id){
+
+        $token = comprobarToken();
+
+        $book = $this->Books_model->get_pdfEstimate($token, $id);
+
+        $bin = base64_encode($book);
+
+        echo "<iframe src='data:application/pdf;base64,$bin' width=100% height=600></iframe>";
 
     }
     
@@ -325,32 +335,134 @@ class Books extends CI_Controller{
             'emailContacto' => $this->input->post('emailContacto'),
             'emailPropietario' => $this->input->post('emailPropietario'),
         );
-
+        var_dump($data);
+        die();
         $dataSessions = $_SESSION['book'];
-        
-        foreach($dataSessions as $dataSession){
-            echo $dataSession['articulos'];
+        //$data_save = array();
+        foreach($dataSessions as $clave => $valor){
+
+            if($clave == "articulos"){
+
+                foreach($valor as $articulo){
+
+                    $header = $articulo['header'];
+                    //var_dump($header);
+                    //$data_save['titulo'] = $articulo['header'];
+                    // Accede a los valores dentro de "items" en cada artículo
+                    foreach($articulo['items'] as $item){
+
+                        $item_id = $item['item_id'];
+                        $name    = $item['name'];
+                        $sku     = $item['sku'];
+                        $brand   = $item['brand'];
+                        $manufacturer  = $item['manufacturer'];
+                        $category_id   = $item['category_id'];
+                        $category_name = $item['category_name'];
+                        $image_name = $item['image_name'];
+                        $image_type = $item['image_type'];
+                        $status = $item['status'];
+                        $source = $item['source'];
+                        $is_linked_with_zohocrm = $item['is_linked_with_zohocrm'];
+                        $zcrm_product_id        = $item['zcrm_product_id'];
+                        $crm_owner_id           = $item['crm_owner_id'];
+                        $unit    = $item['unit'];
+                        $unit_id = $item['unit_id'];
+                        $description = $item['description'];
+                        $rate        = $item['rate'];
+                        $account_id  = $item['account_id'];
+                        $tax_id      = $item['tax_id'];
+                        $tax_name    = $item['tax_name'];
+                        $tax_percentage    = $item['tax_percentage'];
+                        $tax_type          = $item['tax_type'];
+                        $purchase_tax_id   = $item['purchase_tax_id'];
+                        $purchase_tax_name = $item['purchase_tax_name'];
+                        $is_default_tax_applied  = $item['is_default_tax_applied'];
+                        $purchase_tax_percentage = $item['purchase_tax_percentage'];
+                        $purchase_tax_type       = $item['purchase_tax_type'];
+                        $associated_template_id  = $item['associated_template_id'];
+                        $documents = $item['documents'];//*
+                        $purchase_description = $item['purchase_description'];
+                        $pricebook_rate = $item['pricebook_rate'];
+                        $pricing_scheme = $item['pricing_scheme'];
+                        $price_brackets = $item['price_brackets'];//*
+                        $default_price_brackets = $item['default_price_brackets'];//*
+                        $sales_rate             = $item['sales_rate'];
+                        $purchase_rate          = $item['purchase_rate'];
+                        $purchase_account_id    = $item['purchase_account_id'];
+                        $purchase_account_name  = $item['purchase_account_name'];
+                        $inventory_account_id   = $item['inventory_account_id'];
+                        $inventory_account_name = $item['inventory_account_name'];
+                        $created_at   = $item['created_at'];
+                        $created_time = $item['created_time'];
+                        $offline_created_date_with_time = $item['offline_created_date_with_time'];
+                        $last_modified_time             = $item['last_modified_time'];
+                        $tags      = $item['tags'];//*
+                        $item_type = $item['item_type'];
+                        $product_type  = $item['product_type'];
+                        $is_returnable = $item['is_returnable'];
+                        //$reorder_level = $item['reorder_level'];
+                        $minimum_order_quantity = $item['minimum_order_quantity'];
+                        $maximum_order_quantity = $item['maximum_order_quantity'];
+                        $initial_stock = $item['initial_stock'];
+                        //$vendor_id     = $item['vendor_id'];
+                        //$vendor_name   = $item['vendor_name'];
+                        //$stock_on_hand = $item['stock_on_hand'];//*
+                        /*$asset_value   = $item['asset_value'];
+                        $available_stock        = $item['available_stock'];
+                        $actual_available_stock = $item['actual_available_stock'];
+                        $committed_stock        = $item['committed_stock'];
+                        $actual_committed_stock = $item['actual_committed_stock'];
+                        $available_for_sale_stock        = $item['available_for_sale_stock'];
+                        $actual_available_for_sale_stock = $item['actual_available_for_sale_stock'];
+                        $custom_fields       = $item['custom_fields'];//*
+                        $custom_field_hash   = $item['custom_field_hash'];//*
+                        $track_serial_number = $item['track_serial_number'];
+                        $is_fulfillable      = $item['is_fulfillable'];
+                        $upc  = $item['upc'];
+                        $ean  = $item['ean'];
+                        $isbn = $item['isbn'];
+                        $part_number       = $item['part_number'];
+                        $is_combo_product  = $item['is_combo_product'];
+                        $sales_channels    = $item['sales_channels'];//*
+                        $preferred_vendors = $item['preferred_vendors'];
+                        $package_details   = $item['package_details'];//*
+                        $quantity   = $item['quantity'];
+                        $item_total = $item['item_total'];*/
+                    }
+                }
+
+            }elseif($clave == "tabulador"){
+
+                // Accede a los valores dentro de "tabulador"
+                $subtotal        = $valor['subtotal'];
+                $envio           = $valor['envio'];
+                $nombre_impuesto = $valor['nombre_impuesto'];
+                $impuesto        = $valor['impuesto'];
+                $total           = $valor['total'];
+
+            }
+
         }
 
-        /*$data = array(
+        $data_save = array(
             'customer_id' => $customer,//ESTIMACIONES ID DE CLIENTE
             'currency_id' => $currency_id,//ID DE CLIENTE
             //'contact_persons' => array(),//SE ENVIA A UNA PERSONA O PERSONAS DE CONTACTO PARA EL ENVIO DE LA ESTIMACION.
-            'template_id' => $template_id,//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.
+            'template_id' => '2511149000000017003',//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.
             //'place_of_supply' => $place_of_supply,//Lugar donde se suministran los bienes/servicios a
-            //'estimate_number' => $estimate_number,//Buscar estimaciones por número estimado
-            //'reference_number' => $reference_number,//Estimaciones de búsqueda por número de referencia
-            'date' => date(Y-m-d),
-            'expiry_date' => $expiry_date, //FECHA DE EXPIRACION DE LA COTIZACION
-            'exchange_rate' => $exchange_rate,//Tipo de cambio de la moneda.
-            'discount' => $discount,//Descuento aplicado a la factura. Puede ser en % o en cantidad
-            'is_discount_before_tax' => $is_discount_before_tax,//Se utiliza para especificar cómo debe aplicarse el descuento. Ya sea antes o después del cálculo del impuesto.
-            'discount_type' => $discount_type,//Cómo se especifica el descuento. Los valores permitidos son entity_level o item_level.
-            'custom_body' => $custom_body,//
-            'custom_subject' => $custom_subject,
-            'salesperson_name' => $salesperson_name,//Nombre del vendedor
+            'estimate_number' => $this->input->post('numeroPresupuesto'),//Buscar estimaciones por número estimado
+            'reference_number' => $this->input->post('numeroReferencia'),//Estimaciones de búsqueda por número de referencia
+            'date' => date('Y-m-d'),
+            'expiry_date' => $this->input->post('fechaPresupuesto'), //FECHA DE EXPIRACION DE LA COTIZACION
+            'exchange_rate' => 1.00,//Tipo de cambio de la moneda.
+            //'discount' => $discount,//Descuento aplicado a la factura. Puede ser en % o en cantidad
+            'is_discount_before_tax' => true,//Se utiliza para especificar cómo debe aplicarse el descuento. Ya sea antes o después del cálculo del impuesto.
+            'discount_type' => 'item_level',//Cómo se especifica el descuento. Los valores permitidos son entity_level o item_level.
+            //'custom_body' => $custom_body,//
+            //'custom_subject' => $custom_subject,
+            //'salesperson_name' => $salesperson_name,//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
             //'custom_fields' => $custom_fields,//Campos personalizados para un presupuesto
-            'line_items' => $line_items array(
+            /*'line_items' => $line_items array(
                 'item_id' => $item_id,
                 'line_item_id' => $line_item_id,
                 'name' => $name,
@@ -372,9 +484,9 @@ class Books extends CI_Controller{
                 'tax_percentage' => $tax_percentage,
                 'tax_treatment_code' => $tax_treatment_code,
                 'item_total' => $item_total,
-            ),//Partidas de un presupuesto.
-            'notes' => $notes,
-            'terms' => $terms,
+            ),//Partidas de un presupuesto.*/
+            'notes' => '',//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
+            'terms' => '',
             'adjustment' => $adjustment,
             'adjustment_description' => $adjustment_description,
             'tax_id' => $tax_id,
@@ -387,8 +499,8 @@ class Books extends CI_Controller{
             'unit' => $unit,
             'quantity' => $quantity,//La cantidad de línea de pedido
             'project_id' => $project_id//ID del proyecto
-
-        );*/
+        );
+        die();
 
     }
 

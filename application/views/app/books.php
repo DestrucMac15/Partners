@@ -32,7 +32,7 @@
                             foreach($books['estimates'] as $book){ 
                     ?>
                             <tr>
-                                <td><a href=""><i class="fas fa-file-pdf"></i> <?= $book['estimate_number']; ?></a></td>
+                                <td><a href="<?= base_url(); ?>books/downloadBook/<?= $book['estimate_id']; ?>" target="_blank"><i class="fas fa-file-pdf"></i> <?= $book['estimate_number']; ?></a></td>
                                 <td><?= $book['status']; ?></td>
                                 <td><?= $book['date']; ?></td>
                                 <td></td>
