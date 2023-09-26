@@ -319,7 +319,7 @@ class Books extends CI_Controller{
 
     public function save(){
 
-        $data = array(
+        /*$data = array(
             'propietarioPresupuesto' => $this->input->post('propietarioPresupuesto'),
             'cuentaNombre' => $this->input->post('cuentaNombre'),
             'oportunidadNombre' => $this->input->post('oportunidadNombre'),
@@ -334,119 +334,133 @@ class Books extends CI_Controller{
             'create' => $this->input->post('create'),
             'emailContacto' => $this->input->post('emailContacto'),
             'emailPropietario' => $this->input->post('emailPropietario'),
-        );
-        var_dump($data);
-        die();
+            'notasCliente' => $this->input->post('notasCliente'),
+            'terminosCondiciones' => $this->input->post('terminosCondiciones')
+        );*/
+
         $dataSessions = $_SESSION['book'];
-        //$data_save = array();
-        foreach($dataSessions as $clave => $valor){
 
-            if($clave == "articulos"){
+        $tabulador = $_SESSION['book']['tabulador'];
+        $tabulador['subtotal'];
 
-                foreach($valor as $articulo){
+        $subtotal        = $tabulador['subtotal'];
+        $envio           = $tabulador['envio'];
+        $nombre_impuesto = $tabulador['nombre_impuesto'];
+        $impuesto        = $tabulador['impuesto'];
+        $total           = $tabulador['total'];
 
-                    $header = $articulo['header'];
-                    //var_dump($header);
-                    //$data_save['titulo'] = $articulo['header'];
-                    // Accede a los valores dentro de "items" en cada artículo
-                    foreach($articulo['items'] as $item){
+        $articulosB = array();
+        $order = 0;
+        
+        foreach($dataSessions['articulos'] as $cabecera){
 
-                        $item_id = $item['item_id'];
-                        $name    = $item['name'];
-                        $sku     = $item['sku'];
-                        $brand   = $item['brand'];
-                        $manufacturer  = $item['manufacturer'];
-                        $category_id   = $item['category_id'];
-                        $category_name = $item['category_name'];
-                        $image_name = $item['image_name'];
-                        $image_type = $item['image_type'];
-                        $status = $item['status'];
-                        $source = $item['source'];
-                        $is_linked_with_zohocrm = $item['is_linked_with_zohocrm'];
-                        $zcrm_product_id        = $item['zcrm_product_id'];
-                        $crm_owner_id           = $item['crm_owner_id'];
-                        $unit    = $item['unit'];
-                        $unit_id = $item['unit_id'];
-                        $description = $item['description'];
-                        $rate        = $item['rate'];
-                        $account_id  = $item['account_id'];
-                        $tax_id      = $item['tax_id'];
-                        $tax_name    = $item['tax_name'];
-                        $tax_percentage    = $item['tax_percentage'];
-                        $tax_type          = $item['tax_type'];
-                        $purchase_tax_id   = $item['purchase_tax_id'];
-                        $purchase_tax_name = $item['purchase_tax_name'];
-                        $is_default_tax_applied  = $item['is_default_tax_applied'];
-                        $purchase_tax_percentage = $item['purchase_tax_percentage'];
-                        $purchase_tax_type       = $item['purchase_tax_type'];
-                        $associated_template_id  = $item['associated_template_id'];
-                        $documents = $item['documents'];//*
-                        $purchase_description = $item['purchase_description'];
-                        $pricebook_rate = $item['pricebook_rate'];
-                        $pricing_scheme = $item['pricing_scheme'];
-                        $price_brackets = $item['price_brackets'];//*
-                        $default_price_brackets = $item['default_price_brackets'];//*
-                        $sales_rate             = $item['sales_rate'];
-                        $purchase_rate          = $item['purchase_rate'];
-                        $purchase_account_id    = $item['purchase_account_id'];
-                        $purchase_account_name  = $item['purchase_account_name'];
-                        $inventory_account_id   = $item['inventory_account_id'];
-                        $inventory_account_name = $item['inventory_account_name'];
-                        $created_at   = $item['created_at'];
-                        $created_time = $item['created_time'];
-                        $offline_created_date_with_time = $item['offline_created_date_with_time'];
-                        $last_modified_time             = $item['last_modified_time'];
-                        $tags      = $item['tags'];//*
-                        $item_type = $item['item_type'];
-                        $product_type  = $item['product_type'];
-                        $is_returnable = $item['is_returnable'];
-                        //$reorder_level = $item['reorder_level'];
-                        $minimum_order_quantity = $item['minimum_order_quantity'];
-                        $maximum_order_quantity = $item['maximum_order_quantity'];
-                        $initial_stock = $item['initial_stock'];
-                        //$vendor_id     = $item['vendor_id'];
-                        //$vendor_name   = $item['vendor_name'];
-                        //$stock_on_hand = $item['stock_on_hand'];//*
-                        /*$asset_value   = $item['asset_value'];
-                        $available_stock        = $item['available_stock'];
-                        $actual_available_stock = $item['actual_available_stock'];
-                        $committed_stock        = $item['committed_stock'];
-                        $actual_committed_stock = $item['actual_committed_stock'];
-                        $available_for_sale_stock        = $item['available_for_sale_stock'];
-                        $actual_available_for_sale_stock = $item['actual_available_for_sale_stock'];
-                        $custom_fields       = $item['custom_fields'];//*
-                        $custom_field_hash   = $item['custom_field_hash'];//*
-                        $track_serial_number = $item['track_serial_number'];
-                        $is_fulfillable      = $item['is_fulfillable'];
-                        $upc  = $item['upc'];
-                        $ean  = $item['ean'];
-                        $isbn = $item['isbn'];
-                        $part_number       = $item['part_number'];
-                        $is_combo_product  = $item['is_combo_product'];
-                        $sales_channels    = $item['sales_channels'];//*
-                        $preferred_vendors = $item['preferred_vendors'];
-                        $package_details   = $item['package_details'];//*
-                        $quantity   = $item['quantity'];
-                        $item_total = $item['item_total'];*/
-                    }
-                }
+            $header = $cabecera['header'];
+            // Accede a los valores dentro de "items" en cada artículo
+            foreach($cabecera['items'] as $item){
+                $articulosB[] = array(
+                    'header'  => $header,
+                    'item_id' => $item['item_id'],
+                    'name'    => $item['name'],
+                    'sku'     => $item['sku'],
+                    //'brand'   => $item['brand'],
+                    //'manufacturer'  => $item['manufacturer'],
+                    //'category_id'   => $item['category_id'],
+                    //'category_name' => $item['category_name'],
+                    //'image_name' => $item['image_name'],
+                    //'image_type' => $item['image_type'],
+                    //'status' => $item['status'],
+                    //'source' => $item['source'],
+                    //'is_linked_with_zohocrm' => $item['is_linked_with_zohocrm'],
+                    //'zcrm_product_id'        => $item['zcrm_product_id'],
+                    //'crm_owner_id'           => $item['crm_owner_id'],
+                    'unit'    => $item['unit'],
+                    //'unit_id' => $item['unit_id'],
+                    'description' => $item['description'],
+                    //'account_id'  => $item['account_id'],
+                    'tax_id'      => $item['tax_id'],// REVISAR EL ERROR
+                    'tax_name'    => $item['tax_name'],
+                    'tax_percentage'    => $item['tax_percentage'],
+                    'tax_type'          => $item['tax_type'],
+                    'purchase_tax_id'   => $item['purchase_tax_id'],
+                    'purchase_tax_name' => $item['purchase_tax_name'],
+                    'is_default_tax_applied'  => $item['is_default_tax_applied'],
+                    'purchase_tax_percentage' => $item['purchase_tax_percentage'],
+                    'purchase_tax_type'       => $item['purchase_tax_type'],
+                    'associated_template_id'  => $item['associated_template_id'],
+                    /*'sat_item_key_code' => $item['custom_field_hash']['cf_codigo_sat'],
+                    //'unitkey_code' => $item['custom_field_hash']['cf_clave_de_unidad_unformatted'],
+                    'item_order' => $order,
+                    'bcy_rate'   => $item['pricebook_rate'],
+                    'rate'       => $item['pricebook_rate'],
+                    'quantity'   => $item['quantity'],
+                    'discount_amount' => $item['discount_amount'],//Areglar regala para evaluar si existe o no
+                    'discount'   => $item['discount'],
+                    'item_total' => $item['item_total']*/
+                    //$documents = $item['documents'];//*
+                    /*$purchase_description = $item['purchase_description'];
+                    $pricing_scheme = $item['pricing_scheme'];
+                    $price_brackets = $item['price_brackets'];//*
+                    $default_price_brackets = $item['default_price_brackets'];//*
+                    $sales_rate             = $item['sales_rate'];
+                    $purchase_rate          = $item['purchase_rate'];
+                    $purchase_account_id    = $item['purchase_account_id'];
+                    $purchase_account_name  = $item['purchase_account_name'];
+                    $inventory_account_id   = $item['inventory_account_id'];
+                    $inventory_account_name = $item['inventory_account_name'];
+                    $created_at   = $item['created_at'];
+                    $created_time = $item['created_time'];
+                    $offline_created_date_with_time = $item['offline_created_date_with_time'];
+                    $last_modified_time             = $item['last_modified_time'];
+                    $tags      = $item['tags'];//*
+                    $item_type = $item['item_type'];
+                    $product_type  = $item['product_type'];
+                    $is_returnable = $item['is_returnable'];
+                    //$reorder_level = $item['reorder_level'];
+                    $minimum_order_quantity = $item['minimum_order_quantity'];
+                    $maximum_order_quantity = $item['maximum_order_quantity'];
+                    $initial_stock = $item['initial_stock'];*/
+                    //$vendor_id     = $item['vendor_id'];
+                    //$vendor_name   = $item['vendor_name'];
+                    //$stock_on_hand = $item['stock_on_hand'];//*
+                    /*$asset_value   = $item['asset_value'];
+                    $available_stock        = $item['available_stock'];
+                    $actual_available_stock = $item['actual_available_stock'];
+                    $committed_stock        = $item['committed_stock'];
+                    $actual_committed_stock = $item['actual_committed_stock'];
+                    $available_for_sale_stock        = $item['available_for_sale_stock'];
+                    $actual_available_for_sale_stock = $item['actual_available_for_sale_stock'];
+                    $custom_fields       = $item['custom_fields'];//* */
+                    //$custom_field_hash   = $item['custom_field_hash'];//*
+                    //$cf_nombresat   = $item['custom_field_hash']['cf_nombresat'];//*
+                    /*$track_serial_number = $item['track_serial_number'];
+                    $is_fulfillable      = $item['is_fulfillable'];
+                    $upc  = $item['upc'];
+                    $ean  = $item['ean'];
+                    $isbn = $item['isbn'];
+                    $part_number       = $item['part_number'];
+                    $is_combo_product  = $item['is_combo_product'];
+                    $sales_channels    = $item['sales_channels'];//*
+                    $preferred_vendors = $item['preferred_vendors'];
+                    $package_details   = $item['package_details'];//* */
+                );
 
-            }elseif($clave == "tabulador"){
-
-                // Accede a los valores dentro de "tabulador"
-                $subtotal        = $valor['subtotal'];
-                $envio           = $valor['envio'];
-                $nombre_impuesto = $valor['nombre_impuesto'];
-                $impuesto        = $valor['impuesto'];
-                $total           = $valor['total'];
+                $item_id = $item['item_id'];
+                $tax_id  = $item['tax_id'];
+                $name    = $item['name'];
+                $rate    = $item['rate'];
+                $unit    = $item['unit'];
+                $cf_nombresat = $item['custom_field_hash']['cf_nombresat'];
+                $quantity     = $item['quantity'];
+                $order++;
 
             }
-
+              
         }
 
         $data_save = array(
-            'customer_id' => $customer,//ESTIMACIONES ID DE CLIENTE
-            'currency_id' => $currency_id,//ID DE CLIENTE
+            'zcrm_potential_id' => '4768126000026038007',// ID DE LA OPORTUNIDAD
+            'customer_id' => '2511149000012786141',// ID DE CUENTA
+            'currency_id' => '2511149000000072080',//ID DE MONEDA
             //'contact_persons' => array(),//SE ENVIA A UNA PERSONA O PERSONAS DE CONTACTO PARA EL ENVIO DE LA ESTIMACION.
             'template_id' => '2511149000000017003',//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.
             //'place_of_supply' => $place_of_supply,//Lugar donde se suministran los bienes/servicios a
@@ -462,44 +476,24 @@ class Books extends CI_Controller{
             //'custom_subject' => $custom_subject,
             //'salesperson_name' => $salesperson_name,//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
             //'custom_fields' => $custom_fields,//Campos personalizados para un presupuesto
-            /*'line_items' => $line_items array(
-                'item_id' => $item_id,
-                'line_item_id' => $line_item_id,
-                'name' => $name,
-                'description' => $description,
-                'product_type' => $product_type,
-                'sat_item_key_code' => $sat_item_key_code,
-                'unitkey_code' => $unitkey_code,
-                'item_order' => $item_order,
-                'bcy_rate' => $bcy_rate,
-                'rate' => $rate,
-                'quantity' => $quantity,
-                'unit' => $unit,
-                'discount_amount' => $discount_amount,
-                'discount' => $discount,
-                'tax_id' => $tax_id,
-                'tds_tax_id' => $tds_tax_id,
-                'tax_name' => $tax_name,
-                'tax_type' => $tax_type,
-                'tax_percentage' => $tax_percentage,
-                'tax_treatment_code' => $tax_treatment_code,
-                'item_total' => $item_total,
-            ),//Partidas de un presupuesto.*/
-            'notes' => '',//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
-            'terms' => '',
-            'adjustment' => $adjustment,
-            'adjustment_description' => $adjustment_description,
+            'line_items' => $articulosB,//Partidas de un presupuesto.
+            'notes' => $this->input->post('notasCliente'),//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
+            'terms' => $this->input->post('terminosCondiciones'),
+            'adjustment' => $impuesto,
+            'adjustment_description' => $nombre_impuesto,
             'tax_id' => $tax_id,
-            'tax_treatment' => $tax_treatment,//Tratamiento del IVA para el Estimado.Valor permitidos
+            //'tax_treatment' => $tax_treatment,//Tratamiento del IVA para el Estimado.Valor permitidos
             'item_id' => $item_id,
-            'line_item_id' => $line_item_id,//Identificador de la línea de pedido. Obligatorio, si es necesario actualizar la línea de pedido existente. Si está vacío, se creará una nueva línea de pedido.
+            //'line_item_id' => $line_item_id,//Identificador de la línea de pedido. Obligatorio, si es necesario actualizar la línea de pedido existente. Si está vacío, se creará una nueva línea de pedido.
             'name' => $name,//El nombre del elemento de línea
-            'description' => $description,
+            'description' => $cf_nombresat,
             'rate' => $rate,
             'unit' => $unit,
             'quantity' => $quantity,//La cantidad de línea de pedido
-            'project_id' => $project_id//ID del proyecto
+            //'project_id' => $project_id//ID del proyecto
         );
+        $x = json_encode($data_save);
+        echo $x;
         die();
 
     }

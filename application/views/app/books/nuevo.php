@@ -175,11 +175,11 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="">Notas del cliente</label>
-                                <textarea class="form-control"></textarea>
+                                <textarea class="form-control" name="notasCliente"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="">Términos y condiciones</label>
-                                <textarea class="form-control" placeholder="Mencione los términos y condiciones de la empresa."></textarea>
+                                <textarea class="form-control" name="terminosCondiciones" placeholder="Mencione los términos y condiciones de la empresa."></textarea>
                             </div>      
                         </div>
                     </div>

@@ -26,7 +26,7 @@
         public function get_pdfEstimate($token,$id){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/books/v3/estimates/print?organization_id=737962647&estimate_ids='.$id,
+                CURLOPT_URL => 'https://www.zohoapis.com/books/v3/estimates/pdf?organization_id=737962647&estimate_ids='.$id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -151,4 +151,28 @@
             curl_close($curl);
             return json_decode($response,true);
         }
+
+        /**
+         *  ZOHO BOOKS CONTACTS
+         */
+        public function get_contactsBy($token,$id){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://www.zohoapis.com/books/v3/contacts?organization_id=737962647&zcrm_account_id='.$id,
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'GET',
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: Zoho-oauthtoken '.$token
+              ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return json_decode($response,true);
+        }
+
     }
