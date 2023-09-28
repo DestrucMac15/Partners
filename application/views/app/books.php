@@ -35,10 +35,10 @@
                                 <td><a href="<?= base_url(); ?>books/downloadBook/<?= $book['estimate_id']; ?>" target="_blank"><i class="fas fa-file-pdf"></i> <?= $book['estimate_number']; ?></a></td>
                                 <td><?= $book['status']; ?></td>
                                 <td><?= $book['date']; ?></td>
-                                <td></td>
+                                <td><?= $book['reference_number']; ?></td>
                                 <td>MXN <?= $book['sub_total']; ?></td>
                                 <td>MXN <?= $book['total']; ?></td>
-                                <td></td>
+                                <td><?= $book['expiry_date']; ?></td>
                             </tr>
                     <?php 
                             }
