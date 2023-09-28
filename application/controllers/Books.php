@@ -318,27 +318,9 @@ class Books extends CI_Controller{
     }
 
     public function save(){
-
-        /*$data = array(
-            'propietarioPresupuesto' => $this->input->post('propietarioPresupuesto'),
-            'cuentaNombre' => $this->input->post('cuentaNombre'),
-            'oportunidadNombre' => $this->input->post('oportunidadNombre'),
-            'numeroPresupuesto' => $this->input->post('numeroPresupuesto'),
-            'numeroReferencia' => $this->input->post('numeroReferencia'),
-            'fechaPresupuesto' => $this->input->post('fechaPresupuesto'),
-            'fechaVencimiento' => $this->input->post('fechaVencimiento'),
-            'nombreProyecto' => $this->input->post('nombreProyecto'),
-            'listaPrecios' => $this->input->post('listaPrecios'),
-            'descripcionProyecto' => $this->input->post('descripcionProyecto'),
-            'asunto' => $this->input->post('asunto'),
-            'create' => $this->input->post('create'),
-            'emailContacto' => $this->input->post('emailContacto'),
-            'emailPropietario' => $this->input->post('emailPropietario'),
-            'notasCliente' => $this->input->post('notasCliente'),
-            'terminosCondiciones' => $this->input->post('terminosCondiciones')
-        );*/
-
+        
         $dataSessions = $_SESSION['book'];
+        $token = comprobarToken();
 
         $tabulador = $_SESSION['book']['tabulador'];
         $tabulador['subtotal'];
@@ -358,90 +340,24 @@ class Books extends CI_Controller{
             // Accede a los valores dentro de "items" en cada artículo
             foreach($cabecera['items'] as $item){
                 $articulosB[] = array(
-                    'header'  => $header,
+                    'header_name'  => $header,
                     'item_id' => $item['item_id'],
                     'name'    => $item['name'],
                     'sku'     => $item['sku'],
-                    //'brand'   => $item['brand'],
-                    //'manufacturer'  => $item['manufacturer'],
-                    //'category_id'   => $item['category_id'],
-                    //'category_name' => $item['category_name'],
-                    //'image_name' => $item['image_name'],
-                    //'image_type' => $item['image_type'],
-                    //'status' => $item['status'],
-                    //'source' => $item['source'],
-                    //'is_linked_with_zohocrm' => $item['is_linked_with_zohocrm'],
-                    //'zcrm_product_id'        => $item['zcrm_product_id'],
-                    //'crm_owner_id'           => $item['crm_owner_id'],
                     'unit'    => $item['unit'],
-                    //'unit_id' => $item['unit_id'],
                     'description' => $item['description'],
-                    //'account_id'  => $item['account_id'],
                     'tax_id'      => $item['tax_id'],// REVISAR EL ERROR
-                    'tax_name'    => $item['tax_name'],
-                    'tax_percentage'    => $item['tax_percentage'],
-                    'tax_type'          => $item['tax_type'],
+                    //'tax_name'    => $item['tax_name'],
+                    //'tax_percentage'    => $item['tax_percentage'],
+                    //'tax_type'          => $item['tax_type'],
                     'purchase_tax_id'   => $item['purchase_tax_id'],
                     'purchase_tax_name' => $item['purchase_tax_name'],
+                    'discount'        => (isset($item['discount']))?"":$item['discount'],//Descuento aplicado a la factura. Puede ser en % o en cantidad
+                    'discount_amount' => (isset($item['discount_amount']))?"":$item['discount_amount'],
                     'is_default_tax_applied'  => $item['is_default_tax_applied'],
                     'purchase_tax_percentage' => $item['purchase_tax_percentage'],
                     'purchase_tax_type'       => $item['purchase_tax_type'],
-                    'associated_template_id'  => $item['associated_template_id'],
-                    /*'sat_item_key_code' => $item['custom_field_hash']['cf_codigo_sat'],
-                    //'unitkey_code' => $item['custom_field_hash']['cf_clave_de_unidad_unformatted'],
-                    'item_order' => $order,
-                    'bcy_rate'   => $item['pricebook_rate'],
-                    'rate'       => $item['pricebook_rate'],
-                    'quantity'   => $item['quantity'],
-                    'discount_amount' => $item['discount_amount'],//Areglar regala para evaluar si existe o no
-                    'discount'   => $item['discount'],
-                    'item_total' => $item['item_total']*/
-                    //$documents = $item['documents'];//*
-                    /*$purchase_description = $item['purchase_description'];
-                    $pricing_scheme = $item['pricing_scheme'];
-                    $price_brackets = $item['price_brackets'];//*
-                    $default_price_brackets = $item['default_price_brackets'];//*
-                    $sales_rate             = $item['sales_rate'];
-                    $purchase_rate          = $item['purchase_rate'];
-                    $purchase_account_id    = $item['purchase_account_id'];
-                    $purchase_account_name  = $item['purchase_account_name'];
-                    $inventory_account_id   = $item['inventory_account_id'];
-                    $inventory_account_name = $item['inventory_account_name'];
-                    $created_at   = $item['created_at'];
-                    $created_time = $item['created_time'];
-                    $offline_created_date_with_time = $item['offline_created_date_with_time'];
-                    $last_modified_time             = $item['last_modified_time'];
-                    $tags      = $item['tags'];//*
-                    $item_type = $item['item_type'];
-                    $product_type  = $item['product_type'];
-                    $is_returnable = $item['is_returnable'];
-                    //$reorder_level = $item['reorder_level'];
-                    $minimum_order_quantity = $item['minimum_order_quantity'];
-                    $maximum_order_quantity = $item['maximum_order_quantity'];
-                    $initial_stock = $item['initial_stock'];*/
-                    //$vendor_id     = $item['vendor_id'];
-                    //$vendor_name   = $item['vendor_name'];
-                    //$stock_on_hand = $item['stock_on_hand'];//*
-                    /*$asset_value   = $item['asset_value'];
-                    $available_stock        = $item['available_stock'];
-                    $actual_available_stock = $item['actual_available_stock'];
-                    $committed_stock        = $item['committed_stock'];
-                    $actual_committed_stock = $item['actual_committed_stock'];
-                    $available_for_sale_stock        = $item['available_for_sale_stock'];
-                    $actual_available_for_sale_stock = $item['actual_available_for_sale_stock'];
-                    $custom_fields       = $item['custom_fields'];//* */
-                    //$custom_field_hash   = $item['custom_field_hash'];//*
-                    //$cf_nombresat   = $item['custom_field_hash']['cf_nombresat'];//*
-                    /*$track_serial_number = $item['track_serial_number'];
-                    $is_fulfillable      = $item['is_fulfillable'];
-                    $upc  = $item['upc'];
-                    $ean  = $item['ean'];
-                    $isbn = $item['isbn'];
-                    $part_number       = $item['part_number'];
-                    $is_combo_product  = $item['is_combo_product'];
-                    $sales_channels    = $item['sales_channels'];//*
-                    $preferred_vendors = $item['preferred_vendors'];
-                    $package_details   = $item['package_details'];//* */
+                    'associated_template_id'  => $item['associated_template_id']
                 );
 
                 $item_id = $item['item_id'];
@@ -459,43 +375,42 @@ class Books extends CI_Controller{
 
         $data_save = array(
             'zcrm_potential_id' => '4768126000026038007',// ID DE LA OPORTUNIDAD
-            'customer_id' => '2511149000012786141',// ID DE CUENTA
-            'currency_id' => '2511149000000072080',//ID DE MONEDA
+            'customer_id'       => '2511149000012786141',// ID DE CUENTA
+            'currency_id'       => '2511149000000072080',//ID DE MONEDA
             //'contact_persons' => array(),//SE ENVIA A UNA PERSONA O PERSONAS DE CONTACTO PARA EL ENVIO DE LA ESTIMACION.
-            'template_id' => '2511149000000017003',//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.
-            //'place_of_supply' => $place_of_supply,//Lugar donde se suministran los bienes/servicios a
-            'estimate_number' => $this->input->post('numeroPresupuesto'),//Buscar estimaciones por número estimado
-            'reference_number' => $this->input->post('numeroReferencia'),//Estimaciones de búsqueda por número de referencia
-            'date' => date('Y-m-d'),
-            'expiry_date' => $this->input->post('fechaPresupuesto'), //FECHA DE EXPIRACION DE LA COTIZACION
+            'template_id'       => '2511149000000017003',//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.
+            'estimate_number'   => $this->input->post('numeroPresupuesto'),//Buscar estimaciones por número estimado
+            'reference_number'  => $this->input->post('numeroReferencia'),//Estimaciones de búsqueda por número de referencia
+            'date'          => date('Y-m-d'),
+            'expiry_date'   => $this->input->post('fechaPresupuesto'), //FECHA DE EXPIRACION DE LA COTIZACION
             'exchange_rate' => 1.00,//Tipo de cambio de la moneda.
-            //'discount' => $discount,//Descuento aplicado a la factura. Puede ser en % o en cantidad
             'is_discount_before_tax' => true,//Se utiliza para especificar cómo debe aplicarse el descuento. Ya sea antes o después del cálculo del impuesto.
-            'discount_type' => 'item_level',//Cómo se especifica el descuento. Los valores permitidos son entity_level o item_level.
+            'discount_type'          => 'item_level',//Cómo se especifica el descuento. Los valores permitidos son entity_level o item_level.
             //'custom_body' => $custom_body,//
             //'custom_subject' => $custom_subject,
             //'salesperson_name' => $salesperson_name,//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
             //'custom_fields' => $custom_fields,//Campos personalizados para un presupuesto
-            'line_items' => $articulosB,//Partidas de un presupuesto.
+            'line_items'      => $articulosB,// ARRAY DE LOS PRODUCTOS
+            'subject_content' => $this->input->post('asunto'),
             'notes' => $this->input->post('notasCliente'),//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
             'terms' => $this->input->post('terminosCondiciones'),
-            'adjustment' => $impuesto,
+            'adjustment'             => $impuesto,
             'adjustment_description' => $nombre_impuesto,
-            'tax_id' => $tax_id,
-            //'tax_treatment' => $tax_treatment,//Tratamiento del IVA para el Estimado.Valor permitidos
+            'tax_id'  => $tax_id,
             'item_id' => $item_id,
-            //'line_item_id' => $line_item_id,//Identificador de la línea de pedido. Obligatorio, si es necesario actualizar la línea de pedido existente. Si está vacío, se creará una nueva línea de pedido.
-            'name' => $name,//El nombre del elemento de línea
+            'name'    => $name,//El nombre del elemento de línea
             'description' => $cf_nombresat,
             'rate' => $rate,
             'unit' => $unit,
+            'shipping_charge' => $envio,
             'quantity' => $quantity,//La cantidad de línea de pedido
-            //'project_id' => $project_id//ID del proyecto
         );
         $x = json_encode($data_save);
         echo $x;
         die();
 
+        $book = $this->Books_model->create_estimates($token,json_encode($data_save))['data'][0];
+        
     }
 
 
