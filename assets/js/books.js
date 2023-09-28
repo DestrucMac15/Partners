@@ -137,6 +137,7 @@ function cotizacion(ruta){
         method: 'POST',
         dataType: 'JSON',
     }).done(function(respuesta){
+        console.log(respuesta.articulos);
 
         if(respuesta.articulos.length > 0){
 
@@ -166,7 +167,7 @@ function cotizacion(ruta){
                                 <input type="number" class="form-control cantidadItem" value="${valor.quantity}" data-cabecera=${indice} data-item=${clave} data-rate="${valor.rate}" value="1">
                             </td>
                             <td>
-                                ${valor.pricebook_rate.toFixed(2)}
+                                $${valor.pricebook_rate.toFixed(2)}
                             </td>
                             <td class="d-flex">
                                 <input type="number" class="form-control discount" value="${valor.discount_amount}" data-cabecera=${indice} data-item=${clave}>
@@ -175,8 +176,8 @@ function cotizacion(ruta){
                                     <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? '' : 'selected' : ''} value="MXN">MXN</option>
                                 </select>
                             </td>
-                            <td>${valor.tax_name+' - '+valor.tax_percentage+'%'}</td>
-                            <td>${valor.item_total.toFixed(2)}</td>
+                            <td>${valor.tax_name+' - '+valor.tax_percentage+'%'}<br>$${valor.impuesto}</td>
+                            <td>$${valor.item_total.toFixed(2)}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm btnQuitar" data-cabecera=${indice} data-item=${clave}>X</button>
                             </td>

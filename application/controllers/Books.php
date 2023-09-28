@@ -127,16 +127,23 @@ class Books extends CI_Controller{
 
             $indice --;
 
+            
+
             $item['item']['quantity'] = 1;
-            $item['item']['item_total'] = $item['item']['rate'];
+            $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
+
+
 
             
             $_SESSION['book']['articulos'][$indice]['items'][] = $item['item'];
             
         }else{
-            
+
             $item['item']['quantity'] = 1;
-            $item['item']['item_total'] = $item['item']['rate'];
+
+            $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
             
             $_SESSION['book']['articulos'][0]['header'] = 'Nueva Cabecera';
 
@@ -176,6 +183,8 @@ class Books extends CI_Controller{
         $cabecera = $this->input->post('cabecera');
 
         unset($_SESSION['book']['articulos'][$cabecera]);
+
+        $_SESSION['book']['articulos'] = array_values($_SESSION['book']['articulos']);
 
         $this->createTabulador();
 

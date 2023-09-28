@@ -92,13 +92,13 @@
                             <input type="date" name="fechaVencimiento" class="form-control" readonly value="<?php echo date('Y-m-d'); ?>">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Nombre del proyecto</label>
                             <input type="text" name="nombreProyecto" class="form-control">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Lista de precios</label>
                             <input type="text" name="listaPrecios" class="form-control">
