@@ -53,12 +53,15 @@ class Books extends CI_Controller{
             $opportunitie = $this->Opportunities_model->get_opportunities($token,$id)['data'][0];
             $account = $this->Accounts_model->get_account($token,$opportunitie['Account_Name']['id'])['data'][0];
             $contact = $this->Contacts_model->get_contacts($token, $opportunitie['Contact_Name']['id'])['data'][0];
+            $book = $this->Books_model->get_contactsBy($token,$contact['id'])['page_context'];
             
             $data = array(
                 'opportunitie' => $opportunitie,
                 'account' => $account,
                 'contact' => $contact,
-                'id' => $id
+                'id' => $id,
+                'zcrm_account_id' => $book['search_criteria'][0]['search_text'],
+                'customer_id' => $account['id']
             );
     
             $this->template->content->view('app/books/nuevo', $data);
@@ -81,7 +84,7 @@ class Books extends CI_Controller{
 
         $bin = base64_encode($book);
 
-        echo "<iframe src='data:application/pdf;base64,$bin' width=100% height=600></iframe>";
+        echo "<iframe src='data:application/pdf;base64,$bin' width=100% height=100%></iframe>";
 
     }
     
@@ -458,8 +461,8 @@ class Books extends CI_Controller{
         }
 
         $data_save = array(
-            'zcrm_potential_id' => '4768126000026038007',// ID DE LA OPORTUNIDAD
-            'customer_id' => '2511149000012786141',// ID DE CUENTA
+            'zcrm_potential_id' => $this->input->post('zcrm_account_id'),// ID DE LA OPORTUNIDAD
+            'customer_id' => $this->input->post('customer_id'),// ID DE CUENTA
             'currency_id' => '2511149000000072080',//ID DE MONEDA
             //'contact_persons' => array(),//SE ENVIA A UNA PERSONA O PERSONAS DE CONTACTO PARA EL ENVIO DE LA ESTIMACION.
             'template_id' => '2511149000000017003',//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.

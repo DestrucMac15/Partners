@@ -171,7 +171,7 @@ function cotizacion(ruta){
                             <td class="d-flex">
                                 <input type="number" class="form-control discount" value="${valor.discount_amount}" data-cabecera=${indice} data-item=${clave}>
                                 <select  class="form-control typeDiscount" value="${valor.discount_amount}" data-cabecera=${indice} data-item=${clave}>
-                                    <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? 'selected' : '' : ''} value="%">%</option>
+                                    <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? "selected" : "" : ''} value="%">%</option>
                                     <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? '' : 'selected' : ''} value="MXN">MXN</option>
                                 </select>
                             </td>
@@ -307,7 +307,7 @@ function cotizacion(ruta){
         $('.discount').on('focusout',function(){
 
             let descuento = $(this).val();
-            let TipoDescuento = $('.typeDiscount').val();
+            let TipoDescuento = $(this).siblings('.typeDiscount').val();
             let cabecera = $(this).data('cabecera');
             let item = $(this).data('item');
 
@@ -333,7 +333,7 @@ function cotizacion(ruta){
         //Editar tipo de descuento de simbolo
         $('.typeDiscount').on('change',function(){
 
-            let descuento = $('.discount').val();
+            let descuento = $(this).siblings('.discount').val();
             let TipoDescuento = $(this).val();
             let cabecera = $(this).data('cabecera');
             let item = $(this).data('item');

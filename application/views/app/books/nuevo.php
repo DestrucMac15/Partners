@@ -15,6 +15,18 @@
             <form id="formLeads" action="" class="was-validated">
                 <div class="row my-5">
                     <div class="col-md-6">
+                        <div class="form-group" hidden>
+                            <label for="">Zcrm_account_id</label>
+                            <input type="text" class="form-control" value="<?= $zcrm_account_id; ?>" name="Zcrm_account_id" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" hidden>
+                            <label for="">Customer_id</label>
+                            <input type="text" class="form-control" value="<?= $customer_id; ?>" name="Customer_id" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Propietario de presupuesto</label>
                             <input type="text" class="form-control" value="Nacir Coronado" name="propietarioPresupuesto" readonly>
