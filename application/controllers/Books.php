@@ -408,7 +408,9 @@ class Books extends CI_Controller{
             'shipping_charge' => $envio,
             'quantity' => $quantity,//La cantidad de línea de pedido
         );
-
+        $x = json_encode($data_save);
+        echo $x;
+        die();
         $book = $this->Books_model->create_estimates($token,json_encode($data_save))['data'][0];
 
         if($book['code'] == 0){
