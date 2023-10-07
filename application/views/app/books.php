@@ -24,6 +24,7 @@
                         <th class="text-center">Subtotal</th>
                         <th class="text-center">Importe</th>
                         <th class="text-center">Válido Hasta</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,9 @@
                                 <td>MXN <?= $book['sub_total']; ?></td>
                                 <td>MXN <?= $book['total']; ?></td>
                                 <td><?= $book['expiry_date']; ?></td>
+                                <td>
+                                    <a class="dropdown-item" href="<?php echo base_url(); ?>books/editar/<?= $book['estimate_id']; ?>">Editar</a>
+                                </td>
                             </tr>
                     <?php 
                             }

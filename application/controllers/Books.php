@@ -76,6 +76,30 @@ class Books extends CI_Controller{
 
     }
 
+    public function editar($id){
+
+        if($this->session->userdata('is_logged')){
+
+            $this->template->title = 'Editar Estimates';
+
+            $token = comprobarToken();
+
+            $estimate = $this->Books_model->get_estimateByID($token, $id)['estimate'];
+
+            $data = array(
+                'estimate' => $estimate,
+                'id_opp'   => $estimate['zcrm_potential_id']
+            );
+
+            $this->template->content->view('app/books/editar',$data);
+
+            $this->template->publish();
+
+        }else{
+            redirect(base_url('login'), 'refresh');
+        }
+    }
+
     public function downloadBook($id){
 
         $token = comprobarToken();
@@ -382,6 +406,12 @@ class Books extends CI_Controller{
             }
               
         }
+
+        $custom_fields = array(
+            'api_name' => 'cf_descripci_n_del_proyecto',
+            'value'    => $this->input->post('descripcionProyecto')
+        );
+
         $data_save = array(
             'zcrm_potential_id' => $this->input->post('oportunidad'),// ID DE LA OPORTUNIDAD
             'customer_id' => $this->input->post('customer_id'),// ID DE CUENTA 
@@ -397,8 +427,9 @@ class Books extends CI_Controller{
             'discount_type'          => 'item_level',//Cómo se especifica el descuento. Los valores permitidos son entity_level o item_level.
             //'custom_body' => $custom_body,//
             //'custom_subject' => $custom_subject,
-            //'salesperson_name' => $salesperson_name,//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
-            //'custom_fields' => $custom_fields,//Campos personalizados para un presupuesto
+            //'salesperson_id'   => '2511149000000149005',
+            'salesperson_name' => 'Nacir Coronado',//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
+            'custom_fields' => $custom_fields,//Campos personalizados para un presupuesto
             'line_items'      => $articulosB,// ARRAY DE LOS PRODUCTOS
             'subject_content' => $this->input->post('asunto'),
             'notes' => $this->input->post('notasCliente'),//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
@@ -414,7 +445,8 @@ class Books extends CI_Controller{
             'shipping_charge' => $envio,
             'quantity' => $quantity,//La cantidad de línea de pedido
         );
-        
+        json_encode($data_save);
+        die();
         $book = $this->Books_model->create_estimates($token,json_encode($data_save));
 
         if($book['code'] == 0){
