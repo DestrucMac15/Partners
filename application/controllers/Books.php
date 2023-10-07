@@ -25,7 +25,7 @@ class Books extends CI_Controller{
             $token = comprobarToken();
 
             $books = $this->Books_model->get_listEstimates($token, $_GET['opp']);
-
+            
             $data = array(
                 'books' => $books
             );
@@ -53,14 +53,14 @@ class Books extends CI_Controller{
             $opportunitie = $this->Opportunities_model->get_opportunities($token,$id)['data'][0];
             $account = $this->Accounts_model->get_account($token,$opportunitie['Account_Name']['id'])['data'][0];
             $contact = $this->Contacts_model->get_contacts($token, $opportunitie['Contact_Name']['id'])['data'][0];
-            $book = $this->Books_model->get_contactsBy($token,$contact['id'])['page_context'];
-            
+            $book = $this->Books_model->get_contactsBy($token,$contact['Account_Name']['id']);
+
             $data = array(
                 'opportunitie' => $opportunitie,
                 'account' => $account,
                 'contact' => $contact,
                 'id' => $id,
-                'zcrm_account_id' => $book['search_criteria'][0]['search_text'],
+                'zcrm_account_id' => $book['contacts'][0]['contact_id'],
                 'customer_id' => $account['id']
             );
     
@@ -127,16 +127,23 @@ class Books extends CI_Controller{
 
             $indice --;
 
+            
+
             $item['item']['quantity'] = 1;
-            $item['item']['item_total'] = $item['item']['rate'];
+            $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
+
+
 
             
             $_SESSION['book']['articulos'][$indice]['items'][] = $item['item'];
             
         }else{
-            
+
             $item['item']['quantity'] = 1;
-            $item['item']['item_total'] = $item['item']['rate'];
+
+            $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
             
             $_SESSION['book']['articulos'][0]['header'] = 'Nueva Cabecera';
 
@@ -176,6 +183,8 @@ class Books extends CI_Controller{
         $cabecera = $this->input->post('cabecera');
 
         unset($_SESSION['book']['articulos'][$cabecera]);
+
+        $_SESSION['book']['articulos'] = array_values($_SESSION['book']['articulos']);
 
         $this->createTabulador();
 
@@ -328,11 +337,9 @@ class Books extends CI_Controller{
         $tabulador = $_SESSION['book']['tabulador'];
         $tabulador['subtotal'];
 
-        $subtotal        = $tabulador['subtotal'];
         $envio           = $tabulador['envio'];
         $nombre_impuesto = $tabulador['nombre_impuesto'];
         $impuesto        = $tabulador['impuesto'];
-        $total           = $tabulador['total'];
 
         $articulosB = array();
         $order = 0;
@@ -349,14 +356,14 @@ class Books extends CI_Controller{
                     'sku'     => $item['sku'],
                     'unit'    => $item['unit'],
                     'description' => $item['description'],
-                    'tax_id'      => $item['tax_id'],// REVISAR EL ERROR
-                    //'tax_name'    => $item['tax_name'],
-                    //'tax_percentage'    => $item['tax_percentage'],
-                    //'tax_type'          => $item['tax_type'],
+                    //'tax_id'      => $item['tax_id'],// REVISAR EL ERROR
+                    'tax_name'    => $item['tax_name'],
+                    'tax_percentage'    => $item['tax_percentage'],
+                    'tax_type'          => $item['tax_type'],
                     'purchase_tax_id'   => $item['purchase_tax_id'],
                     'purchase_tax_name' => $item['purchase_tax_name'],
-                    'discount'        => (isset($item['discount'])) ? "" : $item['discount'],//Descuento aplicado a la factura. Puede ser en % o en cantidad
-                    'discount_amount' => (isset($item['discount_amount'])) ? "" : $item['discount_amount'],
+                    'discount'        => isset($item['discount']) ? $item['discount'] : '',//Descuento aplicado a la factura. Puede ser en % o en cantidad
+                    'discount_amount' => isset($item['discount_amount']) ? $item['discount_amount'] : '',
                     'is_default_tax_applied'  => $item['is_default_tax_applied'],
                     'purchase_tax_percentage' => $item['purchase_tax_percentage'],
                     'purchase_tax_type'       => $item['purchase_tax_type'],
@@ -375,17 +382,16 @@ class Books extends CI_Controller{
             }
               
         }
-
         $data_save = array(
-            'zcrm_potential_id' => $this->input->post('zcrm_account_id'),// ID DE LA OPORTUNIDAD
+            'zcrm_potential_id' => $this->input->post('oportunidad'),// ID DE LA OPORTUNIDAD
             'customer_id' => $this->input->post('customer_id'),// ID DE CUENTA 
             'currency_id' => '2511149000000072080',//ID DE MONEDA
             //'contact_persons' => array(),//SE ENVIA A UNA PERSONA O PERSONAS DE CONTACTO PARA EL ENVIO DE LA ESTIMACION.
             'template_id'       => '2511149000000017003',//ID DE LA PLANTILLA PDF ASOCIADA AL PRESUPUESTO.
-            'estimate_number'   => $this->input->post('numeroPresupuesto'),//Buscar estimaciones por número estimado
+            //'estimate_number'   => $this->input->post('numeroPresupuesto'),//Buscar estimaciones por número estimado
             'reference_number'  => $this->input->post('numeroReferencia'),//Estimaciones de búsqueda por número de referencia
-            'date'          => date('Y-m-d'),
-            'expiry_date'   => $this->input->post('fechaPresupuesto'), //FECHA DE EXPIRACION DE LA COTIZACION
+            'date'          => $this->input->post('fechaPresupuesto'),
+            'expiry_date'   => $this->input->post('fechaVencimiento'), //FECHA DE EXPIRACION DE LA COTIZACION
             'exchange_rate' => 1.00,//Tipo de cambio de la moneda.
             'is_discount_before_tax' => true,//Se utiliza para especificar cómo debe aplicarse el descuento. Ya sea antes o después del cálculo del impuesto.
             'discount_type'          => 'item_level',//Cómo se especifica el descuento. Los valores permitidos son entity_level o item_level.
@@ -399,7 +405,7 @@ class Books extends CI_Controller{
             'terms' => $this->input->post('terminosCondiciones'),
             'adjustment'             => $impuesto,
             'adjustment_description' => $nombre_impuesto,
-            'tax_id'  => $tax_id,
+            //'tax_id'  => $tax_id,
             'item_id' => $item_id,
             'name'    => $name,//El nombre del elemento de línea
             'description' => $cf_nombresat,
@@ -408,10 +414,8 @@ class Books extends CI_Controller{
             'shipping_charge' => $envio,
             'quantity' => $quantity,//La cantidad de línea de pedido
         );
-        $x = json_encode($data_save);
-        echo $x;
-        die();
-        $book = $this->Books_model->create_estimates($token,json_encode($data_save))['data'][0];
+        
+        $book = $this->Books_model->create_estimates($token,json_encode($data_save));
 
         if($book['code'] == 0){
 

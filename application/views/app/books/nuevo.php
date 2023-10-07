@@ -14,16 +14,16 @@
             <hr>
             <form id="formLeads" action="" class="was-validated">
                 <div class="row my-5">
-                    <div class="col-md-6">
-                        <div class="form-group" hidden>
-                            <label for="">Zcrm_account_id</label>
-                            <input type="text" class="form-control" value="<?= $zcrm_account_id; ?>" name="Zcrm_account_id" readonly>
+                    <div class="col-md-6" hidden>
+                        <div class="form-group">
+                            <label for="">Oportunidad</label>
+                            <input type="text" class="form-control" value="<?= $id; ?>" name="oportunidad" readonly>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group" hidden>
+                    <div class="col-md-6" hidden>
+                        <div class="form-group">
                             <label for="">Customer_id</label>
-                            <input type="text" class="form-control" value="<?= $customer_id; ?>" name="Customer_id" readonly>
+                            <input type="text" class="form-control" value="<?= $zcrm_account_id; ?>" name="customer_id" readonly>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -68,7 +68,7 @@
                             <input type="text" class="form-control" name="oportunidadNombre" value="<?= $opportunitie['Deal_Name']; ?>" readonly>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Número del presupuesto</label>
                             <input type="text" name="numeroPresupuesto" class="form-control">
@@ -83,22 +83,22 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha del presupuesto</label>
-                            <input type="date" name="fechaPresupuesto" class="form-control">
+                            <input type="date" name="fechaPresupuesto" class="form-control" readonly value="<?php echo date('Y-m-d'); ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha de vencimiento</label>
-                            <input type="date" name="fechaVencimiento" class="form-control" readonly value="<?php echo date('Y-m-d'); ?>">
+                            <input type="date" name="fechaVencimiento" class="form-control" ">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Nombre del proyecto</label>
                             <input type="text" name="nombreProyecto" class="form-control">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Lista de precios</label>
                             <input type="text" name="listaPrecios" class="form-control">
