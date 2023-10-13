@@ -173,16 +173,20 @@
                                 </label>
                             </div> 
                             <p class="font-weight-bold">Enviar por correo eletrónico</p>
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value="<?= $contact['id']; ?>" name="emailContacto"> <?= $contact['Email']; ?>
-                                </label>
-                            </div> 
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" value="<?= $this->session->userdata('id_partner'); ?>" name="emailPropietario"> <?= $this->session->userdata('email'); ?>
-                                </label>
-                            </div>      
+                            <?php 
+                                foreach($contactPersons['contact_persons'] as $data){ 
+                                    if(!empty($data['email'])){
+                            ?>
+
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="<?= $data['contact_person_id']; ?>" name="emailContactoPerson[]"> <?= $data['email']; ?>
+                                    </label>
+                                </div>     
+                            <?php 
+                                    }
+                                }
+                            ?>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">

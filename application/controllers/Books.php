@@ -53,7 +53,8 @@ class Books extends CI_Controller{
             $opportunitie = $this->Opportunities_model->get_opportunities($token,$id)['data'][0];
             $account = $this->Accounts_model->get_account($token,$opportunitie['Account_Name']['id'])['data'][0];
             $contact = $this->Contacts_model->get_contacts($token, $opportunitie['Contact_Name']['id'])['data'][0];
-            $book = $this->Books_model->get_contactsBy($token,$contact['Account_Name']['id']);
+            $book    = $this->Books_model->get_contactsBy($token,$contact['Account_Name']['id']);
+            $contactPersons = $this->Books_model->get_contactsPersonsAll($token,$book['contacts'][0]['contact_id']);
 
             $data = array(
                 'opportunitie' => $opportunitie,
@@ -61,7 +62,8 @@ class Books extends CI_Controller{
                 'contact' => $contact,
                 'id' => $id,
                 'zcrm_account_id' => $book['contacts'][0]['contact_id'],
-                'customer_id' => $account['id']
+                'customer_id' => $account['id'],
+                'contactPersons' => $contactPersons
             );
     
             $this->template->content->view('app/books/nuevo', $data);

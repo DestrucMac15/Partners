@@ -134,8 +134,8 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="contenido">
-                            
+                        <tbody id="contenidoEdit">
+
                         </tbody>
                     </table>
                 </div>
@@ -145,7 +145,7 @@
                 <div class="col-md-4 offset-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <ul class="list-group" id="tabulador">
+                            <ul class="list-group" id="tabuladorEdit">
                             </ul>
                         </div>
                     </div>
@@ -161,13 +161,17 @@
                                 </label>
                             </div> 
                             <p class="font-weight-bold">Enviar por correo eletrónico</p>
-                            <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <?php foreach($estimate['contact_persons_details'] as $data){ ?>
-                                        <input class="form-check-input" type="checkbox" value="<?= $data['contact_person_id']; ?>" name="emailContacto"> <?= $data['email']; ?>
-                                    <?php } ?>
-                                </label>
-                            </div>     
+                            <?php 
+                                foreach($estimate['contact_persons_details'] as $data){ 
+                            ?>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" value="<?= $data['contact_person_id']; ?>" name="emailContactoPerson[]"> <?= $data['email']; ?>
+                                    </label>
+                                </div>
+                            <?php 
+                                } 
+                            ?>    
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
