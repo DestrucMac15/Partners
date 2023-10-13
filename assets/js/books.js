@@ -5,12 +5,13 @@ $(document).ready(function(){
     $('#buscador').select2();
 
     /*=====CREAR PRESUPUESTO=======*/
-    $('#formEstimate').submit(function(event){
+    $('#formEstimates').submit(function(event){
 
         event.preventDefault();
 
-        let data = new FormData(this);
+        let data   = new FormData(this);
         let emails = new FormData(document.getElementById("footerForm"));
+        let opp_id = $('#opp_id').val();
 
         // Obtienes las entradas del formulario X para meterlos al fomulario Y.
         for (let [key, value] of emails.entries()) {
@@ -59,7 +60,7 @@ $(document).ready(function(){
                                 });
 
                                 setInterval(function(){
-                                    location.href = ruta+"opportunities";
+                                    location.href = ruta+"books/?opp="+opp_id;
                                 },1500);
 
                             }else{

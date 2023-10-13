@@ -429,7 +429,7 @@ class Books extends CI_Controller{
             //'custom_subject' => $custom_subject,
             //'salesperson_id'   => '2511149000000149005',
             'salesperson_name' => 'Nacir Coronado',//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
-            'custom_fields' => $custom_fields,//Campos personalizados para un presupuesto
+            'custom_fields' => array($custom_fields),//Campos personalizados para un presupuesto
             'line_items'      => $articulosB,// ARRAY DE LOS PRODUCTOS
             'subject_content' => $this->input->post('asunto'),
             'notes' => $this->input->post('notasCliente'),//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
@@ -445,10 +445,9 @@ class Books extends CI_Controller{
             'shipping_charge' => $envio,
             'quantity' => $quantity,//La cantidad de línea de pedido
         );
-        json_encode($data_save);
-        die();
+        //echo json_encode($data_save);
+        //die();
         $book = $this->Books_model->create_estimates($token,json_encode($data_save));
-
         if($book['code'] == 0){
 
             echo json_encode(array('estatus' => true, 'mensaje' => 'Se creo correctamente.'));
@@ -461,6 +460,11 @@ class Books extends CI_Controller{
         
     }
 
+    public function edit(){
+
+        $token = comprobarToken();
+        //$book = $this->Books_model->upd_estimates($token,json_encode($data_save),$id);
+    }
 
 
 }

@@ -17,7 +17,7 @@
                     <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Oportunidad</label>
-                            <input type="text" class="form-control" value="<?= $id; ?>" name="oportunidad" readonly>
+                            <input type="text" id="opp_id" class="form-control" value="<?= $id; ?>" name="oportunidad" readonly>
                         </div>
                     </div>
                     <div class="col-md-6" hidden>
@@ -199,7 +199,7 @@
             </form>
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-success" type="submit" form="formEstimate">Guardar</button>
+                    <button class="btn btn-success" type="submit" form="formEstimates">Guardar</button>
                 </div>
             </div>
         </div>
