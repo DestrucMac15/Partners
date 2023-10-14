@@ -16,6 +16,12 @@
                 <div class="row my-5">
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="">Estimate</label>
+                            <input type="text" id="estimate_id" class="form-control" value="<?= $id_estimate; ?>" name="estimate" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="">Propietario de presupuesto</label>
                             <input type="text" class="form-control" value="Nacir Coronado" name="propietarioPresupuesto" readonly>
                         </div>
@@ -95,7 +101,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Descripción del proyecto</label>
-                            <input type="text" name="descripcionProyecto" class="form-control" value="<?= $estimate['custom_fields'][0]['value']; ?>">
+                            <input type="text" name="descripcionProyecto" class="form-control" value="<?= isset($estimate['custom_fields'][0]['value'])?$estimate['custom_fields'][0]['value']:'' ?>">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -195,5 +201,5 @@
     </div>
 </div>
 
-<?= $this->template->javascript->add(base_url().'assets/js/books.js'); ?> 
+<?= $this->template->javascript->add(base_url().'assets/js/booksEdit.js'); ?> 
 

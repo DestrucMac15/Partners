@@ -4,20 +4,12 @@ $(document).ready(function(){
 
     $('#buscador').select2();
 
-    /*=====CREAR PRESUPUESTO=======*/
-    $('#formEstimates').submit(function(event){
+    /*=====EDITAR PRESUPUESTO=======*/
+    $('#formEstimateEdit').on('submit',function(event){
 
         event.preventDefault();
 
-        let data   = new FormData(this);
-        let emails = new FormData(document.getElementById("footerForm"));
-        let opp_id = $('#opp_id').val();
-
-        // Obtienes las entradas del formulario X para meterlos al fomulario Y.
-        for (let [key, value] of emails.entries()) {
-            data.append(key, value);
-        }
-
+        let data = new FormData(this);
         let boton = $(this).find(':submit');
         boton.text('Enviando..');
         boton.prop('disabled', true);
@@ -36,7 +28,7 @@ $(document).ready(function(){
                 ['<button>Guardar</button>', function (instance, toast) {
 
                     $.ajax({
-                        url: ruta+'Books/save',
+                        url: ruta+'Books/edit',
                         dataType: 'JSON',
                         data: data,
                         cache: false,
@@ -60,7 +52,7 @@ $(document).ready(function(){
                                 });
 
                                 setInterval(function(){
-                                    location.href = ruta+"books/?opp="+opp_id;
+                                    location.href = ruta+"opportunities";
                                 },1500);
 
                             }else{
@@ -89,8 +81,10 @@ $(document).ready(function(){
             ]
         });
 
-    });
+        
+    
 
+    });
 
     $('#form_buscador').submit(function(event){
 
@@ -113,7 +107,9 @@ $(document).ready(function(){
 
     });
 
-    cotizacion(ruta);
+    const opp  = $('#estimate_id').val();
+
+    cotizacion(ruta,opp);
 
     $('#btn_agregarCabecera').click(function(){
 
@@ -131,14 +127,15 @@ $(document).ready(function(){
 
 });
 
-function cotizacion(ruta){
-
-    let contenido;
+function cotizacion(ruta,opp){
+    
+    let contenidoEdit;
 
     $.ajax({
-        url: ruta+'books/getBook',
+        url: ruta+'books/getBookEdit',
         method: 'POST',
         dataType: 'JSON',
+        data:{opp:opp}
     }).done(function(respuesta){
         console.log(respuesta.articulos);
 
@@ -147,7 +144,7 @@ function cotizacion(ruta){
             $.each(respuesta.articulos, function(indice, items){
 
 
-                contenido += `
+                contenidoEdit += `
                     <tr>
                         <td colspan="9">
                             <input type="text" class="form-control inputHeader" data-cabecera=${indice} value="${items.header}">
@@ -160,7 +157,7 @@ function cotizacion(ruta){
 
                 $.each(items.items, function(clave, valor){
                     
-                    contenido += `
+                    contenidoEdit += `
                         <tr data-indice=${clave} class="small">
                             <td> ${valor.name}</td>
                             <td>${valor.custom_field_hash.cf_codigo_sat}</td>
@@ -194,21 +191,21 @@ function cotizacion(ruta){
 
         }else{
 
-            contenido = `
+            contenidoEdit = `
                 <tr>
                     <td colspan="10">
-                        <h5 class="text-center">Sin artículos</h5>
+                        <h5 class="text-center">Sin artículos EDITAR</h5>
                     </td>
                 </tr>
             `;
             
         }
 
-        $('#contenido').html(contenido);
+        $('#contenidoEdit').html(contenidoEdit);
 
-        let tabulador = "";
+        let tabuladorEdit = "";
 
-        tabulador += `
+        tabuladorEdit += `
             <li class="list-group-item d-flex justify-content-between"><b>Subtotal:</b> ${respuesta.tabulador.subtotal.toFixed(2)}</li>
             <li class="list-group-item d-flex justify-content-between"><b>Cargo de envió:</b> <input class="form-control cargoEnvio" type="number" value="${respuesta.tabulador.envio.toFixed(2)}"></li>
             <li class="list-group-item d-flex justify-content-between"><input type="text" class="form-control nombreImpuesto" value="${respuesta.tabulador.nombre_impuesto}"><input type="number" class="form-control mx-1 valorImpuesto" value="${respuesta.tabulador.impuesto.toFixed(2)}"></li>
@@ -216,7 +213,7 @@ function cotizacion(ruta){
         `;
 
 
-        $('#tabulador').html(tabulador);
+        $('#tabuladorEdit').html(tabuladorEdit);
 
         //Eliminar articulo
         $('.btnQuitar').click(function(){

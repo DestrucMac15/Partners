@@ -90,7 +90,8 @@ class Books extends CI_Controller{
 
             $data = array(
                 'estimate' => $estimate,
-                'id_opp'   => $estimate['zcrm_potential_id']
+                'id_opp'   => $estimate['zcrm_potential_id'],
+                'id_estimate' => $estimate['estimate_id']
             );
 
             $this->template->content->view('app/books/editar',$data);
@@ -128,6 +129,40 @@ class Books extends CI_Controller{
                     'subtotal' => 0,
                     'envio' => 0,
                     'nombre_impuesto' => 'Ajuste',
+                    'impuesto' => 0,
+                    'total' => 0
+                )
+            );
+            
+        }
+        
+        echo json_encode($_SESSION['book']);
+
+    }
+
+    public function getBookEdit(){
+
+        if(!isset($_SESSION['book'])){
+
+            $token  = comprobarToken();
+            $estimate_id = $this->input->post('opp');
+            
+            $estimate = $this->Books_model->get_estimateByID($token,$estimate_id)['estimate'];
+            
+            /*$item_data = array();
+
+            foreach($estimate['line_items'] as $item){
+                $item_data[]=array(
+                    $name = $item['name']
+                );
+            }*/
+            
+            $_SESSION['book'] = array(
+                'articulos' => array(),
+                'tabulador' => array(
+                    'subtotal' => 0,
+                    'envio' => 0,
+                    'nombre_impuesto' => $estimate['adjustment_description'],
                     'impuesto' => 0,
                     'total' => 0
                 )
