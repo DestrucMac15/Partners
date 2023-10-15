@@ -149,22 +149,24 @@ class Books extends CI_Controller{
             
             $estimate = $this->Books_model->get_estimateByID($token,$estimate_id)['estimate'];
             
-            /*$item_data = array();
+            $item_data = array();
 
             foreach($estimate['line_items'] as $item){
-                $item_data[]=array(
-                    $name = $item['name']
-                );
-            }*/
-            
+                $valor = $item['header_name'];
+                if(!isset($item_data[$valor])){
+                    $item_data[$valor] = array();
+                }
+                $item_data[$valor][] = $item;
+            }
+
             $_SESSION['book'] = array(
-                'articulos' => array(),
+                'articulos' => $item_data,
                 'tabulador' => array(
-                    'subtotal' => 0,
-                    'envio' => 0,
+                    'subtotal' => $estimate['sub_total'],
+                    'envio'    => $estimate['shipping_charge'],
                     'nombre_impuesto' => $estimate['adjustment_description'],
-                    'impuesto' => 0,
-                    'total' => 0
+                    'impuesto'        => $estimate['adjustment'],
+                    'total'           => $estimate['total']
                 )
             );
             

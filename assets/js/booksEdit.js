@@ -137,69 +137,86 @@ function cotizacion(ruta,opp){
         dataType: 'JSON',
         data:{opp:opp}
     }).done(function(respuesta){
-        console.log(respuesta.articulos);
+        //console.log(respuesta.articulos);
 
-        if(respuesta.articulos.length > 0){
+        //if(respuesta.articulos.length > 0){
 
-            $.each(respuesta.articulos, function(indice, items){
+            for (const clave in respuesta.articulos) {
 
+                if (respuesta.articulos.hasOwnProperty(clave)) {
+                    //console.log(`Clave principal: ${clave}`);
+                        contenidoEdit += `
+                            <tr>
+                                <td colspan="9">
+                                    <input type="text" class="form-control inputHeader" value="${clave}">
+                                </td>
+                            </tr>
+                        `;
+                    const valores = respuesta.articulos[clave];
+                    //console.log("Valores dentro de la clave principal:");
+                    for (const valor of valores) {
+                        //const name = valor.name;
+                        //console.log(`Name: ${name}`);
+                        contenidoEdit += `
+                            <tr class="small">
+                                <td>${valor.name}</td>
+                        `;
+                        if(Array.isArray(valor.item_custom_fields)){
 
-                contenidoEdit += `
-                    <tr>
-                        <td colspan="9">
-                            <input type="text" class="form-control inputHeader" data-cabecera=${indice} value="${items.header}">
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm btnQuitarHeader" data-cabecera=${indice}>X</button>
-                        </td>
-                    </tr>
-                `;
+                            valor.item_custom_fields.forEach(customField => {
 
-                $.each(items.items, function(clave, valor){
+                                //console.log(customField.label);
+                                if(customField.label == 'Codigo Sat'){
+
+                                    contenidoEdit += `
+                                            <td>${customField.value}</td>
+                                    `;
+                                }
+
+                                if(customField.label == 'NombreSAT'){
+
+                                    contenidoEdit += `
+                                            <td>${customField.value}</td>
+                                    `;
+                                }
+
+                                if(customField.label == 'Clave de Producto o Servicio'){
+
+                                    contenidoEdit += `
+                                            <td>${customField.value}</td>
+                                    `;
+                                }
+
+                            });
+                            
+                        }
+                        const descuento = valor.discount.toString();
+                        const descuentoNum = descuento.replace('%', '');
+                        //console.log(descuentoNum);
+                        contenidoEdit += `
+                                <td>
+                                    <input type="number" class="form-control cantidadItem" value="${valor.quantity}">
+                                </td>
+                                <td>${valor.rate}</td>
+                                <td>
+                                    <input type="number" class="form-control discount" value="${descuentoNum}">
+                                </td>
+                                <td>${valor.tax_name} [${valor.tax_percentage}]</td>
+                                <td>${valor.item_total}</td>
+                            </tr>
+                        `;
+                        
+                    }
                     
-                    contenidoEdit += `
-                        <tr data-indice=${clave} class="small">
-                            <td> ${valor.name}</td>
-                            <td>${valor.custom_field_hash.cf_codigo_sat}</td>
-                            <td>${valor.custom_field_hash.cf_nombresat}</td>
-                            <td>${valor.custom_field_hash.cf_clave_de_producto_o_servici}</td>
-                            <td>
-                                <input type="number" class="form-control cantidadItem" value="${valor.quantity}" data-cabecera=${indice} data-item=${clave} data-rate="${valor.rate}" value="1">
-                            </td>
-                            <td>
-                                $${valor.pricebook_rate.toFixed(2)}
-                            </td>
-                            <td class="d-flex">
-                                <input type="number" class="form-control discount" value="${valor.discount_amount}" data-cabecera=${indice} data-item=${clave}>
-                                <select  class="form-control typeDiscount" value="${valor.discount_amount}" data-cabecera=${indice} data-item=${clave}>
-                                    <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? "selected" : "" : ''} value="%">%</option>
-                                    <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? '' : 'selected' : ''} value="MXN">MXN</option>
-                                </select>
-                            </td>
-                            <td>${valor.tax_name+' - '+valor.tax_percentage+'%'}<br>$${valor.impuesto}</td>
-                            <td>$${valor.item_total.toFixed(2)}</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm btnQuitar" data-cabecera=${indice} data-item=${clave}>X</button>
-                            </td>
-                       </tr>
-                    `;
-    
-                });
-    
-            });
+                    //console.log("\n"); // Salto de línea para separar las entradas
+                }
+
+            }
             
 
-        }else{
-
-            contenidoEdit = `
-                <tr>
-                    <td colspan="10">
-                        <h5 class="text-center">Sin artículos EDITAR</h5>
-                    </td>
-                </tr>
-            `;
+        //}else{
             
-        }
+        //}
 
         $('#contenidoEdit').html(contenidoEdit);
 
