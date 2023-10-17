@@ -140,27 +140,30 @@ function cotizacion(ruta,opp){
         //console.log(respuesta.articulos);
 
         //if(respuesta.articulos.length > 0){
+            $.each(respuesta.articulos, function(items){
 
-            for (const clave in respuesta.articulos) {
+                if(respuesta.articulos.hasOwnProperty(items)){
+                    //console.log(`Clave principal: ${items}`);
+                    contenidoEdit += `
+                        <tr>
+                            <td colspan="9">
+                                <input type="text" class="form-control inputHeader" value="${items}">
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm btnQuitarHeader">X</button>
+                            </td>
+                        </tr>
+                    `;
 
-                if (respuesta.articulos.hasOwnProperty(clave)) {
-                    //console.log(`Clave principal: ${clave}`);
-                        contenidoEdit += `
-                            <tr>
-                                <td colspan="9">
-                                    <input type="text" class="form-control inputHeader" value="${clave}">
-                                </td>
-                            </tr>
-                        `;
-                    const valores = respuesta.articulos[clave];
-                    //console.log("Valores dentro de la clave principal:");
-                    for (const valor of valores) {
-                        //const name = valor.name;
-                        //console.log(`Name: ${name}`);
+                    const valores = respuesta.articulos[items];
+
+                    $.each(valores, function(clave,valor){
+                        
                         contenidoEdit += `
                             <tr class="small">
                                 <td>${valor.name}</td>
                         `;
+
                         if(Array.isArray(valor.item_custom_fields)){
 
                             valor.item_custom_fields.forEach(customField => {
@@ -190,6 +193,7 @@ function cotizacion(ruta,opp){
                             });
                             
                         }
+
                         const descuento = valor.discount.toString();
                         const descuentoNum = descuento.replace('%', '');
                         //console.log(descuentoNum);
@@ -203,17 +207,16 @@ function cotizacion(ruta,opp){
                                 </td>
                                 <td>${valor.tax_name} [${valor.tax_percentage}]</td>
                                 <td>${valor.item_total}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm btnQuitar"}>X</button>
+                                </td>
                             </tr>
                         `;
-                        
-                    }
-                    
-                    //console.log("\n"); // Salto de línea para separar las entradas
+
+                    });
                 }
 
-            }
-            
-
+            });
         //}else{
             
         //}
