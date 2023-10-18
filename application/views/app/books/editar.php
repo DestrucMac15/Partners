@@ -140,7 +140,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="contenidoEdit">
+                        <tbody id="contenido">
 
                         </tbody>
                     </table>
@@ -151,7 +151,7 @@
                 <div class="col-md-4 offset-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <ul class="list-group" id="tabuladorEdit">
+                            <ul class="list-group" id="tabulador">
                             </ul>
                         </div>
                     </div>
