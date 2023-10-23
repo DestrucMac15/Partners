@@ -163,7 +163,7 @@ class Books extends CI_Controller{
              
                 if($key == 0){
 
-                    $this->addHeader($item['header_name'],$item['header_id']);
+                    $this->viewHeader($item['header_name'],$item['header_id']);
 
                 }
 
@@ -173,7 +173,7 @@ class Books extends CI_Controller{
 
                 }else{
 
-                    $this->addHeader($item['header_name'],$item['header_id']);
+                    $this->viewHeader($item['header_name'],$item['header_id']);
                     $this->editItem($item);
 
                 }
@@ -209,19 +209,25 @@ class Books extends CI_Controller{
 
             $indice --;
 
-            $item['item']['quantity'] = $data['quantity'];
-            $item['item']['descuento'] = $data['quantity'];
-            $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['quantity']   = $data['quantity'];
+            $item['item']['discount_amount']  = strval($data['discount']);
+            $item['item']['discount']   = strval($data['discount']);
+            //$item['item']['impuesto']   = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['impuesto']   = $data['rate'] * ($data['tax_percentage']/100);
             $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
+            //$item['item']['item_total'] = $data['rate'] + $data['impuesto'];
 
             $_SESSION['book']['articulos'][$indice]['items'][] = $item['item'];
             
         }else{
 
-            $item['item']['quantity'] = $data['quantity'];
-
-            $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['quantity']   = $data['quantity'];
+            $item['item']['discount_amount']  = strval($data['discount']);
+            $item['item']['discount']   = strval($data['discount']);
+            //$item['item']['impuesto']   = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
+            $item['item']['impuesto']   = $data['rate'] * ($data['tax_percentage']/100);
             $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
+            //$item['item']['item_total'] = $data['rate'] + $data['impuesto'];
             
             $_SESSION['book']['articulos'][0]['items'][] = $item['item'];
 
@@ -231,11 +237,9 @@ class Books extends CI_Controller{
 
     }
 
-    public function addItem($id=''){
+    public function addItem(){
 
-        if(empty($id)){
-            $id = $this->input->post('item');
-        }
+        $id = $this->input->post('item');
 
         $token = comprobarToken();
 
@@ -258,9 +262,9 @@ class Books extends CI_Controller{
             $item['item']['quantity'] = 1;
 
             $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
-            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
+            $item['item']['item_total'] = ($item['item']['quantity'] * $item['item']['rate']) + $item['item']['impuesto'];
             
-            //$_SESSION['book']['articulos'][0]['header'] = 'Nueva Cabecera';
+            $_SESSION['book']['articulos'][0]['header'] = 'Nueva Cabecera';
 
             $_SESSION['book']['articulos'][0]['items'][] = $item['item'];
 
@@ -268,18 +272,26 @@ class Books extends CI_Controller{
 
         $this->createTabulador();
 
-        //echo json_encode($_SESSION['book']);
+        echo json_encode($_SESSION['book']);
 
     }
 
-    public function addHeader($nombre,$id){
+    public function addHeader(){
+
+        $indice = count($_SESSION['book']['articulos']);
+
+        $_SESSION['book']['articulos'][$indice]['header'] = 'Nueva Cabecera';
+
+        echo json_encode($_SESSION['book']);
+
+    }
+
+    public function viewHeader($nombre,$id){
 
         $indice = count($_SESSION['book']['articulos']);
 
         $_SESSION['book']['articulos'][$indice]['header'] = $nombre;
         $_SESSION['book']['articulos'][$indice]['id'] = $id;
-
-        //echo json_encode($_SESSION['book']);
 
     }
 
