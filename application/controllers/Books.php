@@ -566,8 +566,98 @@ class Books extends CI_Controller{
 
     public function edit(){
 
+        $dataSessions = $_SESSION['book'];
         $token = comprobarToken();
-        //$book = $this->Books_model->upd_estimates($token,json_encode($data_save),$id);
+
+        $tabulador = $_SESSION['book']['tabulador'];
+        $tabulador['subtotal'];
+
+        $envio           = $tabulador['envio'];
+        $nombre_impuesto = $tabulador['nombre_impuesto'];
+        $impuesto        = $tabulador['impuesto'];
+
+        $articulosB = array();
+        $order = 0;
+
+        foreach($dataSessions['articulos'] as $cabecera){
+
+            $header = $cabecera['header'];
+            // Accede a los valores dentro de "items" en cada artículo
+            foreach($cabecera['items'] as $item){
+                $articulosB[] = array(
+                    'header_name'  => $header,
+                    'item_id' => $item['item_id'],
+                    'name'    => $item['name'],
+                    'sku'     => $item['sku'],
+                    'unit'    => $item['unit'],
+                    'description' => $item['description'],
+                    'tax_name'    => $item['tax_name'],
+                    'tax_percentage'    => $item['tax_percentage'],
+                    'tax_type'          => $item['tax_type'],
+                    'purchase_tax_id'   => $item['purchase_tax_id'],
+                    'purchase_tax_name' => $item['purchase_tax_name'],
+                    'discount'        => isset($item['discount']) ? $item['discount'] : '',//Descuento aplicado a la factura. Puede ser en % o en cantidad
+                    'discount_amount' => isset($item['discount_amount']) ? $item['discount_amount'] : '',
+                    'is_default_tax_applied'  => $item['is_default_tax_applied'],
+                    'purchase_tax_percentage' => $item['purchase_tax_percentage'],
+                    'purchase_tax_type'       => $item['purchase_tax_type'],
+                    'associated_template_id'  => $item['associated_template_id']
+                );
+
+                $item_id = $item['item_id'];
+                $tax_id  = $item['tax_id'];
+                $name    = $item['name'];
+                $rate    = $item['rate'];
+                $unit    = $item['unit'];
+                $cf_nombresat = $item['custom_field_hash']['cf_nombresat'];
+                $quantity     = $item['quantity'];
+                $order++;
+
+            }
+              
+        }
+
+        $custom_fields = array(
+            'api_name' => 'cf_descripci_n_del_proyecto',
+            'value'    => $this->input->post('descripcionProyecto')
+        );
+
+        $data_save = array(
+            'reference_number'  => $this->input->post('numeroReferencia'),//Estimaciones de búsqueda por número de referencia
+            'date'          => $this->input->post('fechaPresupuesto'),
+            'expiry_date'   => $this->input->post('fechaVencimiento'), //FECHA DE EXPIRACION DE LA COTIZACION
+            //'salesperson_name' => 'Nacir Coronado',//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
+            'custom_fields'   => array($custom_fields),//Campos personalizados para un presupuesto
+            'line_items'      => $articulosB,// ARRAY DE LOS PRODUCTOS
+            'subject_content' => $this->input->post('asunto'),
+            'notes' => $this->input->post('notasCliente'),//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
+            'terms' => $this->input->post('terminosCondiciones'),
+            'adjustment'             => $impuesto,
+            'adjustment_description' => $nombre_impuesto,
+            'item_id' => $item_id,
+            'name'    => $name,//El nombre del elemento de línea
+            'description' => $cf_nombresat,
+            'rate' => $rate,
+            'unit' => $unit,
+            'shipping_charge' => $envio,
+            'quantity' => $quantity,//La cantidad de línea de pedido
+        );
+        var_dump($this->input->post('notasCliente'));
+        //echo json_encode($data_save);
+        die();
+
+        //$editBook = $this->Books_model->upd_estimates($token,json_encode($data_save),$this->input->post('estimate'));
+       
+        if($editBook['code'] == 0){
+
+            echo json_encode(array('estatus' => true, 'mensaje' => 'Se creo correctamente.'));
+
+        }else{
+
+            echo json_encode(array('estatus' => true, 'mensaje' => $editBook['message']));
+
+        }
+
     }
 
 

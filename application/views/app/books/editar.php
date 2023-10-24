@@ -14,7 +14,7 @@
             <hr>
             <form id="formEstimatesEdit" action="" class="was-validated">
                 <div class="row my-5">
-                    <div class="col-md-6">
+                    <div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Estimate</label>
                             <input type="text" id="estimate_id" class="form-control" value="<?= $id_estimate; ?>" name="estimate" readonly>
@@ -194,7 +194,7 @@
             </form>
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-success" type="submit" form="formEstimateEdit">Guardar</button>
+                    <button class="btn btn-success" type="submit" form="formEstimatesEdit">Guardar</button>
                 </div>
             </div>
         </div>

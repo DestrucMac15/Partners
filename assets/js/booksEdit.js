@@ -5,11 +5,18 @@ $(document).ready(function(){
     $('#buscador').select2();
 
     /*=====EDITAR PRESUPUESTO=======*/
-    $('#formEstimateEdit').on('submit',function(event){
+    $('#formEstimatesEdit').on('submit',function(event){
 
         event.preventDefault();
 
         let data = new FormData(this);
+        let emails = new FormData(document.getElementById("footerForm"));
+
+        // Obtienes las entradas del formulario X para meterlos al fomulario Y.
+        for (let [key, value] of emails.entries()) {
+            data.append(key, value);
+        }
+
         let boton = $(this).find(':submit');
         boton.text('Enviando..');
         boton.prop('disabled', true);
@@ -137,6 +144,7 @@ function cotizacion(ruta,opp){
         dataType: 'JSON',
         data:{opp:opp}
     }).done(function(respuesta){
+
         console.log(respuesta.articulos);
 
         if(respuesta.articulos.length > 0){
