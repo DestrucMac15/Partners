@@ -215,4 +215,32 @@
             return json_decode($response,true);
         }
 
+        public function sendMail($token,$id,$correos){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://www.zohoapis.com/books/v3/estimates/'.$id.'/email?organization_id=737962647',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS =>'{
+                    "send_from_org_email_id": false,
+                    "to_mail_ids": ['.$correos.'],
+                    "cc_mail_ids": [
+                        "otonielex77c@gmail.com"
+                    ]
+                }',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Zoho-oauthtoken '.$token,
+                    'content-type: application/json'
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return json_decode($response,true);
+        }
+
     }

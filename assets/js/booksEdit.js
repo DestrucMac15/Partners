@@ -88,8 +88,98 @@ $(document).ready(function(){
             ]
         });
 
+    });
+
+    /*=====ENVIAR CORREO=======*/
+    $('#sendMail').on('click',function(event){
         
-    
+        event.preventDefault();
+
+        //let data = new FormData(this);
+        let mails = [];
+        $('.email').each(function(){
+            mails.push($(this).data('email'));
+        });
+
+        let data = new FormData(document.getElementById("formEstimatesEdit"));
+        let emails = new FormData(document.getElementById("footerForm"));
+
+        // Obtienes las entradas del formulario X para meterlos al fomulario Y.
+        for (let [key, value] of emails.entries()) {
+            data.append(key, value);
+        }
+
+        data.append('correos',mails);
+
+        let boton = $(this).find(':submit');
+        boton.text('Enviando..');
+        boton.prop('disabled', true);
+
+        iziToast.success({
+            timeout: 5000,
+            overlay: true,
+            displayMode: 'once',
+            id: 'inputs',
+            zindex: 999,
+            title: 'Atención!',
+            message: '¿Estás seguro de enviar la cotización?',
+            position: 'topRight',
+            drag: false,
+            buttons: [
+                ['<button>Guardar</button>', function (instance, toast){
+
+                    $.ajax({
+                        url: ruta+'Books/sendMailContacts',
+                        dataType: 'JSON',
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST'
+                    }).done(function(respuesta){
+                            
+                            if(respuesta.estatus){
+
+                                iziToast.success({
+                                    timeout: 3000,
+                                    overlay: true,
+                                    displayMode: 'once',
+                                    id: 'inputs',
+                                    zindex: 999,
+                                    title: 'Correcto!',
+                                    message: respuesta.mensaje,
+                                    position: 'topRight',
+                                    drag: false
+                                });
+
+                                /*setInterval(function(){
+                                    location.href = ruta+"books/?opp="+opp_id;
+                                },1500);*/
+
+                            }else{
+
+                                iziToast.error({
+                                    title: 'Alerta!',
+                                    message: respuesta.mensaje,
+                                    position: 'topRight',
+                                });
+
+                            }
+
+                    }).always(function(){
+                        boton.prop('disabled', false);
+                        boton.text('Guardar');
+                    });
+                }, true],
+                ['<button>Cancelar</button>', function (instance, toast) {
+
+                    iziToast.hide({
+                        transitionOut: 'fadeOutUp'
+                    }, toast);
+                    
+                }, true],
+            ]
+        });
 
     });
 
@@ -151,7 +241,6 @@ function cotizacion(ruta,opp){
 
             $.each(respuesta.articulos, function(indice, items){
 
-
                 contenido += `
                     <tr>
                         <td colspan="9">
@@ -163,11 +252,19 @@ function cotizacion(ruta,opp){
                     </tr>
                 `;
 
+                contenido += `
+                    <tr hidden>
+                        <td colspan="9">
+                            <input type="text" class="form-control" value="${items.id}">
+                        </td>
+                    </tr>
+                `;
+
                 $.each(items.items, function(clave, valor){
                     
                     contenido += `
                         <tr data-indice=${clave} class="small">
-                            <td> ${valor.name}</td>
+                            <td>${valor.name}</td>
                             <td>${valor.custom_field_hash.cf_codigo_sat}</td>
                             <td>${valor.custom_field_hash.cf_nombresat}</td>
                             <td>${valor.custom_field_hash.cf_clave_de_producto_o_servici}</td>
@@ -189,7 +286,7 @@ function cotizacion(ruta,opp){
                             <td>
                                 <button class="btn btn-danger btn-sm btnQuitar" data-cabecera=${indice} data-item=${clave}>X</button>
                             </td>
-                       </tr>
+                        </tr>
                     `;
     
                 });

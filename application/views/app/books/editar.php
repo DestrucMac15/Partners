@@ -168,16 +168,25 @@
                             </div> 
                             <p class="font-weight-bold">Enviar por correo eletrónico</p>
                             <?php 
-                                foreach($estimate['contact_persons_details'] as $data){ 
+                                function compararMail($contact_person_id,$estimate){
+                                    foreach($estimate as $contactMail){
+                                        if($contact_person_id == $contactMail){
+                                            return true;
+                                        }
+                                    }
+                                }
+                                foreach($estimate['contact_persons_details'] as $data){
+                                    if(!empty($data['email'])){
                             ?>
                                 <div class="form-group form-check">
                                     <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="<?= $data['contact_person_id']; ?>" name="emailContactoPerson[]"> <?= $data['email']; ?>
-                                    </label>
+                                                <input class="form-check-input email" <?= (compararMail($data['contact_person_id'],$estimate['contact_persons'])) ? 'checked' : ''; ?> type="checkbox" value="<?= $data['contact_person_id']; ?>" name="emailContactoPerson[]" data-email="<?= $data['email']; ?>"> <?= $data['email']; ?>
+                                        </label>
                                 </div>
                             <?php 
+                                    } 
                                 } 
-                            ?>    
+                            ?>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -195,6 +204,7 @@
             <div class="row">
                 <div class="col-md-12 text-right">
                     <button class="btn btn-success" type="submit" form="formEstimatesEdit">Guardar</button>
+                    <button class="btn btn-success" id="sendMail" type="submit">Enviar</button>
                 </div>
             </div>
         </div>
@@ -202,4 +212,3 @@
 </div>
 
 <?= $this->template->javascript->add(base_url().'assets/js/booksEdit.js'); ?> 
-
