@@ -254,8 +254,9 @@ class Books extends CI_Controller{
             $indice --;
 
             $item['item']['quantity'] = 1;
+
             $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
-            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
+            $item['item']['item_total'] = ($item['item']['rate'] * $item['item']['quantity']) + $item['item']['impuesto'];
 
             $_SESSION['book']['articulos'][$indice]['items'][] = $item['item'];
             
@@ -264,7 +265,7 @@ class Books extends CI_Controller{
             $item['item']['quantity'] = 1;
 
             $item['item']['impuesto'] = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
-            $item['item']['item_total'] = ($item['item']['quantity'] * $item['item']['rate']) + $item['item']['impuesto'];
+            $item['item']['item_total'] = ($item['item']['rate'] * $item['item']['quantity']) + $item['item']['impuesto'];
             
             $_SESSION['book']['articulos'][0]['header'] = 'Nueva Cabecera';
 
@@ -330,7 +331,8 @@ class Books extends CI_Controller{
 
                 foreach($articulo['items'] as $item){
 
-                    $subtotal += $item['item_total'];
+                    //$subtotal += $item['item_total'];
+                    $subtotal = $subtotal + $item['item_total'] + $item['impuesto'];
 
                 }
 
@@ -370,9 +372,9 @@ class Books extends CI_Controller{
 
             $total = $subtotal - (($descuento / 100) * $subtotal);
 
-            $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount'] = $descuento / 100;
+            $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount'] = $descuento;
 
-            $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'] = strval($descuento / 100).'%';
+            $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'] = strval($descuento).'%';
 
         }
         if($TipoDescuento == 'MXN'){
@@ -382,7 +384,7 @@ class Books extends CI_Controller{
             $total = $subtotal - $descuento;
 
             $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'] = $descuento;
-
+            
             $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount'] = $descuento;
 
         }
@@ -408,7 +410,12 @@ class Books extends CI_Controller{
 
             if(str_contains($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'],'%')){
 
-                $item_total *= $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount'];
+                //$item_total *= $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount'];
+                $descuento = $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount']/100);
+
+                $item_total = $item_total - $descuento;
+
+                //echo $descuento;
 
             }else{
 
@@ -416,16 +423,18 @@ class Books extends CI_Controller{
 
             }
 
+            $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
+            //$total_impuestosFila = $item_total + $imp;
+
         }
 
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['quantity'] = $cantidad;
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['item_total'] = $item_total;
-
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['impuesto'] = $imp;
 
         $this->createTabulador();
 
         echo json_encode($_SESSION['book']);
-
 
     }
 
@@ -551,9 +560,11 @@ class Books extends CI_Controller{
             'shipping_charge' => $envio,
             'quantity' => $quantity,//La cantidad de línea de pedido
         );
-        echo json_encode($data_save);
-        die();
+        //echo json_encode($data_save);
+        //die();
+
         $book = $this->Books_model->create_estimates($token,json_encode($data_save));
+        
         if($book['code'] == 0){
 
             echo json_encode(array('estatus' => true, 'mensaje' => 'Se creo correctamente.'));
@@ -675,8 +686,8 @@ class Books extends CI_Controller{
             'shipping_charge' => $envio,
             //'quantity' => $quantity,//La cantidad de línea de pedido
         );
-        echo json_encode($data_save);
-        die();
+        //echo json_encode($data_save);
+        //die();
 
         $editBook = $this->Books_model->upd_estimates($token,json_encode($data_save),$this->input->post('estimate'));
        
