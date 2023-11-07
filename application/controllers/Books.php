@@ -44,6 +44,8 @@ class Books extends CI_Controller{
 
     public function nuevo($id){
 
+        $this->session->unset_userdata('book');
+
         if($this->session->userdata('is_logged')){
 
             $this->template->title = 'Crear Books';
@@ -79,6 +81,8 @@ class Books extends CI_Controller{
     }
 
     public function editar($id){
+
+        $this->session->unset_userdata('book');
 
         if($this->session->userdata('is_logged')){
 
@@ -211,12 +215,23 @@ class Books extends CI_Controller{
 
             $item['item']['line_item_id']   = $data['line_item_id'];
             $item['item']['quantity']   = $data['quantity'];
-            $item['item']['discount_amount']  = strval($data['discount']);
+            $item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
             $item['item']['discount']   = strval($data['discount']);
-            //$item['item']['impuesto']   = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
-            $item['item']['impuesto']   = $data['rate'] * ($data['tax_percentage']/100);
-            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
-            //$item['item']['item_total'] = $data['rate'] + $data['impuesto'];
+            /** CALCULO */
+
+            if(str_contains($item['item']['discount'],'%')){
+                $sub_discount = ($data['rate'] * $item['item']['quantity']) * ($item['item']['discount_amount']/100);
+            }else{
+                $sub_discount = $item['item']['discount_amount'];
+            }
+            
+            $total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
+
+            $sub_impuesto = $total_discount * ($data['tax_percentage']/100);
+            $total_impuesto = $total_discount + $sub_impuesto;
+
+            $item['item']['impuesto']   = $sub_impuesto;
+            $item['item']['item_total'] = $total_impuesto;
 
             $_SESSION['book']['articulos'][$indice]['items'][] = $item['item'];
             
@@ -224,12 +239,24 @@ class Books extends CI_Controller{
 
             $item['item']['line_item_id']   = $data['line_item_id'];
             $item['item']['quantity']   = $data['quantity'];
-            $item['item']['discount_amount']  = strval($data['discount']);
+            $item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
             $item['item']['discount']   = strval($data['discount']);
-            //$item['item']['impuesto']   = $item['item']['rate'] * ($item['item']['tax_percentage']/100);
-            $item['item']['impuesto']   = $data['rate'] * ($data['tax_percentage']/100);
-            $item['item']['item_total'] = $item['item']['rate'] + $item['item']['impuesto'];
-            //$item['item']['item_total'] = $data['rate'] + $data['impuesto'];
+            /** CALCULO */
+
+            if(str_contains($item['item']['discount'],'%')){
+                $sub_discount = ($data['rate'] * $item['item']['quantity']) * ($item['item']['discount_amount']/100);
+            }else{
+                $sub_discount = $item['item']['discount_amount'];
+            }
+
+            
+            $total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
+
+            $sub_impuesto = $total_discount * ($data['tax_percentage']/100);
+            $total_impuesto = $total_discount + $sub_impuesto;
+
+            $item['item']['impuesto']   = $sub_impuesto;
+            $item['item']['item_total'] = $total_impuesto;
             
             $_SESSION['book']['articulos'][0]['items'][] = $item['item'];
 
@@ -331,8 +358,8 @@ class Books extends CI_Controller{
 
                 foreach($articulo['items'] as $item){
 
-                    //$subtotal += $item['item_total'];
-                    $subtotal = $subtotal + $item['item_total'] + $item['impuesto'];
+                    $subtotal += $item['item_total'];
+                    //$subtotal = $subtotal + $item['item_total'] + $item['impuesto'];
 
                 }
 
@@ -369,8 +396,12 @@ class Books extends CI_Controller{
         if($TipoDescuento == '%'){
 
             $subtotal = $_SESSION['book']['articulos'][$cabecera]['items'][$item]['rate'] * $_SESSION['book']['articulos'][$cabecera]['items'][$item]['quantity'];
-
+            
             $total = $subtotal - (($descuento / 100) * $subtotal);
+
+            $imp =  $total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
+
+            $total = $total + $imp;
 
             $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount'] = $descuento;
 
@@ -383,6 +414,10 @@ class Books extends CI_Controller{
 
             $total = $subtotal - $descuento;
 
+            $imp =  $total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
+
+            $total = $total + $imp;
+
             $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'] = $descuento;
             
             $_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount_amount'] = $descuento;
@@ -390,6 +425,7 @@ class Books extends CI_Controller{
         }
 
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['item_total'] = $total;
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['impuesto'] = $imp;
 
         $this->createTabulador();
 
@@ -424,7 +460,7 @@ class Books extends CI_Controller{
             }
 
             $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
-            //$total_impuestosFila = $item_total + $imp;
+            $item_total = $item_total + $imp;
 
         }
 

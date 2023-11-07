@@ -97,4 +97,20 @@ class Login extends CI_Controller {
 
     }
 
+    public function reset($email=''){
+
+        $this->template->title = 'Login';
+
+        $this->template->set_template('templates/template_login');
+
+        $data = array(
+            'correo' => $email
+        );
+
+		$this->template->content->view('reset', $data);
+
+        $this->template->publish();
+
+    }
+
 }
