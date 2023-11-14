@@ -113,4 +113,52 @@ class Login extends CI_Controller {
 
     }
 
+    public function create_password(){
+
+        $correo = $this->input->post('correo');
+        $password = $this->input->post('password1');
+        $password2 = $this->input->post('password2');
+
+        $token = comprobarToken();
+
+        if($password == $password2){
+
+            if(empty($res = $this->Partners_model->get_email($token, $correo)['data'][0])){
+
+                $this->output->set_status_header(402);
+                echo json_encode('No se encontro un correo valido!');
+
+            }else{
+
+                $this->output->set_status_header(200);
+
+                $data = $this->Partners_model->upd_password($token,$res['id'],$password)['data'][0];
+                echo $data['code'];
+                //$this->session->set_userdata($data);
+
+                if($data['code'] == "SUCCESS"){
+
+                    $this->output->set_status_header(200);
+
+                    echo json_encode('Correcto, bienvenido!');
+
+                }else{
+
+                    $this->output->set_status_header(402);
+                    echo json_encode('Error, No se puede actualizar!');
+
+                }
+                
+
+            }
+
+        }else{
+
+            $this->output->set_status_header(402);
+
+            echo json_encode('Error, Las contraseñas no son iguales');
+
+        }
+    }
+
 }
