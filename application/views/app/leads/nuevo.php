@@ -192,7 +192,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Cantidad de empleados</label>
-                    <input type="text" class="form-control" name="empleados" required>
+                    <input type="number" class="form-control" name="empleados" min="0" required>
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
                 <div class="form-group">

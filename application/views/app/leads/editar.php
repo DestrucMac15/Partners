@@ -166,7 +166,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Sitio web</label>
-                    <input type="url" class="form-control" name="website" value="<?= !empty($lead['Website']) ? $lead['Website'] : ''; ?>">
+                    <input type="text" class="form-control" name="website" value="<?= !empty($lead['Website']) ? $lead['Website'] : ''; ?>">
                 </div>
                 <div class="form-group">
                     <label for="">Fax</label>
@@ -196,7 +196,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Cantidad de empleados</label>
-                    <input type="number" class="form-control" name="empleados" value="<?= !empty($lead['No_of_Employees']) ? $lead['No_of_Employees'] : ''; ?>">
+                    <input type="number" class="form-control" name="empleados" min="0" value="<?= isset($lead['No_of_Employees']) ? $lead['No_of_Employees'] : ''; ?>">
                 </div>
                 <div class="form-group">
                     <label for="">Calificación</label>

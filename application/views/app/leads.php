@@ -20,6 +20,8 @@
                 <thead>
                     <tr>
                         <th class="text-center">Nombre</th>
+                        <th class="text-center">Correo</th>
+                        <th class="text-center">Telefono</th>
                         <th class="text-center">Empresa</th>
                         <th>Acciones</th>
                     </tr>
@@ -31,6 +33,8 @@
                     ?>
                                 <tr>
                                     <td><?= $lead['Full_Name']; ?></td>
+                                    <td><?= $lead['Email']; ?></td>
+                                    <td><?= $lead['Phone']; ?></td>
                                     <td><?= $lead['Company']; ?></td>
                                     <td>
                                         <div class="btn-group">

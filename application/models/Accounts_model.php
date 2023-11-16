@@ -61,7 +61,7 @@
             return json_decode($response,true);
         }
 
-        public function upd_accountData($token,$data,$id){
+        public function upd_accountData($token,$id,$data){
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Accounts/'.$id,

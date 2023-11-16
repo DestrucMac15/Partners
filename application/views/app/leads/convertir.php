@@ -15,7 +15,34 @@
         <div class="col-md-12">
             <?php 
                 //Cuando tiene una o más cuentas
-                if(!empty($accounts)){
+                if($type == "both" OR $type == "email" ){
+            ?>
+            <h4>Convertir Lead <span class="small text-secondary">(<?= $lead['Full_Name'].' - '.$lead['Company']; ?> )</span></h4>
+            <hr>
+            <p>
+                Ya existe un Contacto con detalles similares en <b>Correo electrónico</b>
+            </p>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input optAdd" name="optConvert">Agregar a Contacto existente <a href="" class="showAdd">Ver</a>
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input optCreate" name="optConvert">Crear nuevo Contacto: <span class="badge badge-secondary"><?= $lead['Company']; ?></span>(Deshabilitado. Su organización he elegido no crear duplicados.)
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input optCreate" name="optConvert">Cree una nueva Oportunidad para esta Cuenta:
+                </label>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-outline-success">Convertir</button>
+            <a href="<?php echo base_url(); ?>leads" class="btn btn-outline-secondary">Regresar</a>
+            <?php 
+                //Cuando tiene una o más cuentas
+                }elseif($type == "company"){
             ?>
             <h4>Convertir Lead <span class="small text-secondary">(<?= $lead['Full_Name'].' - '.$lead['Company']; ?> )</span></h4>
             <hr>

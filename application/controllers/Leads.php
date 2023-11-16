@@ -7,7 +7,7 @@ class Leads extends CI_Controller{
         parent::__construct();
 
         $this->load->library(array('session'));
-        $this->load->model(array('Leads_model','Accounts_model'));
+        $this->load->model(array('Leads_model','Accounts_model','Contacts_model'));
         $this->load->helper(array('zoho_refresh/refresh_token','users/users'));
 
     }
@@ -101,16 +101,40 @@ class Leads extends CI_Controller{
             $lead = $this->Leads_model->get_lead($token,$id)['data'][0];
 
             $company_name = urlencode($lead['Company']);
+            $email = urlencode($lead['Email']);
 
-            if(empty($accounts = $this->Accounts_model->get_accountName($token,$company_name))){
+            /*if(empty($accounts = $this->Accounts_model->get_accountName($token,$company_name)) or empty($accounts = $this->Contacts_model->gat_contactEmail($token,$email))){
 
                $accounts = ''; 
                
-            }
-            var_dump($accounts);
+            }*/
+
+            if(!empty($accounts = $this->Accounts_model->get_accountName($token,$company_name)) AND !empty($contacts = $this->Contacts_model->gat_contactEmail($token,$email))){
+                
+                $type = "both";
+
+           }elseif(!empty($accounts = $this->Accounts_model->get_accountName($token,$company_name))){
+
+                $type = "company";
+
+           }elseif (!empty($contacts = $this->Contacts_model->gat_contactEmail($token,$email))) {
+
+                $type = "email";
+
+           }else{
+
+                $type = "nuevo";
+                $contacts = '';
+                $accounts = '';
+
+           }
+
+            //var_dump($id);
 
             $data = array(
+                'type' => $type,
                 'lead' => $lead,
+                'contacts' => $contacts,
                 'accounts' => $accounts
             );
 
@@ -129,7 +153,7 @@ class Leads extends CI_Controller{
     public function save(){
 
         $data = array(
-            "Owner" => array("id" => 4768126000000300001),
+            'Owner' => array('id' => 4768126000000300001),
             'Nombre_de_partner' => $this->input->post('nombre_partner'),
             'First_Name' => $this->input->post('nombre'),
             'Phone' => $this->input->post('telefono'),
@@ -326,8 +350,21 @@ class Leads extends CI_Controller{
 
         $token = comprobarToken();
 
-        $lead = $this->Leads_model->convert_lead($token, json_decode($encode_data), $this->input->post('id'))['data'][0];
-        sleep(3);
+        $lead = "";
+
+        while (empty($lead)) {
+
+            $lead_resut = $this->Leads_model->convert_lead($token, json_decode($encode_data), $this->input->post('id'))['data'][0];
+
+            if(isset($lead_resut)){
+
+                $lead = $lead_resut;
+
+            }
+
+            sleep(3);
+        }
+        var_dump($lead);
         /**UPD Accounts*/
         $data_account = array(
             'Partner' => $this->session->userdata('id_company'),
@@ -336,7 +373,6 @@ class Leads extends CI_Controller{
 
         $json_account = '{"data":['.json_encode($data_account).']}';
         $encode_dataAcoount = json_encode($json_account);
-        
 
         $account = $this->Accounts_model->upd_accountData($token,$lead['Accounts'],json_decode($encode_dataAcoount))['data'][0];
         
@@ -346,7 +382,7 @@ class Leads extends CI_Controller{
 
         }else{
 
-            echo json_encode(array('estatus' => false, 'mensaje' => 'Error en el campo: '.$account['details']['api_name']));
+            echo json_encode(array('estatus' => false, 'mensaje' => 'Error en el campo: '.$account));
 
         }
 

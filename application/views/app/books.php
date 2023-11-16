@@ -41,7 +41,7 @@
                                 <td>MXN <?= $book['total']; ?></td>
                                 <td><?= $book['expiry_date']; ?></td>
                                 <td>
-                                    <a class="dropdown-item" href="<?php echo base_url(); ?>books/editar/<?= $book['estimate_id']; ?>">Editar</a>
+                                    <a class="dropdown-item" href="<?php echo base_url(); ?>books_edit/editar/<?= $book['estimate_id']; ?>">Editar</a>
                                 </td>
                             </tr>
                     <?php 

@@ -35,7 +35,7 @@ $(document).ready(function(){
                 ['<button>Guardar</button>', function (instance, toast) {
 
                     $.ajax({
-                        url: ruta+'Books/edit',
+                        url: ruta+'Books_edit/edit',
                         dataType: 'JSON',
                         data: data,
                         cache: false,
@@ -129,7 +129,7 @@ $(document).ready(function(){
                 ['<button>Guardar</button>', function (instance, toast){
 
                     $.ajax({
-                        url: ruta+'Books/sendMailContacts',
+                        url: ruta+'Books_edit/sendMailContacts',
                         dataType: 'JSON',
                         data: data,
                         cache: false,
@@ -190,7 +190,7 @@ $(document).ready(function(){
         let item = $('#buscador').val();
 
         $.ajax({
-            url: ruta+'books/addItem',
+            url: ruta+'Books_edit/addItem',
             method: 'POST',
             dataType: 'JSON',
             data: {
@@ -211,7 +211,7 @@ $(document).ready(function(){
     $('#btn_agregarCabecera').click(function(){
 
         $.ajax({
-            url: ruta+'books/addHeader',
+            url: ruta+'Books_edit/addHeader',
             method: 'POST',
             dataType: 'JSON'
         }).done(function(respuesta){
@@ -229,7 +229,7 @@ function cotizacion(ruta,opp){
     let contenido;
 
     $.ajax({
-        url: ruta+'books/getBookEdit',
+        url: ruta+'Books_edit/getBookEdit',
         method: 'POST',
         dataType: 'JSON',
         data:{opp:opp}
@@ -327,7 +327,7 @@ function cotizacion(ruta,opp){
             let item = $(this).data('item');
 
             $.ajax({
-                url: ruta+'books/deleteItem',
+                url: ruta+'Books_edit/deleteItem',
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -348,7 +348,7 @@ function cotizacion(ruta,opp){
             let valor = $(this).val();
 
             $.ajax({
-                url: ruta+'books/editHeader',
+                url: ruta+'Books_edit/editHeader',
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -369,7 +369,7 @@ function cotizacion(ruta,opp){
             let cabecera = $(this).data('cabecera');
 
             $.ajax({
-                url: ruta+'books/deleteHeader',
+                url: ruta+'Books_edit/deleteHeader',
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -392,7 +392,7 @@ function cotizacion(ruta,opp){
             let item = $(this).data('item');
 
             $.ajax({
-                url: ruta+'books/editQuantity', 
+                url: ruta+'Books_edit/editQuantity', 
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -419,7 +419,7 @@ function cotizacion(ruta,opp){
 
 
             $.ajax({
-                url: ruta+'books/addDiscount', 
+                url: ruta+'Books_edit/addDiscount', 
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -446,7 +446,7 @@ function cotizacion(ruta,opp){
 
 
             $.ajax({
-                url: ruta+'books/addDiscount', 
+                url: ruta+'Books_edit/addDiscount', 
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -470,7 +470,7 @@ function cotizacion(ruta,opp){
             let shipment = $(this).val();
 
             $.ajax({
-                url: ruta+'books/editShipment', 
+                url: ruta+'Books_edit/editShipment', 
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -490,7 +490,7 @@ function cotizacion(ruta,opp){
             let nameTax = $(this).val();
 
             $.ajax({
-                url: ruta+'books/editNameTax', 
+                url: ruta+'Books_edit/editNameTax', 
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -510,7 +510,7 @@ function cotizacion(ruta,opp){
             let tax = $(this).val();
 
             $.ajax({
-                url: ruta+'books/editTax', 
+                url: ruta+'Books_edit/editTax', 
                 method: 'POST',
                 dataType: 'JSON',
                 data: {
