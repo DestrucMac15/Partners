@@ -9,8 +9,9 @@ $(document).ready(function(){
 
         event.preventDefault();
 
-        let data = new FormData(this);
+        let data   = new FormData(this);
         let emails = new FormData(document.getElementById("footerForm"));
+        let opp_id = $('#opp_id').val();
 
         // Obtienes las entradas del formulario X para meterlos al fomulario Y.
         for (let [key, value] of emails.entries()) {
@@ -59,9 +60,9 @@ $(document).ready(function(){
                                 });
 
                                 setInterval(function(){
-                                    location.href = ruta+"opportunities";
+                                    location.href = ruta+"books/?opp="+opp_id;
                                 },1500);
-
+                                
                             }else{
 
                                 iziToast.error({
@@ -97,12 +98,15 @@ $(document).ready(function(){
 
         //let data = new FormData(this);
         let mails = [];
+
         $('.email').each(function(){
             mails.push($(this).data('email'));
         });
 
-        let data = new FormData(document.getElementById("formEstimatesEdit"));
+        let data   = new FormData(document.getElementById("formEstimatesEdit"));
         let emails = new FormData(document.getElementById("footerForm"));
+        let opp_id = $('#opp_id').val();
+        //let opp_id = new FormData(document.getElementById("footerForm"));
 
         // Obtienes las entradas del formulario X para meterlos al fomulario Y.
         for (let [key, value] of emails.entries()) {
@@ -137,7 +141,7 @@ $(document).ready(function(){
                         processData: false,
                         type: 'POST'
                     }).done(function(respuesta){
-                            
+                            //console.log(respuesta);
                             if(respuesta.estatus){
 
                                 iziToast.success({
@@ -152,9 +156,9 @@ $(document).ready(function(){
                                     drag: false
                                 });
 
-                                /*setInterval(function(){
+                                setInterval(function(){
                                     location.href = ruta+"books/?opp="+opp_id;
-                                },1500);*/
+                                },1500);
 
                             }else{
 

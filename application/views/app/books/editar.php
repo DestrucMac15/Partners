@@ -16,6 +16,12 @@
                 <div class="row my-5">
                     <div class="col-md-6" hidden>
                         <div class="form-group">
+                            <label for="">Oportunidad</label>
+                            <input type="text" id="opp_id" class="form-control" value="<?= $id_opp; ?>" name="oportunidad" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6" hidden>
+                        <div class="form-group">
                             <label for="">Estimate</label>
                             <input type="text" id="estimate_id" class="form-control" value="<?= $id_estimate; ?>" name="estimate" readonly>
                         </div>
@@ -204,7 +210,7 @@
             <div class="row">
                 <div class="col-md-12 text-right">
                     <button class="btn btn-success" type="submit" form="formEstimatesEdit">Guardar</button>
-                    <button class="btn btn-success" id="sendMail" type="submit">Enviar</button>
+                    <button class="btn btn-success" id="sendMail" type="submit">Guardar y Enviar</button>
                 </div>
             </div>
         </div>

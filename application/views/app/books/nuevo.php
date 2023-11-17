@@ -107,7 +107,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Descripción del proyecto</label>
-                            <input type="text" name="descripcionProyecto" class="form-control">
+                            <input type="text" name="descripcionProyecto" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-md-12">

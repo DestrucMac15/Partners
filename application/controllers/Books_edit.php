@@ -613,23 +613,23 @@ class Books_edit extends CI_Controller{
     public function sendMailContacts(){
 
         //var_dump($this->input->post());
-        $result = $this->edit();
+        $this->edit();
         $token = comprobarToken();
 
         $estimate_id = $this->input->post('estimate');
         $correos = $this->input->post('correos');
         
         $enviar_correo = $this->Books_model->sendMail($token,$estimate_id,$correos);
-        //var_dump($enviar_correo);
-        if($enviar_correo['code'] == 0){
 
-            echo json_encode(array('estatus' => true, 'mensaje' => 'Se actualizo correctamente y envio la cotización.'));
+        /*if($enviar_correo['code'] == 0){
+
+            echo json_encode(array('estatusEmail' => true, 'mensaje' => 'Se actualizo correctamente y envio la cotización.'));
 
         }else{
 
-            echo json_encode(array('estatus' => true, 'mensaje' => $enviar_correo['message']));
+            echo json_encode(array('estatusEmail' => true, 'mensaje' => $enviar_correo['message']));
 
-        }
+        }*/
 
     }
 
