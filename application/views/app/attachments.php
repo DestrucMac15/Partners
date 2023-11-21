@@ -3,8 +3,13 @@
         <div class="col-md-12">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item active">Oportunidades</li>
+                <li class="breadcrumb-item active">Archivos adjuntos</li>
             </ul>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <a class="btn btn-success btn_upload" href="" data-id="<?= $_GET['opp']; ?>">Subir archivo</a>
         </div>
     </div>
     <div class="row">
@@ -12,32 +17,33 @@
             <table class="table table-bordered table-striped display responsive nowrap" id="tabla" width="100%">
                 <thead>
                     <tr>
-                        <th class="text-center">Oportunidad</th>
-                        <th class="text-center">Descripcion</th>
-                        <th>Acciones</th>
+                        <th class="text-center">Nombre del archivo</th>
+                        <th class="text-center">Adjuntado Por</th>
+                        <th class="text-center">Fecha Agregada</th>
+                        <th class="text-center">Tamaño</th>
+                        <!--<th>Acciones</th>-->
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
-                        if(!empty($opportunities)){
-                            foreach($opportunities['data'] as $info){ 
+                        if(!empty($attachments)){
+                            foreach($attachments['data'] as $info){ 
                     ?>
                             <tr>
-                                <td><?= $info['Deal_Name']; ?></td>
-                                <td><?= $info['Description']; ?></td>
-                                <td>
+                                <td><a href="<?= base_url(); ?>attachments/downloadAttachment/<?= $info['Parent_Id']['id']; ?>/<?= $info['id']; ?>" target="_blank"><i class="fas fa-file-pdf"></i> <?= $info['File_Name']; ?></a></td>
+                                <td><?= $info['Created_By']['name']; ?></td>
+                                <td><?= $info['Created_Time']; ?></td>
+                                <td><?= $info['Size']; ?></td>
+                                <!--<td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                             Acciones
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="<?php echo base_url(); ?>opportunities/editar/<?= $info['id']; ?>">Editar</a>
-                                            <a class="dropdown-item" href="<?php echo base_url(); ?>books/?opp=<?= $info['id']; ?>">Presupuestos</a>
-                                            <!--<a class="dropdown-item btn_upload" href="" data-id="">Subir Archivo</a>-->
-                                            <a class="dropdown-item" href="<?php echo base_url(); ?>attachments/?opp=<?= $info['id']; ?>">Subir Archivo</a>
+                                            <a class="dropdown-item">ver</a>
                                         </div>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                     <?php 
                             }
@@ -83,4 +89,4 @@
   </div>
 </div>
 
-<?= $this->template->javascript->add(base_url().'assets/js/opportunities.js'); ?>
+<?= $this->template->javascript->add(base_url().'assets/js/attachments.js'); ?>

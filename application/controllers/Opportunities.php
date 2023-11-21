@@ -114,7 +114,7 @@ class Opportunities extends CI_Controller{
 
     }
 
-    public function upload(){
+    /*public function upload(){
 
         if($_FILES['archivo']['type'] == 'application/pdf'){
 
@@ -138,7 +138,7 @@ class Opportunities extends CI_Controller{
 
 
 
-    }
+    }*/
 
 
 }

@@ -83,7 +83,7 @@
             return json_decode($response, true);
         }
 
-        public function post_documentFile($token, $id, $file){
+        /*public function post_documentFile($token, $id, $file){
             $curl = curl_init();
             curl_setopt_array($curl, array(
               CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Potentials/'.$id.'/Attachments',
@@ -102,5 +102,5 @@
             $response = curl_exec($curl);
             curl_close($curl);
             return json_decode($response,true);
-        }
+        }*/
     }
