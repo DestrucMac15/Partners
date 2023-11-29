@@ -9,8 +9,7 @@ $(document).ready(function(){
         let data = new FormData(this);
 
         let boton = $(this).find(':submit');
-        boton.text('Enviando..');
-        boton.prop('disabled', true);
+        
 
         iziToast.success({
             timeout: 5000,
@@ -24,6 +23,9 @@ $(document).ready(function(){
             drag: false,
             buttons: [
                 ['<button>Guardar</button>', function (instance, toast) {
+
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
 
                     $.ajax({
                         url: ruta+'opportunities/edit',

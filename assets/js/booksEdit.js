@@ -19,9 +19,7 @@ $(document).ready(function(){
         }
 
         let boton = $(this).find(':submit');
-        boton.text('Enviando..');
-        boton.prop('disabled', true);
-
+        
         iziToast.success({
             timeout: 5000,
             overlay: true,
@@ -34,6 +32,8 @@ $(document).ready(function(){
             drag: false,
             buttons: [
                 ['<button>Guardar</button>', function (instance, toast) {
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
 
                     $.ajax({
                         url: ruta+'Books_edit/edit',
@@ -116,8 +116,7 @@ $(document).ready(function(){
         data.append('correos',mails);
 
         let boton = $(this).find(':submit');
-        boton.text('Enviando..');
-        boton.prop('disabled', true);
+        
 
         iziToast.success({
             timeout: 5000,
@@ -132,6 +131,9 @@ $(document).ready(function(){
             buttons: [
                 ['<button>Guardar</button>', function (instance, toast){
 
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
+                    
                     $.ajax({
                         url: ruta+'Books_edit/sendMailContacts',
                         dataType: 'JSON',
