@@ -1,14 +1,14 @@
 $(document).ready(function(){
 
     const ruta = $('body').data('ruta');
+    var idCheckboxSeleccionadoAccount;
+    var idCheckboxSeleccionadoContact;
 
     /*=====AGREGAR LEAD======*/
     $('#formLeads').on('submit',function(event){
 
         event.preventDefault();
         let boton = $(this).find(':submit');
-        boton.text('Enviando..');
-        boton.prop('disabled', true);
 
         let data = new FormData(this);
 
@@ -24,6 +24,9 @@ $(document).ready(function(){
             drag: false,
             buttons: [
                 ['<button>Guardar</button>', function (instance, toast) {
+
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
 
                     $.ajax({
                         url: ruta+'Leads/save',
@@ -86,9 +89,6 @@ $(document).ready(function(){
             ]
         });
 
-        
-    
-
     });
 
     /*=====EDITAR lEAD=======*/
@@ -98,8 +98,6 @@ $(document).ready(function(){
 
         let data = new FormData(this);
         let boton = $(this).find(':submit');
-        boton.text('Enviando..');
-        boton.prop('disabled', true);
 
         iziToast.success({
             timeout: 5000,
@@ -113,6 +111,9 @@ $(document).ready(function(){
             drag: false,
             buttons: [
                 ['<button>Guardar</button>', function (instance, toast) {
+
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
 
                     $.ajax({
                         url: ruta+'Leads/edit',
@@ -168,18 +169,27 @@ $(document).ready(function(){
             ]
         });
 
-        
-    
-
     });
 
-    $('.optAdd').click(function(){
+    $('#optAddAccount').click(function(){
 
         $('#modalAddAccount').modal('show');
 
+        if($('.accountOpt').hasClass('d-none') == false){
+
+            $('.accountOpt').addClass('d-none');   
+
+        }
+
     });
 
-    $('.showAdd').click(function(event){
+    $('#optAddContacts').click(function(){
+
+        $('#modalAddContact').modal('show');
+
+    });
+
+    $('.showAddAccount').click(function(event){
 
         event.preventDefault();
 
@@ -187,28 +197,52 @@ $(document).ready(function(){
 
     });
 
-    $('.optCreate').click(function(){
+    $('.showAddContact').click(function(event){
+
+        event.preventDefault();
+
+        $('#modalAddContact').modal('show');
+
+    });
+
+    $('.optCreateAccount').click(function(){
 
         $('#modalCreateAccount').modal('show');
 
     });
 
-    $('.optCreateOptAccount').click(function(){
+    $('.optCreateAccount').click(function(){
 
         $('.infomation').toggleClass('d-none');
 
     });
+    
+    /*=====CONVERTIR A OPORTUNIDAD=======*/
     
     $('#formConvert').submit(function(event){
 
         event.preventDefault();
 
         let data = new FormData(this);
+        let id_account = $('#optAddAccount').data('id');
+        let id_contact = $('#optAddContacts').data('id');
+
+        if(id_account !== undefined){
+
+            data.append('id_account',id_account);
+
+        }else if(id_contact !== undefined){
+
+            data.append('id_contact',id_contact);
+
+        }else{
+
+            data.append('id_deal',"new_deal");
+
+        }
 
         let boton = $(this).find(':submit');
-        boton.text('Enviando..');
-        boton.prop('disabled', true);
-
+       
         iziToast.success({
             timeout: 5000,
             overlay: true,
@@ -222,6 +256,9 @@ $(document).ready(function(){
             buttons: [
                 ['<button>Guardar</button>', function (instance, toast) {
 
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
+
                     $.ajax({
                         url: ruta+'Leads/convert',
                         dataType: 'JSON',
@@ -232,7 +269,7 @@ $(document).ready(function(){
                         type: 'POST'
                     }).done(function(respuesta){
                             
-                            if(respuesta.estatus === true){
+                            if(respuesta.estatus){
 
                                 iziToast.success({
                                     timeout: 3000,
@@ -253,15 +290,15 @@ $(document).ready(function(){
                             }else{
 
                                 iziToast.error({
-                                    timeout: 3000,
-                                    overlay: true,
-                                    displayMode: 'once',
-                                    id: 'inputs',
-                                    zindex: 999,
+                                    //timeout: 3000,
+                                    //overlay: true,
+                                    //displayMode: 'once',
+                                    //id: 'inputs',
+                                    //zindex: 999,
                                     title: 'Atención!',
                                     message: respuesta.mensaje,
                                     position: 'topRight',
-                                    drag: false
+                                    //drag: false
                                 });
 
                             }
@@ -283,5 +320,115 @@ $(document).ready(function(){
         });
 
     });
+
+    /*=====CONVERTIR A OPORTUNIDAD CUENTA=======*/
+
+    $('#modalAddAccount').on('change', 'input[type="checkbox"]', function(){
+
+        // Marcar el checkbox seleccionado
+        //$(this).prop('checked', true);
+        // Almacenar el ID del checkbox seleccionado
+        idCheckboxSeleccionadoAccount = $(this).data('id');
+    });
+
+    $('.btnSaveModalAccount').on('click', function(){
+
+        $('#optAddAccount').attr('data-id', idCheckboxSeleccionadoAccount);
+        $('#optAddAccount').prop('checked', true);
+
+        $('#optCreateAccountNew').prop('checked', false);
+
+        /*if($('.accountOpt').hasClass('d-none') == false){
+
+            $('.accountOpt').addClass('d-none');   
+
+        }*/
+        $('.accountOpt').removeClass('d-none');
+
+        if($('#optCreateAccountOportunidad').checked ){
+            //console.log("Activo");
+            //$('#formConvert input').attr("required");
+        }else{
+            //console.log("InActivo");
+            $('#formConvert input').removeAttr("required");
+        }
+
+    });
+
+    $('#optCreateAccountNew').click(function(){
+
+        $('#optAddAccount').prop('checked', false);
+        $('#optAddAccount').attr('data-id', '');
+        // Desmarcar todos los checkboxes del model 'Cuenta Existente'
+        $('.account_id').prop('checked', false);
+
+        //$('.accountOpt').toggleClass('d-none');
+        $('.accountOpt').removeClass('d-none');
+
+        if($('#optCreateAccountOportunidad').checked ){
+            //console.log("Activo");
+            //$('#formConvert input').attr("required");
+            //$('#optCreateAccountOportunidad').prop('checked', false);
+            //$('#formConvert input').removeAttr("required");
+            //$('.formioConvertLead').addClass('d-none');
+        }else{
+            //console.log("InActivo");
+            $('#formConvert input').removeAttr("required");
+        }
+
+    });
+
+    $('#optCreateAccountOportunidad').click(function(){
+
+        $('.formioConvertLead').toggleClass('d-none');
+        //$('#formConvert input[type="text"]').attr("required","required");
+        //$('#formConvert input[type="date"]').attr("required","required");
+
+        if( this.checked ){
+            $('#formConvert input[type="text"]').attr("required","required");
+            $('#formConvert input[type="date"]').attr("required","required");
+        }else{
+            $('#formConvert input').removeAttr("required");
+        }
+
+    });
+
+    /*=====CONVERTIR A OPORTUNIDAD CONTACTO=======*/
+
+    $('#modalAddContact').on('change', 'input[type="checkbox"]', function(){
+        // Almacenar el ID del checkbox seleccionado
+        idCheckboxSeleccionadoContact = $(this).data('id');
+    });
+
+    $('.btnSaveModalContact').on('click', function(){
+
+        $('#optAddContacts').attr('data-id', idCheckboxSeleccionadoContact);
+        $('#optAddContacts').prop('checked', true);
+
+        $('.contactOpt').removeClass('d-none');
+
+        if($('#optCreateContactOportunidad').checked ){
+
+        }else{
+            //console.log("InActivo");
+            $('#formConvert input').removeAttr("required");
+        }
+
+    });
+
+    $('#optCreateContactOportunidad').click(function(){
+
+        $('.formioConvertLead').toggleClass('d-none');
+
+        if( this.checked ){
+            $('#formConvert input[type="text"]').attr("required","required");
+            $('#formConvert input[type="date"]').attr("required","required");
+        }else{
+            $('#formConvert input').removeAttr("required");
+        }
+
+    });
+
+
 
 });

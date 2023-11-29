@@ -113,6 +113,22 @@ class Login extends CI_Controller {
 
     }
 
+    public function restoremail($email=''){
+
+        $this->template->title = 'Login';
+
+        $this->template->set_template('templates/template_login');
+
+        $data = array(
+            'correo' => $email
+        );
+
+        $this->template->content->view('restoremail', $data);
+
+        $this->template->publish();
+
+    }
+
     public function create_password(){
 
         $correo = $this->input->post('correo');
@@ -159,6 +175,47 @@ class Login extends CI_Controller {
             echo json_encode('Error, Las contraseñas no son iguales');
 
         }
+    }
+
+    public function mail(){
+
+        $correo = $this->input->post('correo');
+
+        $config['protocol']     = 'sendmail';
+        $config['smtp_port']    = 587; // Puedes usar 465 para SSL o 587 para TLS
+        $config['smtp_crypto']  = 'tls'; // Puedes usar 'ssl' o 'tls'
+        $config['mailtype']     = 'html';
+        $config['charset']      = 'utf-8';
+        $config['newline']      = "\r\n";
+
+        $this->load->library('email');
+
+        $this->email->initialize($config);
+        $this->email->from('admin@vocom.com', 'Zoho Partners Vocom');
+        $this->email->to($correo);
+
+        $this->email->subject('Creación de Lead');
+
+        $data = array(
+            'lead' => urlencode($correo)
+        );
+
+        $body = $this->load->view('emails/restorePassword',$data,TRUE);
+
+        $this->email->message($body);
+
+        if($this->email->send()){
+
+            echo true;
+            //echo "Se envio correctamente";
+
+        }else{
+
+            echo false;
+            //echo $this->email->print_debugger();
+
+        }
+
     }
 
 }

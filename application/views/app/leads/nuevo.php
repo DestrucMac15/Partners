@@ -132,7 +132,7 @@
                     <input type="text" class="form-control" name="twitter" placeholder="@">
                 </div>
                 <div class="form-group">
-                    <label for="">Producto (Para agregar más de uno mantén precionado CTRL)</label>
+                    <label for="">Producto (Para agregar más de uno mantén precionado CTRL/Command)</label>
                     <select class="form-control" multiple required name="producto[]">
                         <option value="">Ninguno</option>
                         <option value="KontUX">KontUX</option>

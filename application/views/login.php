@@ -17,7 +17,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <label for="">Contraseña</label>
-                        <a href="<?php echo base_url('login/recuperar'); ?>">¿Olvidaste tu contraseña?</a>
+                        <a href="<?php echo base_url('login/restoremail'); ?>">¿Olvidaste tu contraseña?</a>
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password" id="password" class="form-control"  required>

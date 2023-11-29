@@ -150,6 +150,43 @@ class Leads extends CI_Controller{
         
     }
 
+    public function mail($correo){
+
+        $config['protocol']     = 'sendmail';
+        $config['smtp_port']    = 587; // Puedes usar 465 para SSL o 587 para TLS
+        $config['smtp_crypto']  = 'tls'; // Puedes usar 'ssl' o 'tls'
+        $config['mailtype']     = 'html';
+        $config['charset']      = 'utf-8';
+        $config['newline']      = "\r\n";
+
+        $this->load->library('email');
+
+        $this->email->initialize($config);
+        $this->email->from('admin@vocom.com', 'Zoho Partners Vocom');
+        $this->email->to($correo);
+
+        $this->email->subject('Creación de Lead');
+
+        $data = array(
+            'lead' => 'Marco Ortega'
+        );
+
+        $body = $this->load->view('emails/lead',$data,TRUE);
+
+        $this->email->message($body);
+
+        if($this->email->send()){
+
+            echo true;    
+
+        }else{
+
+            echo false;
+            //echo $this->email->print_debugger();
+        }
+
+    }
+    
     public function save(){
 
         $data = array(
@@ -310,29 +347,104 @@ class Leads extends CI_Controller{
 
     public function convert(){
 
-        $data = array(
-            'overwrite' => false,
-            'notify_lead_owner' => false,
-            'assign_to' => '4768126000000300001',
-            'Deals' => array(
-                'Amount' => intval($this->input->post('importe')),
-                'Tiempo_de_Implementaci_n' => $this->input->post('tiempo'),
-                'Producto' => $this->input->post('producto'),
-                'Presupuesto' => $this->input->post('presupuesto'),
-                'Autoridad' => $this->input->post('autoridad'),
-                'Necesidad' => $this->input->post('necesidad'),
-                'Deal_Name' => $this->input->post('nombreOportunidad'),
-                'Closing_Date' => $this->input->post('fecha'),
-                'Stage' => $this->input->post('fase'),
-                'Description' => $this->input->post('descripcion'),
-                'Currency' => $this->input->post('moneda'),
-                //'canal' => $this->input->post('canal'),
-                'Ingeniero_Preventa' => '4768126000000300001',
-                'N_mero_de_Empleados' => $this->input->post('empleados'),
-                'Partner' => $this->session->userdata('id_company'),
-                'Contacto_Partner' => $this->session->userdata('id_partner')
-            )
-        );
+        if(!empty($this->input->post('id_contact')) AND !empty($this->input->post('contactoCrearOportunidad'))){
+
+            $data = array(
+                'overwrite' => true,
+                'notify_lead_owner' => true,
+                'Contacts' => $this->input->post('id_contact'),
+                'assign_to' => '4768126000000300001',
+                'Deals' => array(
+                    'Amount' => intval($this->input->post('importe')),
+                    'Tiempo_de_Implementaci_n' => $this->input->post('tiempo'),
+                    'Producto' => $this->input->post('producto'),
+                    'Presupuesto' => $this->input->post('presupuesto'),
+                    'Autoridad' => $this->input->post('autoridad'),
+                    'Necesidad' => $this->input->post('necesidad'),
+                    'Deal_Name' => $this->input->post('nombreOportunidad'),
+                    'Closing_Date' => $this->input->post('fecha'),
+                    'Stage' => $this->input->post('fase'),
+                    'Description' => $this->input->post('descripcion'),
+                    'Currency' => $this->input->post('moneda'),
+                    'Ingeniero_Preventa' => '4768126000000300001',
+                    'N_mero_de_Empleados' => $this->input->post('empleados'),
+                    'Partner' => $this->session->userdata('id_company'),
+                    'Contacto_Partner' => $this->session->userdata('id_partner')
+                )
+            );
+
+        }else if(!empty($this->input->post('id_account')) AND !empty($this->input->post('cuentaCrearOportunidad'))){
+
+            $data = array(
+                'overwrite' => true,
+                'notify_lead_owner' => true,
+                'Accounts' => $this->input->post('id_account'),
+                'assign_to' => '4768126000000300001',
+                'Deals' => array(
+                    'Amount' => intval($this->input->post('importe')),
+                    'Tiempo_de_Implementaci_n' => $this->input->post('tiempo'),
+                    'Producto' => $this->input->post('producto'),
+                    'Presupuesto' => $this->input->post('presupuesto'),
+                    'Autoridad' => $this->input->post('autoridad'),
+                    'Necesidad' => $this->input->post('necesidad'),
+                    'Deal_Name' => $this->input->post('nombreOportunidad'),
+                    'Closing_Date' => $this->input->post('fecha'),
+                    'Stage' => $this->input->post('fase'),
+                    'Description' => $this->input->post('descripcion'),
+                    'Currency' => $this->input->post('moneda'),
+                    'Ingeniero_Preventa' => '4768126000000300001',
+                    'N_mero_de_Empleados' => $this->input->post('empleados'),
+                    'Partner' => $this->session->userdata('id_company'),
+                    'Contacto_Partner' => $this->session->userdata('id_partner')
+                )
+            );
+
+        }else if(!empty($this->input->post('id_account'))){//Cuando se manda sin datos de deals ***ACCOUNT
+
+            $data = array(
+                'overwrite' => true,
+                'notify_lead_owner' => true,
+                'Accounts' => $this->input->post('id_account'),
+                'assign_to' => '4768126000000300001'
+                //'Deals' => 'id??'
+            );
+
+        }else if(!empty($this->input->post('id_contact'))){//Cuando se manda sin datos de deals ***Contacts
+
+            $data = array(
+                'overwrite' => true,
+                'notify_lead_owner' => true,
+                'Contacts' => $this->input->post('id_contact'),
+                'assign_to' => '4768126000000300001'
+                //'Deals' => 'id??'
+            );
+
+        }else{
+
+            $data = array(
+                'overwrite' => false,
+                'notify_lead_owner' => true,
+                'assign_to' => '4768126000000300001',
+                'Deals' => array(
+                    'Amount' => intval($this->input->post('importe')),
+                    'Tiempo_de_Implementaci_n' => $this->input->post('tiempo'),
+                    'Producto' => $this->input->post('producto'),
+                    'Presupuesto' => $this->input->post('presupuesto'),
+                    'Autoridad' => $this->input->post('autoridad'),
+                    'Necesidad' => $this->input->post('necesidad'),
+                    'Deal_Name' => $this->input->post('nombreOportunidad'),
+                    'Closing_Date' => $this->input->post('fecha'),
+                    'Stage' => $this->input->post('fase'),
+                    'Description' => $this->input->post('descripcion'),
+                    'Currency' => $this->input->post('moneda'),
+                    //'canal' => $this->input->post('canal'),
+                    'Ingeniero_Preventa' => '4768126000000300001',
+                    'N_mero_de_Empleados' => $this->input->post('empleados'),
+                    'Partner' => $this->session->userdata('id_company'),
+                    'Contacto_Partner' => $this->session->userdata('id_partner')
+                )
+            );
+        }
 
         if($this->input->post('notificacion')){
 
@@ -347,6 +459,9 @@ class Leads extends CI_Controller{
         $json = '{"data":['.json_encode($data).']}';
 
         $encode_data = json_encode($json);
+
+        //echo json_decode($encode_data);
+        //die();
 
         $token = comprobarToken();
 
@@ -364,7 +479,7 @@ class Leads extends CI_Controller{
 
             sleep(3);
         }
-        var_dump($lead);
+        //var_dump($lead);
         /**UPD Accounts*/
         $data_account = array(
             'Partner' => $this->session->userdata('id_company'),
@@ -375,43 +490,14 @@ class Leads extends CI_Controller{
         $encode_dataAcoount = json_encode($json_account);
 
         $account = $this->Accounts_model->upd_accountData($token,$lead['Accounts'],json_decode($encode_dataAcoount))['data'][0];
-        
-        if($account['status'] == "success"){ 
+
+        if($account['code'] == "SUCCESS"){ 
 
             echo json_encode(array('estatus' => true, 'mensaje' => 'Se a agregado correctamente.'));
 
         }else{
 
             echo json_encode(array('estatus' => false, 'mensaje' => 'Error en el campo: '.$account));
-
-        }
-
-    }
-
-    public function mail($correo){
-
-        $this->load->library('email');
-
-        $this->email->from('admin@ejemplo.com', 'Zoho Partners Vocom');
-        $this->email->to($correo);
-
-        $this->email->subject('Creación de Lead');
-
-        $data = array(
-            'Lead' => 'Marco Ortega'
-        );
-
-        $body = $this->load->view('emails/lead',$data,TRUE);
-
-        $this->email->message($body);
-
-        if($this->email->send()){
-
-            echo true;    
-
-        }else{
-
-            echo false;
 
         }
 

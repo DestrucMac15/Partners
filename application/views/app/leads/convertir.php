@@ -13,6 +13,7 @@
 <div class="container">
     <div class="row my-5">
         <div class="col-md-12">
+            <form id="formConvert" class="was-validated">
             <?php 
                 //Cuando tiene una o más cuentas
                 if($type == "both" OR $type == "email" ){
@@ -24,22 +25,24 @@
             </p>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input optAdd" name="optConvert">Agregar a Contacto existente <a href="" class="showAdd">Ver</a>
+                    <input type="radio" class="form-check-input" id="optAddContacts" name="optConvertContactsByID">Agregar a Contacto existente <a href="" class="showAddContact">Ver</a>
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input optCreate" name="optConvert">Crear nuevo Contacto: <span class="badge badge-secondary"><?= $lead['Company']; ?></span>(Deshabilitado. Su organización he elegido no crear duplicados.)
+                    <input type="radio" class="form-check-input" id="optCreateContactoNew" name="optConvertContactNew" disabled>Crear nuevo Contacto: <span class="badge badge-secondary"><?= $lead['Full_Name']; ?></span>(Deshabilitado. Su organización he elegido no crear duplicados.)
                 </label>
             </div>
-            <div class="form-check">
+            <br/>
+            <div class="form-check d-none contactOpt">
+                <label class="form-check-label" hidden>
+                    <input type="checkbox" class="form-check-input" id="optNewContactsCompani" name="optNewContactsCompani">Sobrescribir Nombre de Cuenta con el nombre de la empresa de Lead <span class="badge badge-secondary"><?= $lead['Company']; ?></span>
+                </label>
+                <br/>
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input optCreate" name="optConvert">Cree una nueva Oportunidad para esta Cuenta:
+                    <input type="checkbox" class="form-check-input" id="optCreateContactOportunidad" name="contactoCrearOportunidad">Cree una nueva Oportunidad para esta Cuenta.
                 </label>
             </div>
-            <br>
-            <button type="submit" class="btn btn-outline-success">Convertir</button>
-            <a href="<?php echo base_url(); ?>leads" class="btn btn-outline-secondary">Regresar</a>
             <?php 
                 //Cuando tiene una o más cuentas
                 }elseif($type == "company"){
@@ -51,22 +54,24 @@
             </p>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input optAdd" name="optConvert">Agregar a Cuenta existente <a href="" class="showAdd">Ver</a>
+                    <input type="radio" class="form-check-input" id="optAddAccount" name="cuentaExistente" >Agregar a Cuenta existente <a href="" class="showAddAccount">Ver</a>
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input optCreate" name="optConvert">Crear nueva Cuenta: <span class="badge badge-secondary"><?= $lead['Company']; ?></span>
+                    <input type="radio" class="form-check-input" id="optCreateAccountNew" name="cuentaNueva">Crear nueva Cuenta: <span class="badge badge-secondary"><?= $lead['Company']; ?></span>
                 </label>
             </div>
-            <div class="form-check">
+            <br/>
+            <div class="form-check d-none accountOpt">
                 <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input optCreate" name="optConvert">Cree una nueva Oportunidad para esta Cuenta:
+                    Se creará un nuevo Contacto <span class="badge badge-secondary"><?= $lead['Full_Name']; ?></span> para el Cuenta.
+                </label>
+                <br/>
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" id="optCreateAccountOportunidad" name="cuentaCrearOportunidad">Cree una nueva Oportunidad para esta Cuenta.
                 </label>
             </div>
-            <br>
-            <button type="submit" class="btn btn-outline-success">Convertir</button>
-            <a href="<?php echo base_url(); ?>leads" class="btn btn-outline-secondary">Regresar</a>
             <?php
                 }else{
                 //Cuando no tiene cuenta 
@@ -75,9 +80,12 @@
                 <hr>
                 <p>Crear nueva Cuenta <span class="badge badge-secondary"><?= $lead['Company']; ?></span></p>
                 <p>Crear nuevo Contacto <span class="badge badge-secondary"><?= $lead['Full_Name']; ?></span></p>
-                <form id="formConvert" class="was-validated">
-                    <div class="infomation">
-                        <div class="form-group d-none">
+            <?php 
+                }
+            ?>
+                <!--<form id="formConvert" class="was-validated">-->
+                    <div class="formioConvertLead <?= ($type == "nuevo") ? '' : 'd-none'; ?>" ><!--class="infomation"-->
+                        <div class="form-group" hidden><!-- d-none -->
                             <label for="">Id</label>
                             <input type="text" class="form-control" name="id" value="<?= $lead['id']; ?>">
                         </div>
@@ -184,16 +192,13 @@
                     <button type="submit" class="btn btn-outline-success">Convertir</button>
                     <a href="<?php echo base_url(); ?>leads" class="btn btn-outline-secondary">Regresar</a>
                 </form>
-            <?php 
-                }
-            ?>
         </div>
     </div>
 </div>
 
-<!-- The Modal -->
-<div class="modal" id="modalAddAccount">
-  <div class="modal-dialog">
+<!-- The Modal Cuenta -->
+<div class="modal fade" id="modalAddAccount" >
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
       <!-- Modal Header -->
@@ -203,33 +208,103 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        <?php 
-            if(!empty($accounts)){
-                foreach($accounts['data'] as $account){ 
-        ?>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optAccount"><b><?= $account['Account_Name']; ?></b> <span class="small">Tipo de cuenta: <?= $account['Account_Type']; ?></span>
-                </label>
-            </div>
-        <?php 
-                } 
-            } 
-        ?>
-      </div>
+        <div class="modal-body">
+            <!--<div class="form-check">-->
+                <table class="table table-bordered table-striped display responsive " id="tabla" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center">Nombre de cuenta</th>
+                            <th class="text-center">Telefono</th>
+                            <th class="text-center">Sitio Web</th>
+                            <th class="text-center">Tipo de cuenta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            if(!empty($accounts)){
+                                foreach($accounts['data'] as $account){ 
+                        ?>
+                                    <tr>
+                                        <td><input type="checkbox" class="account_id" data-id="<?= $account['id']; ?>"></td>
+                                        <td><?= $account['Account_Name']; ?></td>
+                                        <td><?= $account['Phone']; ?></td>
+                                        <td><?= $account['Website']; ?></td>
+                                        <td><?= $account['Account_Type']; ?></td>
+                                    </tr>
+                        <?php 
+                                } 
+                            } 
+                        ?>
+                    </tbody>
+                </table>
+            <!--</div>-->
+        </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
           <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-outline-info" data-dismiss="modal">Fin</button>
+        <button type="button" class="btn btn-outline-info btnSaveModalAccount" data-dismiss="modal">Fin</button>
       </div>
 
     </div>
   </div>
 </div>
 
-<!-- The Modal -->
+<!-- The Modal Contacto -->
+<div class="modal fade" id="modalAddContact" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Registros coincidentes de Cuenta</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+        <div class="modal-body">
+            <!--<div class="form-check">-->
+                <table class="table table-bordered table-striped display responsive " id="tabla" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th class="text-center">Nombre De Contacto</th>
+                            <th class="text-center">Nombre De Cuenta</th>
+                            <th class="text-center">Correo Electrónico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            if(!empty($contacts)){
+                                foreach($contacts['data'] as $contact){ 
+                        ?>
+                                    <tr>
+                                        <td><input type="checkbox" class="account_id" data-id="<?= $contact['id']; ?>"></td>
+                                        <td><?= $contact['Full_Name']; ?></td>
+                                        <td><?= $contact['Account_Name']['name']; ?></td>
+                                        <td><?= $contact['Email']; ?></td>
+                                    </tr>
+                        <?php 
+                                } 
+                            } 
+                        ?>
+                    </tbody>
+                </table>
+            <!--</div>-->
+        </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-outline-info btnSaveModalContact" data-dismiss="modal">Fin</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Modal Eliminar-->
 <div class="modal" id="modalCreateAccount">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -245,7 +320,7 @@
         <p class="modal-title">Se creará un nuevo Contacto <span class="badge badge-secondary"><?= $lead['Full_Name'] ?></span> para la Cuenta</p>
         <div class="form-check my-3">
             <label class="form-check-label">
-                <input type="checkbox" class="optCreateOptAccount form-check-input">Cree una nueva Oportunidad para esta Cuenta
+                <input type="checkbox" class="optCreateAccount form-check-input">Cree una nueva Oportunidad para esta Cuenta
             </label>
         </div>
         <div class="infomation d-none">

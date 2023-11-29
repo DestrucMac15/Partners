@@ -29,7 +29,7 @@
                     </div>
 
                     <button type="submit" class="btn bg-vocom text-white btn-block">
-                        Guardar
+                        Enviar
                     </button>
                 </form>
             </section>
