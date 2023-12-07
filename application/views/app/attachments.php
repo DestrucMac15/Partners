@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>opportunities">Oportunidades</a></li>
                 <li class="breadcrumb-item active">Archivos adjuntos</li>
             </ul>
         </div>
@@ -27,12 +27,14 @@
                 <tbody>
                     <?php 
                         if(!empty($attachments)){
-                            foreach($attachments['data'] as $info){ 
+                            foreach($attachments['data'] as $info){
+                                $Created_Time = new DateTime($info['Created_Time']);
+                                $formatDate = "d/m/Y H:i:s";
                     ?>
                             <tr>
                                 <td><a href="<?= base_url(); ?>attachments/downloadAttachment/<?= $info['Parent_Id']['id']; ?>/<?= $info['id']; ?>" target="_blank"><i class="fas fa-file-pdf"></i> <?= $info['File_Name']; ?></a></td>
                                 <td><?= $info['Created_By']['name']; ?></td>
-                                <td><?= $info['Created_Time']; ?></td>
+                                <td><?= $Created_Time->format($formatDate); ?></td>
                                 <td><?= $info['Size']; ?></td>
                                 <!--<td>
                                     <div class="btn-group">
@@ -83,6 +85,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="submit" form="formArchivos" class="btn btn-success">Guardar</button>
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
       </div>
 
     </div>

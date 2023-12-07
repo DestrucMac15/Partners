@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/dashboard">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>opportunities">Oportunidades</a></li>
                 <li class="breadcrumb-item active">Books</li>
             </ul>
         </div>

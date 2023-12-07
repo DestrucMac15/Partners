@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item active">Accounts</li>
+                <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                <li class="breadcrumb-item active">Cuentas</li>
             </ul>
         </div>
     </div>

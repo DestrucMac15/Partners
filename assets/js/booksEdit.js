@@ -27,11 +27,11 @@ $(document).ready(function(){
             id: 'inputs',
             zindex: 999,
             title: 'Atención!',
-            message: '¿Estás seguro de guardar?',
+            message: '¿Estás seguro de actulizar presupuesto?',
             position: 'topRight',
             drag: false,
             buttons: [
-                ['<button>Guardar</button>', function (instance, toast) {
+                ['<button>Actualizar</button>', function (instance, toast) {
                     boton.text('Enviando..');
                     boton.prop('disabled', true);
 
@@ -75,7 +75,7 @@ $(document).ready(function(){
 
                     }).always(function(){
                         boton.prop('disabled', false);
-                        boton.text('Guardar');
+                        boton.text('Actualizar');
                     });
                     
                 }, true],
@@ -125,11 +125,11 @@ $(document).ready(function(){
             id: 'inputs',
             zindex: 999,
             title: 'Atención!',
-            message: '¿Estás seguro de enviar la cotización?',
+            message: '¿Estás seguro de enviar el presupuesto?',
             position: 'topRight',
             drag: false,
             buttons: [
-                ['<button>Guardar</button>', function (instance, toast){
+                ['<button>Enviar</button>', function (instance, toast){
 
                     boton.text('Enviando..');
                     boton.prop('disabled', true);

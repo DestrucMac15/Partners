@@ -2,7 +2,7 @@
     <div class="row my-5">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>opportunities">Opportunities</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>opportunities">Oportunidades</a></li>
                 <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>books/?opp=<?= $id; ?>">Books</a></li>
                 <li class="breadcrumb-item active">Nuevo Presupuesto</li>
             </ul>
@@ -203,7 +203,8 @@
             </form>
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-success" type="submit" form="formEstimates">Guardar</button>
+                    <button class="btn btn-success mx-2" type="submit" form="formEstimates">Guardar</button>
+                    <a href="<?php echo base_url(); ?>books/?opp=<?= $id; ?>" class="btn btn-outline-secondary">Regresar</a>
                 </div>
             </div>
         </div>

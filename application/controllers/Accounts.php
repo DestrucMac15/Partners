@@ -110,7 +110,7 @@ class Accounts extends CI_Controller{
 
         $token = comprobarToken();
 
-        $account = $this->Accounts_model->upd_accountData($token, json_decode($encode_data), $this->input->post('id'))['data'][0];
+        $account = $this->Accounts_model->upd_accountData($token, $this->input->post('id'), json_decode($encode_data))['data'][0];
 
         if($account['status'] == "success"){
 

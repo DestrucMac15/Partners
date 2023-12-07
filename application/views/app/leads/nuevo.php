@@ -2,8 +2,7 @@
     <div class="row my-5">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/leads">Leads</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>leads">Leads</a></li>
                 <li class="breadcrumb-item active">Nuevo Lead</li>
             </ul>
         </div>
@@ -264,7 +263,8 @@
         </div>
         <div class="row my-5">
             <div class="col-md-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-outline-success">Guardar</button>
+                <button type="submit" class="btn btn-outline-success mx-2">Guardar</button>
+                <a href="<?php echo base_url(); ?>leads" class="btn btn-outline-secondary">Regresar</a>
             </div>
         </div>
     </div>

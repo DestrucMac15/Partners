@@ -2,7 +2,7 @@
     <div class="row my-5">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>dashboard">Dashboard</a></li>
+                <!--<li class="breadcrumb-item"><a href="">Dashboard</a></li>-->
                 <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>leads">Leads</a></li>
                 <li class="breadcrumb-item active">Convertir Lead</li>
             </ul>
@@ -244,7 +244,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
           <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-outline-info btnSaveModalAccount" data-dismiss="modal">Fin</button>
+        <button type="button" class="btn btn-outline-info btnSaveModalAccount" data-dismiss="modal">Guardar</button>
       </div>
 
     </div>
@@ -297,7 +297,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
           <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-outline-info btnSaveModalContact" data-dismiss="modal">Fin</button>
+        <button type="button" class="btn btn-outline-info btnSaveModalContact" data-dismiss="modal">Guardar</button>
       </div>
 
     </div>

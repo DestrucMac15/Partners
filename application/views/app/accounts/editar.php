@@ -2,8 +2,8 @@
     <div class="row my-5">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/accounts">Accounts</a></li>
+                <!--<li class="breadcrumb-item"><a href="">Dashboard</a></li>-->
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>accounts">Cuentas</a></li>
                 <li class="breadcrumb-item active">Editar Cuenta</li>
             </ul>
         </div>
@@ -11,7 +11,7 @@
 </div>
 <form id="formAccountEdit" action="" class="was-validated">
 <div class="container">
-        <h5>Información de Lead</h5>
+        <h5>Información de Cuenta</h5>
         <hr>
         <div class="row my-5">
             <div class="col-md-6">
@@ -209,7 +209,8 @@
         </div>
         <div class="row my-5">
             <div class="col-md-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-outline-success">Guardar</button>
+                <button type="submit" class="btn btn-outline-success mx-2">Actualizar</button>
+                <a href="<?php echo base_url(); ?>accounts" class="btn btn-outline-secondary">Regresar</a>
             </div>
         </div>
     </div>

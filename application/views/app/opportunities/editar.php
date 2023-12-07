@@ -2,16 +2,16 @@
     <div class="row my-5">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/dashboard">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>/opportunities">Opportunities</a></li>
-                <li class="breadcrumb-item active">Editar Lead</li>
+                <!--<li class="breadcrumb-item"><a href="">Dashboard</a></li>-->
+                <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>opportunities">Oportunidades</a></li>
+                <li class="breadcrumb-item active">Editar Oportunidad</li>
             </ul>
         </div>
     </div>
 </div>
 <form id="formLeadsEdit" action="" class="was-validated">
     <div class="container">
-        <h5>Información de Lead</h5>
+        <h5>Información de Oportunidad</h5>
         <hr>
         <div class="row my-5">
             <div class="col-md-6">
@@ -153,7 +153,7 @@
                     <input type="number" class="form-control" name="tasa" value="<?= $opportunitie['Exchange_Rate']; ?>" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="">Producto (Para agregar más de uno mantén precionado CTRL)</label>
+                    <label for="">Producto (Para agregar más de uno mantén precionado CTRL/Command)</label>
                     <select name="producto[]" multiple class="form-control" required>
                     <option <?= ($opportunitie['Producto'] == '') ? 'selected' : '';?> value="">Ninguno</option>
                         <option <?= (array_search('KontUX', $opportunitie['Producto']) === false) ? '' : 'selected';?> value="KontUX">KontUX</option>
@@ -198,7 +198,8 @@
         </div>
         <div class="row my-5">
             <div class="col-md-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-outline-success">Guardar</button>
+                <button type="submit" class="btn btn-outline-success mx-2">Actualizar</button>
+                <a href="<?php echo base_url(); ?>opportunities" class="btn btn-outline-secondary">Regresar</a>
             </div>
         </div>
     </div>

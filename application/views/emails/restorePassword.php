@@ -44,7 +44,7 @@
         <h1>¡Restaura tu contrseña!</h1>
         <p>En el siguiente enlase podras restaurar tu contraseña</p>
         <ul>
-            <li>Enlaces: <a href="http://pastillasnuevas.store/partners/login/reset/<?= $lead;?>">Cambiar contraseña</a></li>
+            <li>Enlaces: <a href="https://socios.vozmia.com/login/reset/<?= $lead;?>">Cambiar contraseña</a></li>
         </ul>
         <p>Si usted no realizo el cambio de contraseña, no prestar atencion al correo</p>
     </div>
