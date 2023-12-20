@@ -37,8 +37,8 @@
                                 <td><?= $book['status']; ?></td>
                                 <td><?= $book['date']; ?></td>
                                 <td><?= $book['reference_number']; ?></td>
-                                <td>MXN <?= $book['sub_total']; ?></td>
-                                <td>MXN <?= $book['total']; ?></td>
+                                <td><?= $book['currency_code'].'$'.number_format($book['sub_total'], 2, '.', ','); ?></td>
+                                <td><?= $book['currency_code'].'$'.number_format($book['total'], 2, '.', ','); ?></td>
                                 <td><?= $book['expiry_date']; ?></td>
                                 <td>
                                     <a class="dropdown-item" href="<?php echo base_url(); ?>books_edit/editar/<?= $book['estimate_id']; ?>">Editar</a>

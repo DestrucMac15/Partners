@@ -228,8 +228,31 @@ $(document).ready(function(){
 
     });
 
-});
+    /*=====MODAL´S=======*/
+    $('#modalUPDBillingAddress').on('show.bs.modal', function(event){
 
+        $('#formBillingAddress')[0].reset();
+
+    });
+
+    $('.showModalBillingAddress').click(function(event){
+
+        event.preventDefault();
+
+        $('#modalUPDBillingAddress').modal('show');
+
+    });
+
+    $('.showModalShippingAddress').click(function(event){
+
+        event.preventDefault();
+
+        $('#modalUPDShippingAddress').modal('show');
+
+    });
+
+});
+/*=====FUNCTION´S=======*/
 function cotizacion(ruta,opp){
 
     let contenido;
@@ -241,7 +264,11 @@ function cotizacion(ruta,opp){
         data:{opp:opp}
     }).done(function(respuesta){
 
-        console.log(respuesta.articulos);
+        //console.log(respuesta.articulos);
+        let formatCurrency = new Intl.NumberFormat('es-Mx',{
+            style: 'currency',
+            currency: 'MXN'
+        });
 
         if(respuesta.articulos.length > 0){
 
@@ -249,7 +276,7 @@ function cotizacion(ruta,opp){
 
                 contenido += `
                     <tr>
-                        <td colspan="9">
+                        <td colspan="8">
                             <input type="text" class="form-control inputHeader" data-cabecera=${indice} value="${items.header}">
                         </td>
                         <td>
@@ -260,7 +287,7 @@ function cotizacion(ruta,opp){
 
                 contenido += `
                     <tr hidden>
-                        <td colspan="9">
+                        <td colspan="8">
                             <input type="text" class="form-control" value="${items.id}">
                         </td>
                     </tr>
@@ -275,20 +302,13 @@ function cotizacion(ruta,opp){
                             <td>${valor.custom_field_hash.cf_nombresat}</td>
                             <td>${valor.custom_field_hash.cf_clave_de_producto_o_servici}</td>
                             <td>
-                                <input type="number" class="form-control cantidadItem" value="${valor.quantity}" data-cabecera=${indice} data-item=${clave} data-rate="${valor.rate}" value="1">
+                                <input type="number" class="form-control cantidadItem" value="${valor.quantity}" data-cabecera=${indice} data-item=${clave} data-rate="${valor.rate}" value="1" min="0">
                             </td>
                             <td>
-                                $${valor.pricebook_rate.toFixed(2)}
+                                <input type="number" class="form-control rateItem" value="${valor.pricebook_rate}" data-cabecera=${indice} data-item=${clave} min="0">
                             </td>
-                            <td class="d-flex">
-                                <input type="number" class="form-control discount" value="${valor.discount_amount}" data-cabecera=${indice} data-item=${clave}>
-                                <select  class="form-control typeDiscount" value="${valor.discount_amount}" data-cabecera=${indice} data-item=${clave}>
-                                    <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? "selected" : "" : ''} value="%">%</option>
-                                    <option ${(typeof valor.discount !== "undefined") ? (valor.discount.indexOf("%") > -1) ? '' : 'selected' : ''} value="MXN">MXN</option>
-                                </select>
-                            </td>
-                            <td>${valor.tax_name+' - '+valor.tax_percentage+'%'}<br>$${valor.impuesto}</td>
-                            <td>$${valor.item_total.toFixed(2)}</td>
+                            <td>${valor.tax_name+' - '+valor.tax_percentage+'%'}<br>${formatCurrency.format(valor.impuesto)}</td>
+                            <td>${formatCurrency.format(valor.item_total)}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm btnQuitar" data-cabecera=${indice} data-item=${clave}>X</button>
                             </td>
@@ -317,10 +337,10 @@ function cotizacion(ruta,opp){
         let tabulador = "";
 
         tabulador += `
-            <li class="list-group-item d-flex justify-content-between"><b>Subtotal:</b> ${respuesta.tabulador.subtotal.toFixed(2)}</li>
-            <li class="list-group-item d-flex justify-content-between"><b>Cargo de envió:</b> <input class="form-control cargoEnvio" type="number" value="${respuesta.tabulador.envio.toFixed(2)}"></li>
-            <li class="list-group-item d-flex justify-content-between"><input type="text" class="form-control nombreImpuesto" value="${respuesta.tabulador.nombre_impuesto}"><input type="number" class="form-control mx-1 valorImpuesto" value="${respuesta.tabulador.impuesto.toFixed(2)}"></li>
-            <li class="list-group-item d-flex justify-content-between"><b>Total (MXN)</b> ${respuesta.tabulador.total.toFixed(2)}</li>
+            <li class="list-group-item d-flex justify-content-between"><b>Subtotal:</b> ${formatCurrency.format(respuesta.tabulador.subtotal)}</li>
+            <li class="list-group-item d-flex justify-content-between"><b>Cargo de envió:</b> <input class="form-control cargoEnvio" type="number" value="${respuesta.tabulador.envio.toFixed(2)}" min="0"></li>
+            <li class="list-group-item d-flex justify-content-between"><input type="text" class="form-control nombreImpuesto" value="${respuesta.tabulador.nombre_impuesto}"><input type="number" class="form-control mx-1 valorImpuesto" value="${respuesta.tabulador.impuesto.toFixed(2)}" min="0"></li>
+            <li class="list-group-item d-flex justify-content-between"><b>Total (MXN)</b> ${formatCurrency.format(respuesta.tabulador.total)}</li>
         `;
 
 
@@ -416,7 +436,7 @@ function cotizacion(ruta,opp){
         });
 
         //Editar Descuento
-        $('.discount').on('focusout',function(){
+        /*$('.discount').on('focusout',function(){
 
             let descuento = $(this).val();
             let TipoDescuento = $(this).siblings('.typeDiscount').val();
@@ -432,6 +452,30 @@ function cotizacion(ruta,opp){
                     descuento: descuento,
                     cabecera: cabecera,
                     TipoDescuento: TipoDescuento,
+                    item: item
+                }
+            }).done(function(respuesta){
+
+                cotizacion(ruta);
+
+            });
+
+        });*/
+
+        //Editar Precio del producto
+        $('.rateItem').on('focusout',function(){
+
+            let rate = $(this).val();
+            let cabecera = $(this).data('cabecera');
+            let item = $(this).data('item');
+
+            $.ajax({
+                url: ruta+'books/addRate', 
+                method: 'POST',
+                dataType: 'JSON',
+                data: {
+                    rate: rate,
+                    cabecera: cabecera,
                     item: item
                 }
             }).done(function(respuesta){
@@ -468,7 +512,6 @@ function cotizacion(ruta,opp){
             });
 
         });
-
 
         //Agregar Cargo de envío
         $('.cargoEnvio').on('focusout',function(){

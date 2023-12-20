@@ -53,11 +53,13 @@ class Books_edit extends CI_Controller{
             $token = comprobarToken();
 
             $estimate = $this->Books_model->get_estimateByID($token, $id)['estimate'];
+            $contactPersons = $this->Books_model->get_contactsPersonsAll($token,$estimate['customer_id'])['contact'];
 
             $data = array(
                 'estimate' => $estimate,
                 'id_opp'   => $estimate['zcrm_potential_id'],
-                'id_estimate' => $estimate['estimate_id']
+                'id_estimate' => $estimate['estimate_id'],
+                'contactPersons' => $contactPersons
             );
 
             $this->template->content->view('app/books/editar',$data);
@@ -81,7 +83,7 @@ class Books_edit extends CI_Controller{
 
     }
     
-    public function getBook(){
+    /*public function getBook(){
 
         if(!isset($_SESSION['book'])){
 
@@ -103,7 +105,7 @@ class Books_edit extends CI_Controller{
         
         echo json_encode($_SESSION['book']);
 
-    }
+    }*/
 
     public function getBookEdit(){
 
@@ -177,17 +179,19 @@ class Books_edit extends CI_Controller{
             $item['item']['line_item_id'] = $data['line_item_id'];
             $item['item']['item_order']   = $data['item_order'];
             $item['item']['quantity']     = $data['quantity'];
-            $item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
-            $item['item']['discount']   = strval($data['discount']);
+            $item['item']['pricebook_rate'] = $data['rate'];
+            //$item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
+            //$item['item']['discount']   = strval($data['discount']);
             /** CALCULO */
 
-            if(str_contains($item['item']['discount'],'%')){
+            /*if(str_contains($item['item']['discount'],'%')){
                 $sub_discount = ($data['rate'] * $item['item']['quantity']) * ($item['item']['discount_amount']/100);
             }else{
                 $sub_discount = $item['item']['discount_amount'];
-            }
+            }*/
             
-            $total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
+            //$total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
+            $total_discount = $item['item']['pricebook_rate'] * $item['item']['quantity'];
 
             $sub_impuesto = $total_discount * ($data['tax_percentage']/100);
             $total_impuesto = $total_discount + $sub_impuesto;
@@ -202,18 +206,20 @@ class Books_edit extends CI_Controller{
             $item['item']['line_item_id'] = $data['line_item_id'];
             $item['item']['item_order']   = $data['item_order'];
             $item['item']['quantity']     = $data['quantity'];
-            $item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
-            $item['item']['discount']   = strval($data['discount']);
+            $item['item']['pricebook_rate'] = $data['rate'];
+            //$item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
+            //$item['item']['discount']   = strval($data['discount']);
             /** CALCULO */
 
-            if(str_contains($item['item']['discount'],'%')){
+            /*if(str_contains($item['item']['discount'],'%')){
                 $sub_discount = ($data['rate'] * $item['item']['quantity']) * ($item['item']['discount_amount']/100);
             }else{
                 $sub_discount = $item['item']['discount_amount'];
-            }
+            }*/
 
             
-            $total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
+            //$total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
+            $total_discount = $item['item']['pricebook_rate'] * $item['item']['quantity'];
 
             $sub_impuesto = $total_discount * ($data['tax_percentage']/100);
             $total_impuesto = $total_discount + $sub_impuesto;
@@ -349,7 +355,7 @@ class Books_edit extends CI_Controller{
 
     }
 
-    public function addDiscount(){
+    /*public function addDiscount(){
 
         $descuento = $this->input->post('descuento');
         $item = $this->input->post('item');
@@ -394,18 +400,18 @@ class Books_edit extends CI_Controller{
 
         echo json_encode($_SESSION['book']);
 
-    }
+    }*/
 
     public function editQuantity(){
 
         $cantidad = $this->input->post('cantidad');
         $item = $this->input->post('item');
-        $rate = $this->input->post('rate');
+        //$rate = $this->input->post('rate');
         $cabecera = $this->input->post('cabecera');
 
-        $item_total = $cantidad * $rate;
+        $item_total = $cantidad * $_SESSION['book']['articulos'][$cabecera]['items'][$item]['pricebook_rate'];
 
-        if(isset($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'])){
+        /*if(isset($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'])){
 
             if(str_contains($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'],'%')){
 
@@ -425,12 +431,37 @@ class Books_edit extends CI_Controller{
             $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
             $item_total = $item_total + $imp;
 
-        }
+        }*/
+
+        $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
+        $item_total = $item_total + $imp;
 
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['quantity'] = $cantidad;
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['item_total'] = $item_total;
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['impuesto'] = $imp;
 
+        $this->createTabulador();
+
+        echo json_encode($_SESSION['book']);
+
+    }
+
+    public function addRate(){
+
+        $rate = $this->input->post('rate');
+        $item = $this->input->post('item');
+        $cabecera = $this->input->post('cabecera');
+
+        $item_total = $_SESSION['book']['articulos'][$cabecera]['items'][$item]['quantity'] * $rate;
+
+        $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
+        $item_total = $item_total + $imp;
+
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['pricebook_rate'] = $rate;
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['item_total'] = $item_total;
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['impuesto'] = $imp;
+       
+       
         $this->createTabulador();
 
         echo json_encode($_SESSION['book']);
@@ -510,15 +541,15 @@ class Books_edit extends CI_Controller{
                         'unit'    => $item['unit'],
                         'description' => $item['description'],
                         'quantity' => $item['quantity'],
-                        'bcy_rate' => $item['rate'],
-                        'rate' => $item['rate'],
+                        'bcy_rate' => $item['pricebook_rate'],
+                        'rate' => $item['pricebook_rate'],
                         'tax_name'    => $item['tax_name'],
                         'tax_percentage'    => $item['tax_percentage'],
                         'tax_type'          => $item['tax_type'],
                         'purchase_tax_id'   => $item['purchase_tax_id'],
                         'purchase_tax_name' => $item['purchase_tax_name'],
-                        'discount'        => isset($item['discount']) ? $item['discount'] : '',//Descuento aplicado a la factura. Puede ser en % o en cantidad
-                        'discount_amount' => isset($item['discount_amount']) ? $item['discount_amount'] : '',
+                        'discount'        => 0,//Descuento aplicado a la factura. Puede ser en % o en cantidad
+                        'discount_amount' => 0,
                         'is_default_tax_applied'  => $item['is_default_tax_applied'],
                         'purchase_tax_percentage' => $item['purchase_tax_percentage'],
                         'purchase_tax_type'       => $item['purchase_tax_type'],
@@ -536,15 +567,15 @@ class Books_edit extends CI_Controller{
                         'unit'    => $item['unit'],
                         'description' => $item['description'],
                         'quantity' => $item['quantity'],
-                        'bcy_rate' => $item['rate'],
-                        'rate' => $item['rate'],
+                        'bcy_rate' => $item['pricebook_rate'],
+                        'rate' => $item['pricebook_rate'],
                         'tax_name'    => $item['tax_name'],
                         'tax_percentage'    => $item['tax_percentage'],
                         'tax_type'          => $item['tax_type'],
                         'purchase_tax_id'   => $item['purchase_tax_id'],
                         'purchase_tax_name' => $item['purchase_tax_name'],
-                        'discount'        => isset($item['discount']) ? $item['discount'] : '',//Descuento aplicado a la factura. Puede ser en % o en cantidad
-                        'discount_amount' => isset($item['discount_amount']) ? $item['discount_amount'] : '',
+                        'discount'        => 0,//Descuento aplicado a la factura. Puede ser en % o en cantidad
+                        'discount_amount' => 0,
                         'is_default_tax_applied'  => $item['is_default_tax_applied'],
                         'purchase_tax_percentage' => $item['purchase_tax_percentage'],
                         'purchase_tax_type'       => $item['purchase_tax_type'],
@@ -597,7 +628,7 @@ class Books_edit extends CI_Controller{
         //die();
 
         $editBook = $this->Books_model->upd_estimates($token,json_encode($data_save),$this->input->post('estimate'));
-       
+
         if($editBook['code'] == 0){
 
             echo json_encode(array('estatus' => true, 'mensaje' => 'Se actualizo correctamente.'));

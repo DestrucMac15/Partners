@@ -9,6 +9,7 @@
                     <hr>
                     <div class="form-group">
                         <p class="text-center">Restaura tu contraseña</p>
+                        <p class="text-center">Escriba su dirección de correo electrónico registrada</p>
                     </div>
 
                     <div class="d-flex justify-content-between">

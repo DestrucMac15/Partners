@@ -23,7 +23,7 @@
                             foreach($accounts['data'] as $account){ 
                     ?>
                                 <tr>
-                                    <td><?= $account['Account_Name']; ?></td>
+                                    <td><a href="<?php echo base_url(); ?>accounts/editar/<?= $account['id']; ?>"><?= $account['Account_Name']; ?></a></td>
                                     <td><?= $account['Description']; ?></td>
                                     <td>
                                         <div class="btn-group">

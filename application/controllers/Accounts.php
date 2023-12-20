@@ -8,7 +8,7 @@ class Accounts extends CI_Controller{
 
         $this->load->library(array('session'));
 
-        $this->load->model(array('Leads_model','Accounts_model'));
+        $this->load->model(array('Leads_model','Accounts_model','Contacts_model'));
 
 		$this->load->helper(array('zoho_refresh/refresh_token'));
 
@@ -30,9 +30,18 @@ class Accounts extends CI_Controller{
                $accounts = ''; 
                
             }
+            
+            /*$contacts = array();
+
+            foreach($accounts['data'] as $account){
+
+                $contacts[] = $this->Contacts_model->get_contactByAccountID($token,$account['id']);
+
+            }*/
 
             $data = array(
-                'accounts' => $accounts
+                'accounts' => $accounts,
+                //'contacts' => $contacts
             );
     
             $this->template->content->view('app/accounts', $data);

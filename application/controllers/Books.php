@@ -55,8 +55,8 @@ class Books extends CI_Controller{
             $opportunitie = $this->Opportunities_model->get_opportunities($token,$id)['data'][0];
             $account = $this->Accounts_model->get_account($token,$opportunitie['Account_Name']['id'])['data'][0];
             $contact = $this->Contacts_model->get_contacts($token, $opportunitie['Contact_Name']['id'])['data'][0];
-            $book    = $this->Books_model->get_contactsBy($token,$contact['Account_Name']['id']);
-            $contactPersons = $this->Books_model->get_contactsPersonsAll($token,$book['contacts'][0]['contact_id']);
+            $book    = $this->Books_model->get_contactsByZcrmAccount($token,$contact['Account_Name']['id']);
+            $contactPersons = $this->Books_model->get_contactsPersonsAll($token,$book['contacts'][0]['contact_id'])['contact'];
 
             $data = array(
                 'opportunitie' => $opportunitie,
@@ -79,33 +79,6 @@ class Books extends CI_Controller{
         }
 
     }
-
-    /*public function editar($id){
-
-        $this->session->unset_userdata('book');
-
-        if($this->session->userdata('is_logged')){
-
-            $this->template->title = 'Editar Estimates';
-
-            $token = comprobarToken();
-
-            $estimate = $this->Books_model->get_estimateByID($token, $id)['estimate'];
-
-            $data = array(
-                'estimate' => $estimate,
-                'id_opp'   => $estimate['zcrm_potential_id'],
-                'id_estimate' => $estimate['estimate_id']
-            );
-
-            $this->template->content->view('app/books/editar',$data);
-
-            $this->template->publish();
-
-        }else{
-            redirect(base_url('login'), 'refresh');
-        }
-    }*/
 
     public function downloadBook($id){
 
@@ -144,52 +117,6 @@ class Books extends CI_Controller{
 
     }
 
-    /*public function getBookEdit(){
-
-        if(!isset($_SESSION['book'])){
-
-            $token  = comprobarToken();
-            $estimate_id = $this->input->post('opp');
-            $estimate = $this->Books_model->get_estimateByID($token,$estimate_id)['estimate'];   
-            
-            $_SESSION['book'] = array(
-                'articulos' => array(),
-                'tabulador' => array(
-                    'subtotal' => $estimate['sub_total'],
-                    'envio'    => $estimate['shipping_charge'],
-                    'nombre_impuesto' => $estimate['adjustment_description'],
-                    'impuesto'        => $estimate['adjustment'],
-                    'total'           => $estimate['total']
-                )
-            );
-            
-            foreach($estimate['line_items'] as $key => $item){
-             
-                if($key == 0){
-
-                    $this->viewHeader($item['header_name'],$item['header_id']);
-
-                }
-
-                if($this->searchHeader($item['header_id'])){
-
-                    $this->editItem($item);
-
-                }else{
-
-                    $this->viewHeader($item['header_name'],$item['header_id']);
-                    $this->editItem($item);
-
-                }
-
-            }
-            
-        }
-        
-        echo json_encode($_SESSION['book']);
-
-    }*/
-
     public function searchHeader($header_id){
 
         foreach($_SESSION['book']['articulos'] as $data){
@@ -200,71 +127,6 @@ class Books extends CI_Controller{
         return false;
 
     }
-
-    /*public function editItem($data){
-
-        $token = comprobarToken();
-        
-        $item = $this->Books_model->get_itemId($token,$data['item_id']);
-
-        $indice = count($_SESSION['book']['articulos']);
-
-        if($indice > 1){
-
-            $indice --;
-
-            $item['item']['line_item_id'] = $data['line_item_id'];
-            $item['item']['item_order']   = $data['item_order'];
-            $item['item']['quantity']     = $data['quantity'];
-            $item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
-            $item['item']['discount']   = strval($data['discount']);
-
-            if(str_contains($item['item']['discount'],'%')){
-                $sub_discount = ($data['rate'] * $item['item']['quantity']) * ($item['item']['discount_amount']/100);
-            }else{
-                $sub_discount = $item['item']['discount_amount'];
-            }
-            
-            $total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
-
-            $sub_impuesto = $total_discount * ($data['tax_percentage']/100);
-            $total_impuesto = $total_discount + $sub_impuesto;
-
-            $item['item']['impuesto']   = $sub_impuesto;
-            $item['item']['item_total'] = $total_impuesto;
-
-            $_SESSION['book']['articulos'][$indice]['items'][] = $item['item'];
-            
-        }else{
-
-            $item['item']['line_item_id'] = $data['line_item_id'];
-            $item['item']['item_order']   = $data['item_order'];
-            $item['item']['quantity']     = $data['quantity'];
-            $item['item']['discount_amount']  = str_replace("%", "", strval($data['discount']));
-            $item['item']['discount']   = strval($data['discount']);
-
-            if(str_contains($item['item']['discount'],'%')){
-                $sub_discount = ($data['rate'] * $item['item']['quantity']) * ($item['item']['discount_amount']/100);
-            }else{
-                $sub_discount = $item['item']['discount_amount'];
-            }
-
-            
-            $total_discount = ($item['item']['rate'] * $item['item']['quantity']) - $sub_discount;
-
-            $sub_impuesto = $total_discount * ($data['tax_percentage']/100);
-            $total_impuesto = $total_discount + $sub_impuesto;
-
-            $item['item']['impuesto']   = $sub_impuesto;
-            $item['item']['item_total'] = $total_impuesto;
-            
-            $_SESSION['book']['articulos'][0]['items'][] = $item['item'];
-
-        }
-
-        $this->createTabulador();
-
-    }*/
 
     public function addItem(){
 
@@ -315,15 +177,6 @@ class Books extends CI_Controller{
         echo json_encode($_SESSION['book']);
 
     }
-
-    /*public function viewHeader($nombre,$id){
-
-        $indice = count($_SESSION['book']['articulos']);
-
-        $_SESSION['book']['articulos'][$indice]['header'] = $nombre;
-        $_SESSION['book']['articulos'][$indice]['id'] = $id;
-
-    }*/
 
     public function editHeader(){
 
@@ -386,7 +239,7 @@ class Books extends CI_Controller{
 
     }
 
-    public function addDiscount(){
+    /*public function addDiscount(){
 
         $descuento = $this->input->post('descuento');
         $item = $this->input->post('item');
@@ -431,18 +284,18 @@ class Books extends CI_Controller{
 
         echo json_encode($_SESSION['book']);
 
-    }
+    }*/
 
     public function editQuantity(){
 
         $cantidad = $this->input->post('cantidad');
         $item = $this->input->post('item');
-        $rate = $this->input->post('rate');
+        //$rate = $this->input->post('rate');
         $cabecera = $this->input->post('cabecera');
 
-        $item_total = $cantidad * $rate;
-
-        if(isset($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'])){
+        $item_total = $cantidad * $_SESSION['book']['articulos'][$cabecera]['items'][$item]['pricebook_rate'];
+        
+        /*if(isset($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'])){
 
             if(str_contains($_SESSION['book']['articulos'][$cabecera]['items'][$item]['discount'],'%')){
 
@@ -462,12 +315,40 @@ class Books extends CI_Controller{
             $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
             $item_total = $item_total + $imp;
 
-        }
+        }*/
+
+        $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
+        $item_total = $item_total + $imp;
 
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['quantity'] = $cantidad;
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['item_total'] = $item_total;
         $_SESSION['book']['articulos'][$cabecera]['items'][$item]['impuesto'] = $imp;
 
+        $this->createTabulador();
+
+        echo json_encode($_SESSION['book']);
+
+    }
+
+    public function addRate(){
+
+        $rate = $this->input->post('rate');
+        $item = $this->input->post('item');
+        $cabecera = $this->input->post('cabecera');
+
+        
+        //$_SESSION['book']['articulos'][$cabecera]['items'][$item]['precio_producto'] = $_SESSION['book']['articulos'][$cabecera]['items'][$item]['quantity'] * $rate;
+
+        $item_total = $_SESSION['book']['articulos'][$cabecera]['items'][$item]['quantity'] * $rate;
+
+        $imp =  $item_total * ($_SESSION['book']['articulos'][$cabecera]['items'][$item]['tax_percentage']/100);
+        $item_total = $item_total + $imp;
+
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['pricebook_rate'] = $rate;
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['item_total'] = $item_total;
+        $_SESSION['book']['articulos'][$cabecera]['items'][$item]['impuesto'] = $imp;
+       
+       
         $this->createTabulador();
 
         echo json_encode($_SESSION['book']);
@@ -536,9 +417,9 @@ class Books extends CI_Controller{
                     //'unitkey_code' => $item['custom_field_hash']['cf_clave_de_unidad'],// No lo acepta la API Zoho Book´s
                     'quantity' => $item['quantity'],
                     'bcy_rate' => $item['rate'],
-                    'rate' => $item['rate'],
-                    //'tax_id'      => $item['tax_id'],// No lo acepta la API Zoho Book´s
-                    'tax_name'    => $item['tax_name'],
+                    'rate'     => $item['rate'],
+                    //'tax_id'   => $item['tax_id'],// No lo acepta la API Zoho Book´s
+                    'tax_name' => $item['tax_name'],
                     'tax_percentage'    => $item['tax_percentage'],
                     'tax_type'          => $item['tax_type'],
                     'purchase_tax_id'   => $item['purchase_tax_id'],
@@ -620,162 +501,34 @@ class Books extends CI_Controller{
         
     }
 
-    /*public function edit(){
-
-        $dataSessions = $_SESSION['book'];
-        $token = comprobarToken();
-
-        $tabulador = $_SESSION['book']['tabulador'];
-        $tabulador['subtotal'];
-
-        $envio           = $tabulador['envio'];
-        $nombre_impuesto = $tabulador['nombre_impuesto'];
-        $impuesto        = $tabulador['impuesto'];
-
-        $articulosB = array();
-        $order = 0;
-
-        foreach($dataSessions['articulos'] as $cabecera){
-
-            $header = $cabecera['header'];
-            $header_id = $cabecera['id'];
-            // Accede a los valores dentro de "items" en cada artículo
-            foreach($cabecera['items'] as $item){
-
-                if(isset($item['line_item_id'])){
-                    
-                    $articulosB[] = array(
-                        'header_id'  => $header_id,
-                        'header_name'  => $header,
-                        'item_id' => $item['item_id'],
-                        'line_item_id' => $item['line_item_id'],//*
-                        'item_order'   => $item['item_order'],
-                        'name'    => $item['name'],
-                        'sku'     => $item['sku'],
-                        'unit'    => $item['unit'],
-                        'description' => $item['description'],
-                        'quantity' => $item['quantity'],
-                        'bcy_rate' => $item['rate'],
-                        'rate' => $item['rate'],
-                        'tax_name'    => $item['tax_name'],
-                        'tax_percentage'    => $item['tax_percentage'],
-                        'tax_type'          => $item['tax_type'],
-                        'purchase_tax_id'   => $item['purchase_tax_id'],
-                        'purchase_tax_name' => $item['purchase_tax_name'],
-                        'discount'        => isset($item['discount']) ? $item['discount'] : '',//Descuento aplicado a la factura. Puede ser en % o en cantidad
-                        'discount_amount' => isset($item['discount_amount']) ? $item['discount_amount'] : '',
-                        'is_default_tax_applied'  => $item['is_default_tax_applied'],
-                        'purchase_tax_percentage' => $item['purchase_tax_percentage'],
-                        'purchase_tax_type'       => $item['purchase_tax_type'],
-                        //'associated_template_id'  => $item['associated_template_id']
-                        'item_total'              => $item['item_total']
-                    );
-                }else{
-
-                    $articulosB[] = array(
-                        'header_id'  => $header_id,
-                        'header_name'  => $header,
-                        'item_id' => $item['item_id'],
-                        'name'    => $item['name'],
-                        'sku'     => $item['sku'],
-                        'unit'    => $item['unit'],
-                        'description' => $item['description'],
-                        'quantity' => $item['quantity'],
-                        'bcy_rate' => $item['rate'],
-                        'rate' => $item['rate'],
-                        'tax_name'    => $item['tax_name'],
-                        'tax_percentage'    => $item['tax_percentage'],
-                        'tax_type'          => $item['tax_type'],
-                        'purchase_tax_id'   => $item['purchase_tax_id'],
-                        'purchase_tax_name' => $item['purchase_tax_name'],
-                        'discount'        => isset($item['discount']) ? $item['discount'] : '',//Descuento aplicado a la factura. Puede ser en % o en cantidad
-                        'discount_amount' => isset($item['discount_amount']) ? $item['discount_amount'] : '',
-                        'is_default_tax_applied'  => $item['is_default_tax_applied'],
-                        'purchase_tax_percentage' => $item['purchase_tax_percentage'],
-                        'purchase_tax_type'       => $item['purchase_tax_type'],
-                        //'associated_template_id'  => $item['associated_template_id']
-                        'item_total'              => $item['item_total']
-                    );
-
-                }
-
-                $item_id = $item['item_id'];
-                $tax_id  = $item['tax_id'];
-                $name    = $item['name'];
-                $rate    = $item['rate'];
-                $unit    = $item['unit'];
-                $cf_nombresat = $item['custom_field_hash']['cf_nombresat'];
-                $quantity     = $item['quantity'];
-                $order++;
-
-            }
-              
-        }
-
-        $custom_fields = array(
-            'api_name' => 'cf_descripci_n_del_proyecto',
-            'value'    => $this->input->post('descripcionProyecto')
-        );
-
-        $data_save = array(
-            'contact_persons' => $this->input->post('emailContactoPerson'),
-            'reference_number'  => $this->input->post('numeroReferencia'),//Estimaciones de búsqueda por número de referencia
-            'date'          => $this->input->post('fechaPresupuesto'),
-            'expiry_date'   => $this->input->post('fechaVencimiento'), //FECHA DE EXPIRACION DE LA COTIZACION
-            //'salesperson_name' => 'Nacir Coronado',//Nombre del vendedor PREGUNTA A QUE NOMBRE TIENE QUE ESTAR ???
-            'custom_fields'   => array($custom_fields),//Campos personalizados para un presupuesto
-            'line_items'      => $articulosB,// ARRAY DE LOS PRODUCTOS
-            'subject_content' => $this->input->post('asunto'),
-            'notes' => $this->input->post('notasCliente'),//Las notas agregadas a continuación expresando gratitud o por transmitir alguna información
-            'terms' => $this->input->post('terminosCondiciones'),
-            'adjustment'             => $impuesto,
-            'adjustment_description' => $nombre_impuesto,
-            //'item_id' => $item_id,
-            //'name'    => $name,//El nombre del elemento de línea
-            'description' => $cf_nombresat,
-            'rate' => $rate,
-            'unit' => $unit,
-            'shipping_charge' => $envio,
-            //'quantity' => $quantity,//La cantidad de línea de pedido
-        );
-        //echo json_encode($data_save);
-        //die();
-
-        $editBook = $this->Books_model->upd_estimates($token,json_encode($data_save),$this->input->post('estimate'));
-       
-        if($editBook['code'] == 0){
-
-            echo json_encode(array('estatus' => true, 'mensaje' => 'Se actualizo correctamente.'));
-
-        }else{
-
-            echo json_encode(array('estatus' => true, 'mensaje' => $editBook['message']));
-
-        }
-
-    }*/
-
-    /*public function sendMailContacts(){
-
-        //var_dump($this->input->post());
-        $result = $this->edit();
-        $token = comprobarToken();
-
-        $estimate_id = $this->input->post('estimate');
-        $correos = $this->input->post('correos');
+    public function uptaddress(){
         
-        $enviar_correo = $this->Books_model->sendMail($token,$estimate_id,$correos);
-        //var_dump($enviar_correo);
-        if($enviar_correo['code'] == 0){
+        $token = comprobarToken();
+        
+        $data = array(
+            'attention' => $this->input->post('attention'),
+            'address'   => $this->input->post('address'),
+            'street2'   => $this->input->post('street2'),
+            'city'      => $this->input->post('city'),
+            'state'     => $this->input->post('state'),
+            'zip'       => $this->input->post('zip'),
+            'country'   => $this->input->post('country'),
+            'fax'       => $this->input->post('fax'),
+            'phone'     => $this->input->post('phone')
+        );
+        
+        $book = $this->Books_model->upd_contactByAddressID($token,$this->input->post('contact_id'),$this->input->post('address_id'),json_encode($data));
 
-            echo json_encode(array('estatus' => true, 'mensaje' => 'Se actualizo correctamente y envio la cotización.'));
+        if($book['code'] == 0){
+
+            echo json_encode(array('estatus' => true, 'mensaje' => 'La dirección se ha actualizado.'));
 
         }else{
 
-            echo json_encode(array('estatus' => true, 'mensaje' => $enviar_correo['message']));
+            echo json_encode(array('estatus' => true, 'mensaje' => $book['message']));
 
         }
 
-    }*/
-
+    }
+    
 }

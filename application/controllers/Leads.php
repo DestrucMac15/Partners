@@ -103,13 +103,13 @@ class Leads extends CI_Controller{
             $company_name = urlencode($lead['Company']);
             $email = urlencode($lead['Email']);
 
-            /*if(empty($accounts = $this->Accounts_model->get_accountName($token,$company_name)) or empty($accounts = $this->Contacts_model->gat_contactEmail($token,$email))){
+            /*if(empty($accounts = $this->Accounts_model->get_accountName($token,$company_name)) or empty($accounts = $this->Contacts_model->get_contactEmail($token,$email))){
 
                $accounts = ''; 
                
             }*/
 
-            if(!empty($accounts = $this->Accounts_model->get_accountName($token,$company_name)) AND !empty($contacts = $this->Contacts_model->gat_contactEmail($token,$email))){
+            if(!empty($accounts = $this->Accounts_model->get_accountName($token,$company_name)) AND !empty($contacts = $this->Contacts_model->get_contactEmail($token,$email))){
                 
                 $type = "both";
 
@@ -117,7 +117,7 @@ class Leads extends CI_Controller{
 
                 $type = "company";
 
-           }elseif (!empty($contacts = $this->Contacts_model->gat_contactEmail($token,$email))) {
+           }elseif (!empty($contacts = $this->Contacts_model->get_contactEmail($token,$email))) {
 
                 $type = "email";
 
@@ -401,22 +401,28 @@ class Leads extends CI_Controller{
 
         }else if(!empty($this->input->post('id_account'))){//Cuando se manda sin datos de deals ***ACCOUNT
 
+            //$token = comprobarToken();
+            //$data_accountsGet = $this->Accounts_model->get_potentialAccountById($token,$this->input->post('id_account'))['data'][0];
+
             $data = array(
                 'overwrite' => true,
                 'notify_lead_owner' => true,
                 'Accounts' => $this->input->post('id_account'),
                 'assign_to' => '4768126000000300001'
-                //'Deals' => 'id??'
+                //'Deals' => $data_accountsGet['id']
             );
 
         }else if(!empty($this->input->post('id_contact'))){//Cuando se manda sin datos de deals ***Contacts
+
+            //$token = comprobarToken();
+            //$data_contactsGet = $this->Accounts_model->get_potentialContactById($token,$this->input->post('id_contact'))['data'][0];
 
             $data = array(
                 'overwrite' => true,
                 'notify_lead_owner' => true,
                 'Contacts' => $this->input->post('id_contact'),
                 'assign_to' => '4768126000000300001'
-                //'Deals' => 'id??'
+                //'Deals' => $data_contactsGet['id']
             );
 
         }else{

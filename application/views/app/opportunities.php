@@ -13,18 +13,29 @@
                 <thead>
                     <tr>
                         <th class="text-center">Oportunidad</th>
-                        <th class="text-center">Descripcion</th>
-                        <th>Acciones</th>
+                        <th class="text-center">Fecha de Cierre</th>
+                        <!--<th class="text-center">Descripción</th>-->
+                        <th class="text-center">Monto</th>
+                        <th class="text-center">Fase</th>
+                        <th class="text-center">Cuenta</th>
+                        <th class="text-center">Contacto</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
                         if(!empty($opportunities)){
                             foreach($opportunities['data'] as $info){ 
+                                $closing_date = new DateTime($info['Closing_Date']);
+                                $formatDate = "M d,Y";
                     ?>
                             <tr>
-                                <td><?= $info['Deal_Name']; ?></td>
-                                <td><?= $info['Description']; ?></td>
+                                <td><a href="<?php echo base_url(); ?>opportunities/editar/<?= $info['id']; ?>"><?= $info['Deal_Name']; ?></a></td>
+                                <td><?= $closing_date->format($formatDate); ?></td>
+                                <td><?= $info['$currency_symbol'].number_format($info['Amount'],2,'.',','); ?></td>
+                                <td><?= $info['Stage']; ?></td>
+                                <td><?= $info['Account_Name']['name']; ?></td>
+                                <td><?= $info['Contact_Name']['name']; ?></td>
                                 <td>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">

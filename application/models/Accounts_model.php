@@ -83,5 +83,44 @@
             return json_decode($response, true);
         }
 
+        /*public function get_potentialAccountById($token,$id_account){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Potentials/search?criteria=(Account_Name%3Aequals%3A'.$id_account.')',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'GET',
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: Zoho-oauthtoken '.$token
+              ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return json_decode($response, true);
+        }
+
+        public function get_potentialContactById($token,$id_contact){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Potentials/search?criteria=(Account_Name%3Aequals%3A'.$id_contact.')',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'GET',
+              CURLOPT_HTTPHEADER => array(
+                'Authorization: Zoho-oauthtoken '.$token
+              ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return json_decode($response, true);
+        }*/
 
     }

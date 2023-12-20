@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Propietario de Cuenta</label>
-                    <input type="text" name="propietarioCuenta" class="form-control" value="<?= $account['Owner']['name']; ?>" >
+                    <input type="text" name="propietarioCuenta" class="form-control" value="<?= $account['Owner']['name']; ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label for="">Nombre de Cuenta</label>

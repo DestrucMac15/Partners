@@ -23,7 +23,7 @@
                         <th class="text-center">Correo</th>
                         <th class="text-center">Telefono</th>
                         <th class="text-center">Empresa</th>
-                        <th>Acciones</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,7 +32,7 @@
                             foreach($leads['data'] as $lead){
                     ?>
                                 <tr>
-                                    <td><?= $lead['Full_Name']; ?></td>
+                                    <td><a href="<?php echo base_url(); ?>leads/editar/<?= $lead['id']; ?>"><?= $lead['Full_Name']; ?></a></td>
                                     <td><?= $lead['Email']; ?></td>
                                     <td><?= $lead['Phone']; ?></td>
                                     <td><?= $lead['Company']; ?></td>
