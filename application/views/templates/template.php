@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOZMIA</title>
+    <link rel="icon" href="<?php echo base_url(); ?>assets/images/vozmiaIcono.ico">
 
     <meta name="keywords" content="Jada Demoliciones, demoledores, sustentables, excavaciones, desmantelamientos, arquitectura, demoliciones">
     <meta name="descripcion" content="Somos una empresa con 70 años de experiencia especializada en la regeneración de espacios urbanos.">
