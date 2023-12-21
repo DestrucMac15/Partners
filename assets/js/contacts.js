@@ -3,7 +3,7 @@ $(document).ready(function(){
     const ruta = $('body').data('ruta');
 
     /*=====EDITAR=======*/
-    $('#formAccountEdit').on('submit',function(event){
+    $('#formContactEdit').on('submit',function(event){
 
         event.preventDefault();
 
@@ -27,7 +27,7 @@ $(document).ready(function(){
                     boton.prop('disabled', true);
                     
                     $.ajax({
-                        url: ruta+'Accounts/edit',
+                        url: ruta+'contacts/edit',
                         dataType: 'JSON',
                         data: data,
                         cache: false,
@@ -51,7 +51,7 @@ $(document).ready(function(){
                                 });
 
                                 setInterval(function(){
-                                    location.href = ruta+"accounts";
+                                    location.href = ruta+"contacts";
                                 },1500);
 
                             }else{

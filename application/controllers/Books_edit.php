@@ -664,4 +664,34 @@ class Books_edit extends CI_Controller{
 
     }
 
+    public function uptaddress(){
+        
+        $token = comprobarToken();
+        
+        $data = array(
+            'attention' => $this->input->post('attention'),
+            'address'   => $this->input->post('address'),
+            'street2'   => $this->input->post('street2'),
+            'city'      => $this->input->post('city'),
+            'state'     => $this->input->post('state'),
+            'zip'       => $this->input->post('zip'),
+            'country'   => $this->input->post('country'),
+            'fax'       => $this->input->post('fax'),
+            'phone'     => $this->input->post('phone')
+        );
+        
+        $book = $this->Books_model->upd_contactByAddressID($token,$this->input->post('contact_id'),$this->input->post('address_id'),json_encode($data));
+
+        if($book['code'] == 0){
+
+            echo json_encode(array('estatus' => true, 'mensaje' => 'La dirección se ha actualizado.'));
+
+        }else{
+
+            echo json_encode(array('estatus' => true, 'mensaje' => $book['message']));
+
+        }
+
+    }
+
 }

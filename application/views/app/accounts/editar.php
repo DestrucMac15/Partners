@@ -91,8 +91,8 @@
                 <div class="form-group">
                     <label for="">Moneda</label>
                     <select name="moneda" id="" class="form-control">
-                        <option <?= ($account['Currency'] == '') ? 'selected' : '';?> value="MXN">MXN</option>
-                        <option <?= ($account['Currency'] == '') ? 'selected' : '';?> value="USD">USD</option>
+                        <option <?= ($account['Currency'] == 'MXN') ? 'selected' : '';?> value="MXN">MXN</option>
+                        <option <?= ($account['Currency'] == 'USD') ? 'selected' : '';?> value="USD">USD</option>
                     </select>
                 </div>
             </div>
@@ -202,7 +202,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="">Descripción</label>
-                    <textarea class="form-control" name="descripcion" rows="5"><?= $account['Description']; ?></textarea>
+                    <textarea class="form-control" name="descripcion" rows="5" required><?= $account['Description']; ?></textarea>
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
             </div>

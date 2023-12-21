@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="">Dashboard</a></li>
-                <li class="breadcrumb-item active">Cuentas</li>
+                <li class="breadcrumb-item active">Contactos</li>
             </ul>
         </div>
     </div>
@@ -12,26 +12,32 @@
             <table class="table table-bordered table-striped display responsive nowrap" id="tabla" width="100%">
                 <thead>
                     <tr>
+                        <th class="text-center">Contacto</th>
+                        <th class="text-center">Telefono</th>
                         <th class="text-center">Cuenta</th>
-                        <th class="text-center">Descripción</th>
+                        <th class="text-center">Fuente de Lead</th>
+                        <th class="text-center">Correo electrónico</th>
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php   
-                        if(!empty($accounts)){
-                            foreach($accounts['data'] as $account){ 
+                        if(!empty($contacts)){
+                            foreach($contacts['data'] as $contact){ 
                     ?>
                                 <tr>
-                                    <td><a href="<?php echo base_url(); ?>accounts/editar/<?= $account['id']; ?>"><?= $account['Account_Name']; ?></a></td>
-                                    <td><?= $account['Description']; ?></td>
+                                    <td><a href="<?php echo base_url(); ?>contacts/editar/<?= $contact['id']; ?>"><?= $contact['Full_Name']; ?></a></td>
+                                    <td><?= $contact['Phone']; ?></td>
+                                    <td><?= $contact['Account_Name']['name']; ?></td>
+                                    <td><?= $contact['Lead_Source']; ?></td>
+                                    <td><?= $contact['Email']; ?></td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                                                 Acciones
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="<?php echo base_url(); ?>accounts/editar/<?= $account['id']; ?>">Editar</a>
+                                                <a class="dropdown-item" href="<?php echo base_url(); ?>contacts/editar/<?= $contact['id']; ?>">Editar</a>
                                             </div>
                                         </div>
                                     </td>

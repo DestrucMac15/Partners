@@ -496,6 +496,7 @@ class Leads extends CI_Controller{
         $encode_dataAcoount = json_encode($json_account);
 
         $account = $this->Accounts_model->upd_accountData($token,$lead['Accounts'],json_decode($encode_dataAcoount))['data'][0];
+        $contact = $this->Contacts_model->upd_contactData($token,$lead['Contacts'],json_decode($encode_dataAcoount))['data'][0];
 
         if($account['code'] == "SUCCESS"){ 
 

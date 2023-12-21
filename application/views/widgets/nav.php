@@ -17,6 +17,9 @@
       <li class="nav-item <?= ($this->uri->segment(1) === 'accounts') ? 'active' : ''; ?>">
         <a class="nav-link " href="<?php echo base_url('accounts'); ?>">Cuentas</a>
       </li>
+      <li class="nav-item <?= ($this->uri->segment(1) === 'contacts') ? 'active' : ''; ?>">
+        <a class="nav-link " href="<?php echo base_url('contacts'); ?>">Contactos</a>
+      </li>
       <li class="nav-item dropdown ">
         <a class="nav-link dropdown-toggle " href="#" id="navbardrop" data-toggle="dropdown">
          <?= $this->session->userdata('name'); ?>
