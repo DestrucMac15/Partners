@@ -309,7 +309,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-outline-success" form="formBillingAddress">Actualizar</button>
+        <button type="submit" class="btn btn-outline-success" id="billing_boton" form="formBillingAddress">Actualizar</button>
       </div>
 
     </div>
@@ -329,7 +329,7 @@
 
       <!-- Modal body -->
         <div class="modal-body">
-            <form action="">
+            <form action="" id="formShippingAddress" >
                                
                 <div class="col-md-12">
 
@@ -395,7 +395,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
           <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Actualizar</button>
+        <button type="submit" class="btn btn-outline-success" id="shipping_boton" form="formShippingAddress">Actualizar</button>
       </div>
 
     </div>

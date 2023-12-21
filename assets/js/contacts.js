@@ -50,7 +50,7 @@ $(document).ready(function(){
                                     drag: false
                                 });
 
-                                setInterval(function(){
+                                setTimeout(function(){
                                     location.href = ruta+"contacts";
                                 },1500);
 

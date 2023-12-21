@@ -50,7 +50,7 @@ $(document).ready(function(){
                                 drag: false
                             });
                 
-                            setInterval(function(){
+                            setTimeout(function(){
                 
                                 location.replace(ruta+'leads');
                 
@@ -139,7 +139,7 @@ $(document).ready(function(){
                                     drag: false
                                 });
 
-                                setInterval(function(){
+                                setTimeout(function(){
                                     location.href = ruta+"leads";
                                 },1500);
 
@@ -283,7 +283,7 @@ $(document).ready(function(){
                                     drag: false
                                 });
 
-                                setInterval(function(){
+                                setTimeout(function(){
                                     location.href = ruta+"leads";
                                 },1500);
 

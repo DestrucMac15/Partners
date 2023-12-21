@@ -59,7 +59,7 @@ $(document).ready(function(){
                                     drag: false
                                 });
 
-                                setInterval(function(){
+                                setTimeout(function(){
                                     location.href = ruta+"books/?opp="+opp_id;
                                 },1500);
                                 
@@ -235,6 +235,12 @@ $(document).ready(function(){
 
     });
 
+    $('#modalUPDShippingAddress').on('show.bs.modal', function(event){
+
+        $('#formShippingAddress')[0].reset();
+
+    });
+
     $('.showModalBillingAddress').click(function(event){
 
         event.preventDefault();
@@ -249,6 +255,163 @@ $(document).ready(function(){
 
         $('#modalUPDShippingAddress').modal('show');
 
+    });
+
+    /*=====UPDATE FORM MODAL´S=======*/
+    $('#formBillingAddress').submit(function(event){
+
+        event.preventDefault();
+
+        let data = new FormData(document.getElementById("formBillingAddress"));
+        let boton = $(document.getElementById("billing_boton"));
+
+        iziToast.success({
+            timeout: 5000,
+            overlay: true,
+            displayMode: 'once',
+            id: 'inputs',
+            zindex: 1051,
+            title: 'Atención!',
+            message: '¿Estás seguro de Actualizar?',
+            position: 'topRight',
+            drag: false,
+            buttons: [
+                ['<button>Actualizar</button>', function (instance, toast) {
+
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
+
+                    $.ajax({
+                        url: ruta+'Books/uptaddress',
+                        dataType: 'JSON',
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST'
+                    }).done(function(respuesta){
+            
+                        if(respuesta.estatus){
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                            iziToast.success({
+                                title: 'Correcto!',
+                                overlay: true,
+                                message: respuesta.mensaje,
+                                position: 'topRight',
+                            });
+                            // Cerrar el modal después de una respuesta exitosa
+                            //$('#modalUPDBillingAddress').modal('hide');
+
+                            setTimeout(function(){
+                                window.location.reload();
+                            },1500);
+                            
+                        }else{
+            
+                            iziToast.error({
+                                title: 'Alerta!',
+                                message: respuesta.mensaje,
+                                position: 'topRight',
+                            });
+            
+                        }
+            
+                    }).always(function(){
+            
+                        boton.prop('disabled', false);
+                        boton.text('Actualizar');
+            
+                    });
+                    
+                }, true],
+                ['<button>Cancelar</button>', function (instance, toast) {
+
+                    iziToast.hide({
+                        transitionOut: 'fadeOutUp'
+                    }, toast);
+                    
+                }, true],
+            ]
+        });
+        
+    });
+
+    $('#formShippingAddress').submit(function(event){
+
+        event.preventDefault();
+
+        let data = new FormData(document.getElementById("formShippingAddress"));
+        let boton = $(document.getElementById("shipping_boton"));
+
+        iziToast.success({
+            timeout: 5000,
+            overlay: true,
+            displayMode: 'once',
+            id: 'inputs',
+            zindex: 1051,
+            title: 'Atención!',
+            message: '¿Estás seguro de Actualizar?',
+            position: 'topRight',
+            drag: false,
+            buttons: [
+                ['<button>Actualizar</button>', function (instance, toast) {
+
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
+
+                    $.ajax({
+                        url: ruta+'Books/uptaddress',
+                        dataType: 'JSON',
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST'
+                    }).done(function(respuesta){
+            
+                        if(respuesta.estatus){
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                            iziToast.success({
+                                title: 'Correcto!',
+                                overlay: true,
+                                message: respuesta.mensaje,
+                                position: 'topRight',
+                            });
+                            // Cerrar el modal después de una respuesta exitosa
+                            //$('#modalUPDBillingAddress').modal('hide');
+
+                            setTimeout(function(){
+                                window.location.reload();
+                            },1500);
+                            
+                        }else{
+            
+                            iziToast.error({
+                                title: 'Alerta!',
+                                message: respuesta.mensaje,
+                                position: 'topRight',
+                            });
+            
+                        }
+            
+                    }).always(function(){
+            
+                        boton.prop('disabled', false);
+                        boton.text('Actualizar');
+            
+                    });
+                    
+                }, true],
+                ['<button>Cancelar</button>', function (instance, toast) {
+
+                    iziToast.hide({
+                        transitionOut: 'fadeOutUp'
+                    }, toast);
+                    
+                }, true],
+            ]
+        });
+        
     });
 
 });
