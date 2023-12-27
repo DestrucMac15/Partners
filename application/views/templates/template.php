@@ -7,12 +7,11 @@
     <title>VOZMIA</title>
     <link rel="icon" href="<?php echo base_url(); ?>assets/images/vozmiaIcono.ico">
 
-    <meta name="keywords" content="Jada Demoliciones, demoledores, sustentables, excavaciones, desmantelamientos, arquitectura, demoliciones">
-    <meta name="descripcion" content="Somos una empresa con 70 años de experiencia especializada en la regeneración de espacios urbanos.">
+    <meta name="descripcion" content="Vozmia representa nuestra evolución hacia una solución más completa y versátil. Esta transformación nos permitirá brindarles aún más valor y servicios de calidad.">
 
     <meta property="og:title" content="Jada Demoliciones">
     <meta property="og:url" content="<?php echo base_url(); ?>">
-    <meta property="og:description" content="Somos una empresa con 70 años de experiencia especializada en la regeneración de espacios urbanos." />
+    <meta property="og:description" content="Vozmia representa nuestra evolución hacia una solución más completa y versátil. Esta transformación nos permitirá brindarles aún más valor y servicios de calidad." />
     <meta property="og:image" content="<?php echo base_url(); ?>assets/images/logo.png">
     <meta property="og:locale:alternate" content="es_MX">
 
