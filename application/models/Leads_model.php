@@ -4,7 +4,8 @@
         public function all_dataModel($token,$company,$name){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Leads/search?criteria=((Partner%3Aequals%3A'.$company.')and(Contacto_Partner%3Aequals%3A'.$name.'))',
+              CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Leads/search?criteria=(Partner%3Aequals%3A'.$company.')',
+              //CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Leads/search?criteria=((Partner%3Aequals%3A'.$company.')and(Contacto_Partner%3Aequals%3A'.$name.'))',
               //CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Leads?page='.$pag.'&per_page=200',
               CURLOPT_RETURNTRANSFER => true, 
               CURLOPT_ENCODING => '',

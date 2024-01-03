@@ -131,6 +131,14 @@
                 </div>
             </form>
             <div class="row">
+                <div class="alert alert-warning alert-dismissible w-100">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Antención!</strong>
+                    <p>
+                        Cada partner y sus usuarios son responsables por los descuentos y precios que coticen. 
+                        Si aplicas un precio por debajo de los de lista, debes tener autorización escrita desde ventas@vozmia.com.mx
+                    </p>
+                </div>
                 <div class="col-md-12">
                     <form class="form-inline" id="form_buscador">
                         <label for="" class="mx-2">Buscar producto</label>
