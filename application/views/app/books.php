@@ -32,18 +32,18 @@
                         if(!empty($books)){
                             foreach($books['estimates'] as $book){ 
                     ?>
-                            <tr>
-                                <td><a href="<?= base_url(); ?>books/downloadBook/<?= $book['estimate_id']; ?>" target="_blank"><i class="fas fa-file-pdf"></i> <?= $book['estimate_number']; ?></a></td>
-                                <td><?= $book['status']; ?></td>
-                                <td><?= $book['date']; ?></td>
-                                <td><?= $book['reference_number']; ?></td>
-                                <td><?= $book['currency_code'].'$'.number_format($book['sub_total'], 2, '.', ','); ?></td>
-                                <td><?= $book['currency_code'].'$'.number_format($book['total'], 2, '.', ','); ?></td>
-                                <td><?= $book['expiry_date']; ?></td>
-                                <td>
-                                    <a class="dropdown-item" href="<?php echo base_url(); ?>books_edit/editar/<?= $book['estimate_id']; ?>">Editar</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td><a href="<?= base_url(); ?>books/downloadBook/<?= $book['estimate_id']; ?>" target="_blank"><i class="fas fa-file-pdf"></i> <?= $book['estimate_number']; ?></a></td>
+                                    <td><?= $book['status']; ?></td>
+                                    <td><?= $book['date']; ?></td>
+                                    <td><?= $book['reference_number']; ?></td>
+                                    <td><?= $book['currency_code'].'$'.number_format($book['sub_total'], 2, '.', ','); ?></td>
+                                    <td><?= $book['currency_code'].'$'.number_format($book['total'], 2, '.', ','); ?></td>
+                                    <td><?= $book['expiry_date']; ?></td>
+                                    <td>
+                                        <a class="dropdown-item" href="<?php echo base_url(); ?>books_edit/editar/<?= $book['estimate_id']; ?>">Editar</a>
+                                    </td>
+                                </tr>
                     <?php 
                             }
                         }
@@ -54,4 +54,4 @@
     </div>
 </div>
 
-<?= $this->template->javascript->add(base_url().'assets/js/opportunities.js'); ?>
+<?= $this->template->javascript->add(base_url().'assets/js/books.js'); ?>

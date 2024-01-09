@@ -100,7 +100,9 @@ $(document).ready(function(){
         let mails = [];
 
         $('.email').each(function(){
-            mails.push($(this).data('email'));
+            if($(this).prop('checked')){
+                mails.push($(this).data('email'));
+            }
         });
 
         let data   = new FormData(document.getElementById("formEstimatesEdit"));
@@ -114,7 +116,7 @@ $(document).ready(function(){
         }
 
         data.append('correos',mails);
-
+        
         let boton = $(this).find(':submit');
         
 
@@ -158,7 +160,7 @@ $(document).ready(function(){
                                     drag: false
                                 });
 
-                                setInterval(function(){
+                                setTimeout(function(){
                                     location.href = ruta+"books/?opp="+opp_id;
                                 },1500);
 

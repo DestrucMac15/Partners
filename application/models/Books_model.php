@@ -113,7 +113,7 @@
         public function get_listItems($token,$page){##TRAER LOS PRODUCTOS POR PAGINACION DE 200 CADA UNA
             $curl = curl_init();
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://www.zohoapis.com/books/v3/items?organization_id=737962647&page='.$page,
+              CURLOPT_URL => 'https://www.zohoapis.com/books/v3/items?organization_id=737962647&cf_mostrar_en_portal=Si&page='.$page,
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,

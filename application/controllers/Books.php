@@ -488,8 +488,20 @@ class Books extends CI_Controller{
         );
         //echo json_encode($data_save);
         //die();
+        //$book = "";
 
-        $book = $this->Books_model->create_estimates($token,json_encode($data_save));
+        //while (empty($book)) {// ***COMPROBAR LA CREACION DE LA COTIZACION***
+
+            $book = $this->Books_model->create_estimates($token,json_encode($data_save));
+
+            /*if(isset($book_result)){
+
+                $book = $book_result;
+
+            }*/
+
+            //sleep(3);
+        //}
         
         if($book['code'] == 0){
 
@@ -500,7 +512,23 @@ class Books extends CI_Controller{
             echo json_encode(array('estatus' => true, 'mensaje' => $book['message']));
 
         }
+
+        return array(
+            'estimate_id' => $book['estimate']['estimate_id']
+        );
         
+    }
+
+    public function sendEmail(){
+
+        $data = $this->save();
+        $estimate_id = $data['estimate_id'];
+        $correos     = $this->input->post('correos');
+        $token = comprobarToken();
+        
+        $enviar_correo = $this->Books_model->sendMail($token,$estimate_id,$correos);
+        //var_dump($enviar_correo);
+
     }
 
     public function uptaddress(){

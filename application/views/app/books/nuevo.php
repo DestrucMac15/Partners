@@ -101,7 +101,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha de vencimiento</label>
-                            <input type="date" name="fechaVencimiento" class="form-control">
+                            <input type="date" name="fechaVencimiento" class="form-control" required>
+                            <div class="invalid-feedback">Campo obligatorio.</div>
                         </div>
                     </div>
                     <div class="col-md-6" hidden>
@@ -120,6 +121,7 @@
                         <div class="form-group">
                             <label for="">Descripción del proyecto</label>
                             <input type="text" name="descripcionProyecto" class="form-control" required>
+                            <div class="invalid-feedback">Campo obligatorio.</div>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -187,7 +189,7 @@
                 <div class="card my-5">
                     <div class="card-body row">
                         <div class="col-md-6">
-                            <div class="form-group form-check">
+                            <div class="form-group form-check" hidden>
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" name="create"> Create a retainer invioce for this estimación automaticaly
                                 </label>
@@ -200,7 +202,7 @@
 
                                 <div class="form-group form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox" value="<?= $data['contact_person_id']; ?>" name="emailContactoPerson[]"> <?= $data['email']; ?>
+                                        <input class="form-check-input email" type="checkbox" value="<?= $data['contact_person_id']; ?>" name="emailContactoPerson[]" data-email="<?= $data['email']; ?>"> <?= $data['email']; ?>
                                     </label>
                                 </div>     
                             <?php 
@@ -223,7 +225,8 @@
             </form>
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-success mx-2" type="submit" form="formEstimates">Guardar</button>
+                    <button class="btn btn-success" type="submit" form="formEstimates">Guardar</button>
+                    <button class="btn btn-success" id="sendMail" form="formEstimates" type="submit">Guardar y Enviar</button>
                     <a href="<?php echo base_url(); ?>books/?opp=<?= $id; ?>" class="btn btn-outline-secondary">Regresar</a>
                 </div>
             </div>

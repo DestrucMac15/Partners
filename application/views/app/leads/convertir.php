@@ -162,7 +162,7 @@
                             </select>
                             <div class="invalid-feedback">Campo obligatorio.</div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <label for="">Canal</label>
                             <select name="canal" id="" class="form-control" required>
                                 <option value="Standard">Standard</option>
@@ -170,7 +170,7 @@
                             </select>
                             <div class="invalid-feedback">Campo obligatorio.</div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <label for="">Ingeniero Preventa</label>
                             <select name="ingeniero" id="" class="form-control" required readonly>
                                 <option selected value="Nacir Coronado">Nacir Coronado</option>

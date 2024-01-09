@@ -4,7 +4,7 @@
             <section class="card w-100 my-5" style="border-radius: 10px;">
                 <form class="card-body" id="form_login" role="login" class="needs-validation" novalidate>    
                     <div class="d-flex justify-content-center ">
-                        <img src="<?php echo base_url(); ?>assets/images/logo.jpg" width="100" alt="">
+                        <img src="<?php echo base_url(); ?>assets/images/logo2.png" width="100" alt="">
                     </div>
                     <hr>
                     <div class="form-group">

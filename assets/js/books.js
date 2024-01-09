@@ -93,6 +93,115 @@ $(document).ready(function(){
 
     });
 
+    /*=====ENVIAR CORREO=======*/
+    $('#sendMail').on('click',function(event){
+        
+        event.preventDefault();
+
+        //let data = new FormData(this);
+        let mails = [];
+
+        $('.email').each(function(){
+            if($(this).prop('checked')){
+                mails.push($(this).data('email'));
+            }
+        });
+
+        let data   = new FormData(document.getElementById("formEstimates"));
+        let emails = new FormData(document.getElementById("footerForm"));
+        let opp_id = $('#opp_id').val();
+        //let opp_id = new FormData(document.getElementById("footerForm"));
+
+        // Obtienes las entradas del formulario X para meterlos al fomulario Y.
+        for (let [key, value] of emails.entries()) {
+            data.append(key, value);
+        }
+
+        data.append('correos',mails);
+        
+        let boton = $(this).find(':submit');
+        
+        if($('.email').is(":checked")){
+
+            iziToast.success({
+                timeout: 5000,
+                overlay: true,
+                displayMode: 'once',
+                id: 'inputs',
+                zindex: 999,
+                title: 'Atención!',
+                message: '¿Estás seguro de enviar el presupuesto?',
+                position: 'topRight',
+                drag: false,
+                buttons: [
+                    ['<button>Enviar</button>', function (instance, toast){
+
+                        boton.text('Enviando..');
+                        boton.prop('disabled', true);
+                        
+                        $.ajax({
+                            url: ruta+'Books/sendEmail',
+                            dataType: 'JSON',
+                            data: data,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            type: 'POST'
+                        }).done(function(respuesta){
+                                //console.log(respuesta);
+                                if(respuesta.estatus){
+
+                                    iziToast.success({
+                                        timeout: 3000,
+                                        overlay: true,
+                                        displayMode: 'once',
+                                        id: 'inputs',
+                                        zindex: 999,
+                                        title: 'Correcto!',
+                                        message: respuesta.mensaje,
+                                        position: 'topRight',
+                                        drag: false
+                                    });
+
+                                    setTimeout(function(){
+                                        location.href = ruta+"books/?opp="+opp_id;
+                                    },1500);
+
+                                }else{
+
+                                    iziToast.error({
+                                        title: 'Alerta!',
+                                        message: respuesta.mensaje,
+                                        position: 'topRight',
+                                    });
+
+                                }
+
+                        }).always(function(){
+                            boton.prop('disabled', false);
+                            boton.text('Guardar');
+                        });
+                    }, true],
+                    ['<button>Cancelar</button>', function (instance, toast) {
+
+                        iziToast.hide({
+                            transitionOut: 'fadeOutUp'
+                        }, toast);
+                        
+                    }, true],
+                ]
+            });
+
+        }else{
+
+            iziToast.error({
+                title: 'Alerta!',
+                message: 'Marca un correo electronico',
+                position: 'topRight',
+            });
+
+        }
+    });
 
     $('#form_buscador').submit(function(event){
 
@@ -159,7 +268,7 @@ $(document).ready(function(){
         $('#modalUPDShippingAddress').modal('show');
 
     });
-
+    
     /*=====UPDATE FORM MODAL´S=======*/
     $('#formBillingAddress').submit(function(event){
 

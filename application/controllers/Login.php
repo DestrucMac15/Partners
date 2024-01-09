@@ -48,9 +48,11 @@ class Login extends CI_Controller {
             $correo = $this->input->post('correo');
             $password = $this->input->post('password');
 
+            $hashedPassword = hash('sha512', $password);
+
             $token = comprobarToken();
 
-            if(empty($res = $this->Partners_model->get_login($token, $correo, $password))){
+            if(empty($res = $this->Partners_model->get_login($token, $correo, $hashedPassword))){
 
                 $this->output->set_status_header(401);
                 
@@ -131,8 +133,8 @@ class Login extends CI_Controller {
 
     public function create_password(){
 
-        $correo = $this->input->post('correo');
-        $password = $this->input->post('password1');
+        $correo    = $this->input->post('correo');
+        $password  = $this->input->post('password1');
         $password2 = $this->input->post('password2');
 
         $token = comprobarToken();
@@ -148,15 +150,17 @@ class Login extends CI_Controller {
 
                 $this->output->set_status_header(200);
 
-                $data = $this->Partners_model->upd_password($token,$res['id'],$password)['data'][0];
-                echo $data['code'];
+                $hashedPassword = hash('sha512', $password);
+
+                $data = $this->Partners_model->upd_password($token,$res['id'],$hashedPassword)['data'][0];
+                //echo $data['code'];
                 //$this->session->set_userdata($data);
 
                 if($data['code'] == "SUCCESS"){
 
                     $this->output->set_status_header(200);
 
-                    echo json_encode('Correcto, bienvenido!');
+                    echo json_encode('Correcto, Se cambio la contraseña!');
 
                 }else{
 

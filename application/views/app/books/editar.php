@@ -101,7 +101,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha de vencimiento</label>
-                            <input type="date" name="fechaVencimiento" class="form-control" value="<?= $estimate['expiry_date']; ?>">
+                            <input type="date" name="fechaVencimiento" class="form-control" value="<?= $estimate['expiry_date']; ?>" required>
                         </div>
                     </div>
                     <div class="col-md-6" hidden>
@@ -119,7 +119,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Descripción del proyecto</label>
-                            <input type="text" name="descripcionProyecto" class="form-control" value="<?= isset($estimate['custom_fields'][0]['value'])?$estimate['custom_fields'][0]['value']:'' ?>">
+                            <input type="text" name="descripcionProyecto" class="form-control" value="<?= isset($estimate['custom_fields'][0]['value'])?$estimate['custom_fields'][0]['value']:'' ?>" required>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -187,7 +187,7 @@
                 <div class="card my-5">
                     <div class="card-body row">
                         <div class="col-md-6">
-                            <div class="form-group form-check">
+                            <div class="form-group form-check" hidden>
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="checkbox" name="create"> Create a retainer invioce for this estimación automaticaly
                                 </label>
