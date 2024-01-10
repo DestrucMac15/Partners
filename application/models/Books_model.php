@@ -255,7 +255,7 @@
                     "send_from_org_email_id": false,
                     "to_mail_ids": ['.$correos.'],
                     "cc_mail_ids": [
-                        "otonielex77c@gmail.com"
+                        "nacir.coronado@vozmia.com.mx"
                     ]
                 }',
                 CURLOPT_HTTPHEADER => array(
