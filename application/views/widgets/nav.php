@@ -8,6 +8,9 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto w-100 d-flex justify-content-end">
+      <li class="nav-item <?= ($this->uri->segment(1) === 'home') ? 'active' : ''; ?>">
+        <a class="nav-link  " href="<?php echo base_url('home'); ?>">Home</a>
+      </li>
       <li class="nav-item <?= ($this->uri->segment(1) === 'leads') ? 'active' : ''; ?>">
         <a class="nav-link  " href="<?php echo base_url('leads'); ?>">Leads</a>
       </li>
