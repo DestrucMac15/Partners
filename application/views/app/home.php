@@ -8,8 +8,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 my-5">
-            <iframe src="https://workdrive.zohoexternal.com/external/91c5812964ff0d0773acafeeb0a544b52bb63f9a5fe4ffd636a3f36c2b28b9fb" frameborder="0" height="500" width="100%" name="Zoho Workdrive" allow="fullscreen">
-            </iframe>
+        <iframe src="https://workdrive.zohoexternal.com/embed/shmv36b502d0e81e54440aa0ea36bbc69cf46?toolbar=false&layout=grid&appearance=light&themecolor=green" scrolling="no" frameborder="0" allowfullscreen=true width="100%" height="500" title="Embed code"></iframe>
         </div>
     </div>
 </div>
