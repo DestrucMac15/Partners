@@ -53,16 +53,17 @@
                     id: 'inputs',
                     zindex: 999,
                     title: 'Correcto!',
-                    message: 'Bienvenido',
+                    //message: 'Bienvenido',
                     position: 'topRight',
                     drag: false
                 });
     
-                setInterval(function(){
+                setTimeout(function(){
     
-                    location.replace(ruta+'login');
+                    location.href = ruta+"login/reset?"+datos;
     
                 },1000);
+
                 },
                 statusCode: {
                     400: function(xhr){

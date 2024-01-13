@@ -183,7 +183,24 @@ class Login extends CI_Controller {
 
     public function mail(){
 
+        $token = comprobarToken();
         $correo = $this->input->post('correo');
+        //Validar el correo ingresado
+
+        if(empty($data_email = $this->Partners_model->get_email($token, $correo))){
+
+            $this->output->set_status_header(402);
+            echo json_encode(array('estatus' => false, 'mensaje' => 'No esta registrado'));
+
+        }else{
+
+            $this->output->set_status_header(200);
+            echo json_encode(array('estatus' => true, 'mensaje' => 'Correcto'));
+
+        }
+
+
+        /*$correo = $this->input->post('correo');
 
         $config['protocol']     = 'sendmail';
         $config['smtp_port']    = 587; // Puedes usar 465 para SSL o 587 para TLS
@@ -218,7 +235,7 @@ class Login extends CI_Controller {
             echo false;
             //echo $this->email->print_debugger();
 
-        }
+        }*/
 
     }
 

@@ -8,10 +8,14 @@
                     </div>
                     <hr>
                     <div class="form-group">
-                        <p class="text-center">Ingresa tu nueva contraseña para: <?= urldecode($correo); ?></p>
+                        <p class="text-center">Ingresa tu nueva contraseña para: <?= urldecode($_GET['correo']); ?></p>
+                    </div>
+                    <div class="alert alert-warning alert-dismissible w-100">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Antención!</strong> Al momento de realizar el cambio de contraseña esta tarda un minuto en poder ser utilizada.
                     </div>
                     <div class="form-group" hidden>
-                        <input type="text" name="correo" class="form-control" value="<?= $correo; ?>" readonly>
+                        <input type="text" name="correo" class="form-control" value="<?= $_GET['correo']; ?>" readonly>
                     </div>
 
                     <div class="d-flex justify-content-between">
