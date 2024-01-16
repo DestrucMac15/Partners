@@ -101,7 +101,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha de vencimiento</label>
-                            <input type="date" name="fechaVencimiento" class="form-control" required>
+                            <input type="date" name="fechaVencimiento" class="form-control" id="fechaVencimiento" required>
                             <div class="invalid-feedback">Campo obligatorio.</div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Descripción del proyecto</label>
-                            <input type="text" name="descripcionProyecto" class="form-control" required>
+                            <input type="text" name="descripcionProyecto" class="form-control" id="descripcionProyecto" required>
                             <div class="invalid-feedback">Campo obligatorio.</div>
                         </div>
                     </div>

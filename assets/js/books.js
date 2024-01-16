@@ -120,8 +120,9 @@ $(document).ready(function(){
         data.append('correos',mails);
         
         let boton = $(this).find(':submit');
+        let descripcionProyecto = $('#descripcionProyecto').val();
         
-        if($('.email').is(":checked")){
+        if($('.email').is(":checked") && $('#fechaVencimiento').val() !== '' && descripcionProyecto.trim() !== ''){
 
             iziToast.success({
                 timeout: 5000,
@@ -196,7 +197,7 @@ $(document).ready(function(){
 
             iziToast.error({
                 title: 'Alerta!',
-                message: 'Marca un correo electronico',
+                message: 'Campos vacios/Marcar correo',
                 position: 'topRight',
             });
 
