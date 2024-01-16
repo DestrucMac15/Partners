@@ -426,6 +426,91 @@ $(document).ready(function(){
         });
         
     });
+    
+    /*=====MARK AN ESTIMATE AS ACCEPTED=======*/
+    $('#tabla tbody').on('click', '.estimate_accepted', function(event){
+
+        event.preventDefault();
+
+        let estimate_id = $(this).data('id');
+        let opp_id = $(this).data('estimate');
+        let data = new FormData();
+        
+        data.append('estimate_id',estimate_id);
+        data.append('opp_id',opp_id);
+        //console.log(data);
+        let boton = $(this).find(':submit');
+
+        iziToast.success({
+            timeout: 5000,
+            overlay: true,
+            displayMode: 'once',
+            id: 'inputs',
+            zindex: 999,
+            title: 'Atención!',
+            message: '¿Estás seguro de Aceptar el presupuesto?',
+            position: 'topRight',
+            drag: false,
+            buttons: [
+                ['<button>Enviar</button>', function (instance, toast){
+
+                    boton.text('Enviando..');
+                    boton.prop('disabled', true);
+                    
+                    $.ajax({
+                        url: ruta+'Books/updEstatusEstimate',
+                        dataType: 'JSON',
+                        data: data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST'
+                    }).done(function(respuesta){
+                            //console.log(respuesta);
+                            if(respuesta.estatus){
+
+                                iziToast.success({
+                                    timeout: 3000,
+                                    overlay: true,
+                                    displayMode: 'once',
+                                    id: 'inputs',
+                                    zindex: 999,
+                                    title: 'Correcto!',
+                                    message: respuesta.mensaje,
+                                    position: 'topRight',
+                                    drag: false
+                                });
+
+                                setTimeout(function(){
+                                    window.location.reload();
+                                },1500);
+
+                            }else{
+
+                                iziToast.error({
+                                    title: 'Alerta!',
+                                    message: respuesta.mensaje,
+                                    position: 'topRight',
+                                });
+
+                            }
+
+                    }).always(function(){
+                        boton.prop('disabled', false);
+                        boton.text('Guardar');
+                    });
+                }, true],
+                ['<button>Cancelar</button>', function (instance, toast) {
+
+                    iziToast.hide({
+                        transitionOut: 'fadeOutUp'
+                    }, toast);
+                    
+                }, true],
+            ]
+        });
+
+    });
 
 });
 /*=====FUNCTION´S=======*/

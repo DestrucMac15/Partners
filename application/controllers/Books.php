@@ -486,22 +486,8 @@ class Books extends CI_Controller{
             'shipping_charge' => $envio,
             'quantity' => $quantity,//La cantidad de línea de pedido
         );
-        //echo json_encode($data_save);
-        //die();
-        //$book = "";
 
-        //while (empty($book)) {// ***COMPROBAR LA CREACION DE LA COTIZACION***
-
-            $book = $this->Books_model->create_estimates($token,json_encode($data_save));
-
-            /*if(isset($book_result)){
-
-                $book = $book_result;
-
-            }*/
-
-            //sleep(3);
-        //}
+        $book = $this->Books_model->create_estimates($token,json_encode($data_save));
         
         if($book['code'] == 0){
 
@@ -552,6 +538,33 @@ class Books extends CI_Controller{
         if($book['code'] == 0){
 
             echo json_encode(array('estatus' => true, 'mensaje' => 'La dirección se ha actualizado.'));
+
+        }else{
+
+            echo json_encode(array('estatus' => true, 'mensaje' => $book['message']));
+
+        }
+
+    }
+
+    public function updEstatusEstimate(){
+
+        $token = comprobarToken();
+
+        $upd_opp = array(
+            'Stage' => 'Ganada'
+        );
+        
+        $json = '{"data":['.json_encode($upd_opp).']}';
+        $data = json_encode($json);
+
+        $book = $this->Books_model->accepte_estimate($token,$this->input->post('estimate_id'));
+
+        if($book['code'] === 0){
+
+            echo json_encode(array('estatus' => true, 'mensaje' => 'La cotizacion fue Aceptada'));
+
+            $this->Opportunities_model->update_opportunities($token, json_decode($data), $this->input->post('opp_id'));
 
         }else{
 

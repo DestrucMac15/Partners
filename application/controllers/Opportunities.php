@@ -114,31 +114,4 @@ class Opportunities extends CI_Controller{
 
     }
 
-    /*public function upload(){
-
-        if($_FILES['archivo']['type'] == 'application/pdf'){
-
-            $id = $this->input->post('id');
-
-            $token = comprobarToken();
-            
-            $upload = $this->Opportunities_model->post_documentFile($token, $id, $_FILES['archivo'])['data'][0];
-
-            if($upload['status'] === 'success'){
-
-                echo json_encode(array('estatus' => true, 'mensaje' => 'Se a subio correctamente.'));
-
-            }else{
-
-                echo json_encode(array('estatus' => false, 'mensaje' => 'Error en el campo: '.$upload['message']));
-                
-            }
-
-        }
-
-
-
-    }*/
-
-
 }

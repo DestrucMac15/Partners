@@ -41,7 +41,15 @@
                                     <td><?= $book['currency_code'].'$'.number_format($book['total'], 2, '.', ','); ?></td>
                                     <td><?= $book['expiry_date']; ?></td>
                                     <td>
-                                        <a class="dropdown-item" href="<?php echo base_url(); ?>books_edit/editar/<?= $book['estimate_id']; ?>">Editar</a>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                                                Acciones
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="<?php echo base_url(); ?>books_edit/editar/<?= $book['estimate_id']; ?>">Editar</a>
+                                                <button type="button" class="dropdown-item estimate_accepted" data-id="<?= $book['estimate_id']; ?>" data-estimate="<?= $book['zcrm_potential_id']; ?>">Marcar como Aceptado</button>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                     <?php 

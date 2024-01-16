@@ -107,6 +107,26 @@
             return json_decode($response,true);            
         }
 
+        public function accepte_estimate($token,$id){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://www.zohoapis.com/books/v3/estimates/'.$id.'/status/accepted?organization_id=737962647',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Zoho-oauthtoken '.$token
+            ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return json_decode($response,true);
+        }
+
         /**
          * ZOHO BOOKS ITEMS (PRODUCTOS)
          */
@@ -255,7 +275,7 @@
                     "send_from_org_email_id": false,
                     "to_mail_ids": ['.$correos.'],
                     "cc_mail_ids": [
-                        "nacir.coronado@vozmia.com.mx"
+                        "ventas@vozmia.com.mx"
                     ]
                 }',
                 CURLOPT_HTTPHEADER => array(
