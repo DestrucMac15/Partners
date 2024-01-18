@@ -19,7 +19,7 @@
                     <label for="">id</label>
                     <input type="number" class="form-control" name="id" value="<?= $contact['id']; ?>" readonly> 
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">Propietario de Contacto</label>
                     <input type="text" name="propietarioCuenta" class="form-control" value="<?= $contact['Owner']['name']; ?>" readonly>
                 </div>
@@ -62,7 +62,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Fuente de Lead</label>
-                    <select class="form-control" name="fuenteLead" required>
+                    <select class="form-control" name="fuenteLead">
                         <option <?= ($contact['Lead_Source'] == '') ? 'selected' : '';?> value="">-None-</option>
                         <option <?= ($contact['Lead_Source'] == 'Advertisement') ? 'selected' : '';?> value="Advertisement">Advertisement</option>
                         <option <?= ($contact['Lead_Source'] == 'Base de Datos') ? 'selected' : '';?> value="Base de Datos">Base de Datos</option>
@@ -85,7 +85,6 @@
                         <option <?= ($contact['Lead_Source'] == 'Web Download') ? 'selected' : '';?> value="Web Download">Web Download</option>
                         <option <?= ($contact['Lead_Source'] == 'Web Research') ? 'selected' : '';?> value="Web Research">Web Research</option> 
                     </select>
-                    <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
                 <div class="form-group">
                     <label for="">Nombre de contacto</label>
@@ -141,7 +140,7 @@
                     <label for="">Twitter</label>
                     <input type="text" name="twitter" class="form-control"  value="<?= $contact['Twitter']; ?>">
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">Subordinado de</label>
                     <input type="text" name="reporting_to" class="form-control"  value="<?= $contact['Reporting_To']; ?>" readonly>
                 </div>
@@ -212,7 +211,7 @@
         </div>
         <div class="row my-5">
             <div class="col-md-12 d-flex justify-content-end">
-                <button type="submit" class="btn btn-outline-success mx-2">Actualizar</button>
+                <button type="submit" class="btn btn-outline-success mx-2">Guardar</button>
                 <a href="<?php echo base_url(); ?>contacts" class="btn btn-outline-secondary">Regresar</a>
             </div>
         </div>

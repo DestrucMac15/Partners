@@ -4,7 +4,7 @@ class Opportunities extends CI_Controller{
     function __construct(){
         parent::__construct();
         $this->load->library(array('session'));
-        $this->load->model(array('Opportunities_model'));
+        $this->load->model(array('Opportunities_model','Accounts_model','Contacts_model'));
         $this->load->helper(array('zoho_refresh/refresh_token','opportunities/opportunities','users/users'));
     }
 
@@ -27,6 +27,38 @@ class Opportunities extends CI_Controller{
             
             $this->template->content->view('app/opportunities',$data);
     
+            $this->template->publish();
+
+        }else{
+
+            redirect(base_url('login'), 'refresh'); 
+
+        }
+
+    }
+
+    public function nuevo(){
+
+        if($this->session->userdata('is_logged')){
+            
+            $this->template->title = 'Agregar Oportunidad';
+            
+            $token = comprobarToken();
+
+            $company = urlencode($this->session->userdata('company')); 
+            $name = urlencode($this->session->userdata('name'));
+
+            $accounts = $this->Accounts_model->all_dataModel($token, $company, $name);
+            $contacts = $this->Contacts_model->all_dataModelContacts($token, $company, $name);
+
+            $data = array(
+                'token' => $token,
+                'accounts' => $accounts,
+                'contacts' => $contacts
+            );
+
+            $this->template->content->view('app/opportunities/nuevo', $data);
+
             $this->template->publish();
 
         }else{

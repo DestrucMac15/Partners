@@ -4,7 +4,7 @@
         public function all_dataUsers($token){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/users?type=ActiveUsers',
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/users?type=ActiveUsers',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,

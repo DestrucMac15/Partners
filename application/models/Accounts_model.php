@@ -4,7 +4,7 @@
         public function all_dataModel($token,$company,$name){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Accounts/search?criteria=(Partner%3Aequals%3A'.$company.')',
+              CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Accounts/search?criteria=(Partner%3Aequals%3A'.$company.')',
               CURLOPT_RETURNTRANSFER => true, 
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -24,7 +24,7 @@
         public function get_accountName($token,$company_name){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Accounts/search?criteria=Account_Name%3Aequals%3A'.$company_name,
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Accounts/search?criteria=Account_Name%3Aequals%3A'.$company_name,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -44,7 +44,7 @@
         public function get_account($token, $id){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Accounts?ids='.$id,
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Accounts?ids='.$id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -64,7 +64,7 @@
         public function upd_accountData($token,$id,$data){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Accounts/'.$id,
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Accounts/'.$id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,

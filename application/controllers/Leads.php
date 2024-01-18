@@ -191,6 +191,7 @@ class Leads extends CI_Controller{
 
         $data = array(
             'Owner' => array('id' => 4768126000000300001),
+            'Layout' => array('id' => 4768126000000091055),
             'Nombre_de_partner' => $this->input->post('nombre_partner'),
             'First_Name' => $this->input->post('nombre'),
             'Phone' => $this->input->post('telefono'),
@@ -248,19 +249,14 @@ class Leads extends CI_Controller{
         
         if($lead['status'] == "success"){ 
 
-                $this->output->set_status_header(200);
+            $this->output->set_status_header(200);
                 
-                echo json_encode(array('estatus' => true, 'mensaje' => 'Se a agregado correctamente.'));
+            echo json_encode(array('estatus' => true, 'mensaje' => 'Se a agregado correctamente.'));
 
             /*if($this->mail($this->session->userdata('email'))){
-
             }else{
-
                 echo json_encode(array('estatus' => true, 'mensaje' => 'Error al enviar correo.'));
-
             }*/
-
-
 
         }else{
 

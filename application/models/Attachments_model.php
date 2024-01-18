@@ -4,7 +4,7 @@
         public function post_documentFile($token, $id, $file){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Potentials/'.$id.'/Attachments',
+              CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Potentials/'.$id.'/Attachments',
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -25,7 +25,7 @@
         public function get_attachmentsAll($token,$id){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Potentials/'.$id.'/Attachments',
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Potentials/'.$id.'/Attachments',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -45,7 +45,7 @@
         public function get_attachmentsPDF($token,$id_potentials,$id_attachments){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Potentials/'.$id_potentials.'/Attachments/'.$id_attachments,
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Potentials/'.$id_potentials.'/Attachments/'.$id_attachments,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,

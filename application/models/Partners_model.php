@@ -4,7 +4,7 @@
         public function get_login($token, $email, $password){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Contactos_Partners/search?criteria=((Email%3Aequals%3A'.$email.')and(Contrase_a%3Aequals%3A'.$password.'))',
+            CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Contactos_Partners/search?criteria=((Email%3Aequals%3A'.$email.')and(Contrase_a%3Aequals%3A'.$password.'))',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -24,7 +24,7 @@
         public function get_email($token, $email){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Contactos_Partners/search?criteria=(Email%3Aequals%3A'.$email.')',
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Contactos_Partners/search?criteria=(Email%3Aequals%3A'.$email.')',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -44,7 +44,7 @@
         public function upd_password($token,$id,$password){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Contactos_Partners/'.$id,
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Contactos_Partners/'.$id,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,

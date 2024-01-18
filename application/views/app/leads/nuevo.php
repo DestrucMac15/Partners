@@ -10,7 +10,7 @@
 </div>
 <form id="formLeads" action="" class="was-validated">
     <div class="container">
-        <h5>Información de Lead</h5>
+        <h5>Crear Lead</h5>
         <hr>
         <div class="row my-5">
             <div class="col-md-6">

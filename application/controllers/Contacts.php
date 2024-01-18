@@ -8,7 +8,7 @@ class Contacts extends CI_Controller{
 
         $this->load->library(array('session'));
 
-        $this->load->model(array('Contacts_model'));
+        $this->load->model(array('Contacts_model','Accounts_model'));
 
 		$this->load->helper(array('zoho_refresh/refresh_token'));
 
@@ -37,6 +37,37 @@ class Contacts extends CI_Controller{
     
             $this->template->content->view('app/contacts', $data);
     
+            $this->template->publish();
+
+        }else{
+
+            redirect(base_url('login'), 'refresh'); 
+
+        }
+
+    }
+
+    public function nuevo(){
+
+        if($this->session->userdata('is_logged')){
+            
+            $this->template->title = 'Agregar Contacto';
+            
+            $token = comprobarToken();
+            $company = urlencode($this->session->userdata('company'));
+            $name = urlencode($this->session->userdata('name'));
+            
+            $accounts = $this->Accounts_model->all_dataModel($token, $company, $name);
+            $vendors = $this->Contacts_model->get_allVendors($token);
+
+            $data = array(
+                'token' => $token,
+                'accounts' => $accounts,
+                'vendors' => $vendors
+            );
+
+            $this->template->content->view('app/contacts/nuevo', $data);
+
             $this->template->publish();
 
         }else{

@@ -8,6 +8,9 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12 d-flex justify-content-end">
+            <a href="<?php echo base_url(); ?>accounts/nuevo" class="btn btn-outline-success">Agregar</a>
+        </div>
         <div class="col-md-12 my-5">
             <table class="table table-bordered table-striped display responsive nowrap" id="tabla" width="100%">
                 <thead>

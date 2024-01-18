@@ -19,7 +19,7 @@
                     <label for="">id</label>
                     <input type="number" class="form-control" name="id" value="<?= $account['id']; ?>" readonly> 
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">Propietario de Cuenta</label>
                     <input type="text" name="propietarioCuenta" class="form-control" value="<?= $account['Owner']['name']; ?>" readonly>
                 </div>
@@ -70,7 +70,7 @@
                         <option <?= ($account['Industry'] == 'Non-management ISV') ? 'selected' : '';?> value="Non-management ISV">Non-management ISV</option>
                         <option <?= ($account['Industry'] == 'Optical Networking') ? 'selected' : '';?> value="Optical Networking">Optical Networking</option>
                         <option <?= ($account['Industry'] == 'Service Provider') ? 'selected' : '';?> value="Service Provider">Service Provider</option>
-                        <option <?= ($account['Industry'] == 'Small/Medium Enterprise') ? 'selected' : 'Small/Medium Enterprise';?> value="">Small/Medium Enterprise</option>
+                        <option <?= ($account['Industry'] == 'Small/Medium Enterprise') ? 'selected' : 'Small/Medium Enterprise';?> value="Small/Medium Enterprise">Small/Medium Enterprise</option>
                         <option <?= ($account['Industry'] == 'Storage Equipment') ? 'selected' : '';?> value="Storage Equipment">Storage Equipment</option>
                         <option <?= ($account['Industry'] == 'Storage Service Provider') ? 'selected' : '';?> value="Storage Service Provider">Storage Service Provider</option>
                         <option <?= ($account['Industry'] == 'Systems Integrator') ? 'selected' : '';?> value="Systems Integrator">Systems Integrator</option>
@@ -126,7 +126,7 @@
                         <option <?= ($account['Ownership'] == '') ? 'selected' : '';?> value="">-None-</option>
                         <option <?= ($account['Ownership'] == 'Other') ? 'selected' : '';?> value="Other">Other</option>
                         <option <?= ($account['Ownership'] == 'Private') ? 'selected' : '';?> value="Private">Private</option>
-                        <option <?= ($account['Ownership'] == 'Public') ? 'selected' : 'Public';?> value="">Public</option>
+                        <option <?= ($account['Ownership'] == 'Public') ? 'selected' : 'Public';?> value="Public">Public</option>
                         <option <?= ($account['Ownership'] == 'Subsidiary') ? 'selected' : '';?> value="Subsidiary">Subsidiary</option>
                         <option <?= ($account['Ownership'] == 'Government') ? 'selected' : '';?> value="Government">Government</option>
                         <option <?= ($account['Ownership'] == 'Partnership') ? 'selected' : '';?> value="Partnership">Partnership</option>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Empleados</label>
-                    <input type="text" name="empleados" class="form-control" value="<?= $account['Employees']; ?>">
+                    <input type="text" name="empleados" class="form-control" min="0" value="<?= $account['Employees']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="">Código SIC</label>

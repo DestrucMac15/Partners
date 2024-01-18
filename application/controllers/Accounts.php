@@ -47,6 +47,35 @@ class Accounts extends CI_Controller{
 
     }
 
+    public function nuevo(){
+
+        if($this->session->userdata('is_logged')){
+            
+            $this->template->title = 'Agregar Cuenta';
+            
+            $token = comprobarToken();
+            $company = urlencode($this->session->userdata('company'));
+            $name = urlencode($this->session->userdata('name'));
+            
+            $accounts = $this->Accounts_model->all_dataModel($token, $company, $name);
+
+            $data = array(
+                'token' => $token,
+                'accounts' => $accounts
+            );
+
+            $this->template->content->view('app/accounts/nuevo', $data);
+
+            $this->template->publish();
+
+        }else{
+
+            redirect(base_url('login'), 'refresh'); 
+
+        }
+
+    }
+
     public function editar($id){
 
         if($this->session->userdata('is_logged')){
