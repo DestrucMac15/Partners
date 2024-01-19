@@ -29,12 +29,23 @@
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
                 <div class="form-group">
+                    <label for="">Cuenta Principal</label>
+                    <!--<input type="text" name="cuentaPrincipal" class="form-control" value="<empty($account['Parent_Account']) ? '' : $account['Parent_Account']['name']; ?>" readonly>-->
+                    <select name="cuentaPrincipal" class="form-control" required>
+                            <option value="">-None-</option>
+                        <?php foreach($accountAll['data'] as $accountList){ ?>
+                            <option <?= (!empty($account['Parent_Account']['id']) && $account['Parent_Account']['id'] == $accountList['id']) ? 'selected' : '' ;?> value="<?= $accountList['id']; ?>"><?= $accountList['Account_Name']; ?></option>
+                        <?php } ?>
+                    </select>
+                    <div class="invalid-feedback">Campo obligatorio.</div>
+                </div>
+                <div class="form-group">
                     <label for="">Sitio de Cuenta</label>
                     <input type="text" name="sitioCuenta" class="form-control" value="<?= $account['Account_Site']; ?>">
                 </div>
                 <div class="form-group">
-                    <label for="">Cuenta Principal</label>
-                    <input type="text" name="cuentaPrincipal" class="form-control" value="<?= empty($account['Parent_Account']) ? '' : $account['Parent_Account']['name']; ?>" readonly>
+                    <label for="">Número de Cuenta</label>
+                    <input type="number" name="numCuenta" class="form-control" min="0" value="<?= $account['Account_Number']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="">Tipo de Cuenta</label>
@@ -136,11 +147,11 @@
                 </div>
                 <div class="form-group">
                     <label for="">Empleados</label>
-                    <input type="text" name="empleados" class="form-control" min="0" value="<?= $account['Employees']; ?>">
+                    <input type="number" name="empleados" class="form-control" min="0" value="<?= $account['Employees']; ?>" min="0">
                 </div>
                 <div class="form-group">
                     <label for="">Código SIC</label>
-                    <input type="text" name="codigoSic" class="form-control" value="<?= $account['SIC_Code']; ?>">
+                    <input type="number" name="codigoSic" class="form-control" value="<?= $account['SIC_Code']; ?>" min="0">
                 </div>
                 <div class="form-group">
                     <label for="">Tasa de Cambio</label>

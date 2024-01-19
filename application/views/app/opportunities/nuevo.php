@@ -8,7 +8,7 @@
         </div>
     </div>
 </div>
-<form id="formLeadsEdit" action="" class="was-validated">
+<form id="formOppInsert" action="" class="was-validated">
     <div class="container">
         <h5>Crear Oportunidad</h5>
         <hr>
@@ -87,11 +87,11 @@
                     </select>
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">Contacto Partner</label>
                     <input type="text" class="form-control" name="contactoPartner" value="<?= $this->session->userdata('name'); ?>" readonly>
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">Partner</label>
                     <input type="text" class="form-control" name="partner" value="<?= $this->session->userdata('company'); ?>" readonly>
                 </div>
@@ -143,7 +143,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Ingresos esperados</label>
-                    <input type="number" class="form-control" name="Ingresos" placeholder="MX$" readonly>
+                    <input type="number" class="form-control" name="Ingresos" placeholder="MX $" readonly>
                 </div>
                 <div class="form-group">
                     <label for="">Fuente de Campaña</label>

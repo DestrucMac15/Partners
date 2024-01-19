@@ -8,7 +8,7 @@
         </div>
     </div>
 </div>
-<form id="formContactEdit" action="" class="was-validated">
+<form id="formContactInsert" action="" class="was-validated">
     <div class="container">
         <h5>Crear Contacto</h5>
         <hr>
@@ -133,9 +133,10 @@
                     <label for="">N.º de teléfono del asistente</label>
                     <input type="text" name="asst_phone" class="form-control">
                 </div>
-                <div class="form-group">
-                    <label for="">No participación del correo electrónico</label>
-                    <input type="text" name="email_opt_out" class="form-control">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="email_opt_out">No participación del correo electrónico
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="">ID de Skype</label>

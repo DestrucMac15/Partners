@@ -13,7 +13,7 @@
             <strong>Antención!</strong> La creación del lead puede demorar unos minutos.
         </div>
         <div class="col-md-12 d-flex justify-content-end">
-            <a href="<?php echo base_url(); ?>leads/nuevo" class="btn btn-outline-success">Agregar</a>
+            <a href="<?php echo base_url(); ?>leads/nuevo" class="btn btn-outline-success">Crear Lead</a>
         </div>
         <div class="col-md-12 my-5">
             <table class="table table-bordered table-striped display responsive nowrap" id="tabla" width="100%">

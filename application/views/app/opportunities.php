@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-md-12 d-flex justify-content-end">
-            <a href="<?php echo base_url(); ?>opportunities/nuevo" class="btn btn-outline-success">Agregar</a>
+            <a href="<?php echo base_url(); ?>opportunities/nuevo" class="btn btn-outline-success">Crear Oportunidad</a>
         </div>
         <div class="col-md-12 my-5">
             <table class="table table-bordered table-striped display responsive nowrap" id="tabla" width="100%">

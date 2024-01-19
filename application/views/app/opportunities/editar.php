@@ -2,14 +2,13 @@
     <div class="row my-5">
         <div class="col-md-12">
             <ul class="breadcrumb">
-                <!--<li class="breadcrumb-item"><a href="">Dashboard</a></li>-->
                 <li class="breadcrumb-item"><a href="<?php echo base_url(); ?>opportunities">Oportunidades</a></li>
                 <li class="breadcrumb-item active">Editar Oportunidad</li>
             </ul>
         </div>
     </div>
 </div>
-<form id="formLeadsEdit" action="" class="was-validated">
+<form id="formOppEdit" action="" class="was-validated">
     <div class="container">
         <h5>Información de Oportunidad</h5>
         <hr>
@@ -21,12 +20,18 @@
                 </div>
                 <div class="form-group">
                     <label for="">Nombre de la Oportunidad</label>
-                    <input type="text" class="form-control" name="nombreOportunidad" required value="<?= $opportunitie['Deal_Name']; ?>" readonly>
+                    <input type="text" class="form-control" name="nombreOportunidad" required value="<?= $opportunitie['Deal_Name']; ?>">
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
                 <div class="form-group">
                     <label for="">Nombre de la Cuenta</label>
-                    <input type="text" class="form-control" name="nombreCuenta" required value="<?= $opportunitie['Account_Name']['name']; ?>" readonly>
+                    <!--<input type="text" class="form-control" name="nombreCuenta" required value="$opportunitie['Account_Name']['name'];" readonly>-->
+                    <select name="nombreCuenta" class="form-control" required>
+                            <option value="">-None-</option>
+                        <?php foreach($accounts['data'] as $account){ ?>
+                            <option <?= (!empty($opportunitie['Account_Name']['id']) && $opportunitie['Account_Name']['id'] == $account['id']) ? 'selected' : '' ;?> value="<?= $account['id']; ?>"><?= $account['Account_Name']; ?></option>
+                        <?php } ?>
+                    </select>
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
                 <div class="form-group">
@@ -77,13 +82,20 @@
                 </div>
                 <div class="form-group">
                     <label for="">Nombre de Contacto</label>
-                    <input type="text" class="form-control" name="nombreContacto" value="<?= $opportunitie['Contact_Name']['name']; ?>" readonly>
+                    <!--<input type="text" class="form-control" name="nombreContacto" value="$opportunitie['Contact_Name']['name']; ?>">-->
+                    <select name="nombreContacto" class="form-control" required>
+                            <option value="">-None-</option>
+                        <?php foreach($contacts['data'] as $contact){ ?>
+                            <option <?= (!empty($opportunitie['Contact_Name']['id']) && $opportunitie['Contact_Name']['id'] == $contact['id']) ? 'selected' : '' ;?> value="<?= $contact['id']; ?>"><?= $contact['Full_Name']; ?></option>
+                        <?php } ?>
+                    </select>
+                    <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">Contacto Partner</label>
                     <input type="text" class="form-control" name="contactoPartner" value="<?= $opportunitie['Contacto_Partner']['name']; ?>" readonly>
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">Partner</label>
                     <input type="text" class="form-control" name="partner" value="<?= $opportunitie['Partner']['name']; ?>" readonly>
                 </div>
@@ -178,9 +190,11 @@
                 <div class="form-group">
                     <label for="">Categoría de la previsión</label>
                     <select name="prevision" class="form-control">
-                        <option <?= ($opportunitie['Producto'] == '') ? 'selected' : '';?> value="Pipeline">Pipeline</option>
-                        <option <?= ($opportunitie['Producto'] == '') ? 'selected' : '';?> value="Best Case">Best Case</option>
-                        <option <?= ($opportunitie['Producto'] == '') ? 'selected' : '';?> value="Committed">Committed</option>
+                        <option value="">-None-</option>
+                        <option <?= ($opportunitie['Forecast_Category__s'] == 'Pipeline') ? 'selected' : '';?> value="Pipeline">Pipeline</option>
+                        <option <?= ($opportunitie['Forecast_Category__s'] == 'Best Case') ? 'selected' : '';?> value="Best Case">Best Case</option>
+                        <option <?= ($opportunitie['Forecast_Category__s'] == 'Committed') ? 'selected' : '';?> value="Committed">Committed</option>
+                        <option <?= ($opportunitie['Forecast_Category__s'] == 'Closed') ? 'selected' : '';?> value="Closed">Closed</option>
                     </select>
                 </div>
             </div>

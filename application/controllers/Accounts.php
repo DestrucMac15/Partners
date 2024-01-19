@@ -83,11 +83,15 @@ class Accounts extends CI_Controller{
             $this->template->title = 'Accounts';
 
             $token = comprobarToken();
+            $company = urlencode($this->session->userdata('company'));
+            $name = urlencode($this->session->userdata('name'));
 
             $account = $this->Accounts_model->get_account($token, $id);
+            $accountAll = $this->Accounts_model->all_dataModel($token, $company, $name);
 
             $data = array(
-                'account' => $account['data'][0]
+                'account' => $account['data'][0],
+                'accountAll' => $accountAll
             );
     
             $this->template->content->view('app/accounts/editar', $data);
@@ -102,13 +106,13 @@ class Accounts extends CI_Controller{
 
     }
 
-    public function edit(){
+    public function save(){
 
         $data = array(
-            //'propietarioCuenta' => $this->input->post('propietarioCuenta'),
+            'Owner' => array('id' => 4768126000000300001),
             'Account_Name' => $this->input->post('nombreCuenta'),
-            //'Account_Site' => $this->input->post('sitioCuenta'),
-            //'Parent_Account' => $this->input->post('cuentaPrincipal'),
+            'Account_Site' => $this->input->post('sitioCuenta'),
+            'Parent_Account' => $this->input->post('cuentaPrincipal'),
             'Account_Type' => $this->input->post('tipoCuenta'),
             'Industry' => $this->input->post('sector'),
             'Annual_Revenue' => $this->input->post('IngresosAnuales'),
@@ -116,9 +120,69 @@ class Accounts extends CI_Controller{
             'Rating' => $this->input->post('calificacion'),
             'Phone' => $this->input->post('telefono'),
             'Ticker_Symbol' => $this->input->post('simboloValor'),
-            //'Ownership' => $this->input->post('propietario'),
+            'Employees' => $this->input->post('empleados'),
+            'Website' => $this->input->post('website'),
+            'Account_Number' => $this->input->post('numCuenta'),
+            'Ownership' => $this->input->post('propietario'),
+            'SIC_Code' => $this->input->post('codigoSic'),
+            'tasaCambio' => $this->input->post('tasaCambio'),
+            'Billing_Street' => $this->input->post('domicilioFacturacion'),
+            'Billing_City' => $this->input->post('ciudadFacturacion'),
+            'Billing_State' => $this->input->post('estadoFacturacion'),
+            'Billing_Country' => $this->input->post('paisFacturacion'),
+            'Billing_Code' => $this->input->post('codigoFacturacion'),
+            'Shipping_Street' => $this->input->post('domicilioEnvio'),
+            'Shipping_City' => $this->input->post('ciudadEnvio'),
+            'Shipping_State' => $this->input->post('estadoEnvio'),
+            'Shipping_Country' => $this->input->post('paisEnvio'),
+            'Shipping_Code' => $this->input->post('codigoEnvio'),
+            'Contacto_Partner' => $this->session->userdata('id_partner'),
+            'Partner' => $this->session->userdata('id_company'),
+            'Description' => $this->input->post('descripcion')
+        );
+
+        $json = '{"data":['.json_encode($data).']}';
+
+        $encode_data = json_encode($json);
+
+        $token = comprobarToken();
+
+        $account = $this->Accounts_model->insert_accountData($token, json_decode($encode_data))['data'][0];
+
+        if($account['status'] == "success"){ 
+
+            $this->output->set_status_header(200);
+                
+            echo json_encode(array('estatus' => true, 'mensaje' => 'Se a agregado correctamente.'));
+
+        }else{
+
+            $this->output->set_status_header(401);
+
+            echo json_encode(array('estatus' => false, 'mensaje' => 'Error en el campo: '.$account['details']['api_name']));
+
+        }
+    }
+
+    public function edit(){
+
+        $data = array(
+            //'propietarioCuenta' => $this->input->post('propietarioCuenta'),
+            'Account_Name' => $this->input->post('nombreCuenta'),
+            'Account_Site' => $this->input->post('sitioCuenta'),
+            'Parent_Account' => $this->input->post('cuentaPrincipal'),
+            'Account_Type' => $this->input->post('tipoCuenta'),
+            'Industry' => $this->input->post('sector'),
+            'Annual_Revenue' => $this->input->post('IngresosAnuales'),
+            'Currency' => $this->input->post('moneda'),
+            'Rating' => $this->input->post('calificacion'),
+            'Phone' => $this->input->post('telefono'),
+            'Ticker_Symbol' => $this->input->post('simboloValor'),
+            'Ownership' => $this->input->post('propietario'),
             'Employees' => $this->input->post('empleados'),
             'SIC_Code' => $this->input->post('codigoSic'),
+            'Website' => $this->input->post('website'),
+            'Account_Number' => $this->input->post('numCuenta'),
             //'tasaCambio' => $this->input->post('tasaCambio'),
             'Billing_Street' => $this->input->post('domicilioFacturacion'),
             'Billing_City' => $this->input->post('ciudadFacturacion'),
@@ -136,7 +200,7 @@ class Accounts extends CI_Controller{
         $json = '{"data":['.json_encode($data).']}';
 
         $encode_data = json_encode($json);
-
+        
         $token = comprobarToken();
 
         $account = $this->Accounts_model->upd_accountData($token, $this->input->post('id'), json_decode($encode_data))['data'][0];

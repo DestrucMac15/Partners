@@ -8,8 +8,8 @@
         </div>
     </div>
 </div>
-<form id="formAccountEdit" action="" class="was-validated">
-<div class="container">
+<form id="formAccountInsert" action="" class="was-validated">
+    <div class="container">
         <h5>Crear Cuenta</h5>
         <hr>
         <div class="row my-5">
@@ -33,6 +33,10 @@
                         <?php } ?>
                     </select>
                     <div class="invalid-feedback">Campo obligatorio.</div>
+                </div>
+                <div class="form-group">
+                    <label for="">Número de Cuenta</label>
+                    <input type="number" name="numCuenta" class="form-control" min="0">
                 </div>
                 <div class="form-group">
                     <label for="">Tipo de Cuenta</label>
@@ -135,11 +139,11 @@
                 </div>
                 <div class="form-group">
                     <label for="">Empleados</label>
-                    <input type="text" name="empleados" class="form-control" min="0">
+                    <input type="number" name="empleados" class="form-control" min="0">
                 </div>
                 <div class="form-group">
                     <label for="">Código SIC</label>
-                    <input type="text" name="codigoSic" class="form-control">
+                    <input type="number" name="codigoSic" class="form-control" min="0">
                 </div>
                 <div class="form-group">
                     <label for="">Tasa de Cambio</label>

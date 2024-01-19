@@ -24,8 +24,19 @@
                     <input type="text" name="propietarioCuenta" class="form-control" value="<?= $contact['Owner']['name']; ?>" readonly>
                 </div>
                 <div class="form-group">
+                    <label for="">Nombre de contacto</label>
+                    <input type="text" name="nombreContacto" class="form-control"  required value="<?= $contact['First_Name']; ?>">
+                    <div class="invalid-feedback">Campo obligatorio.</div>
+                </div>
+                <div class="form-group">
                     <label for="">Nombre de Cuenta</label>
-                    <input type="text" name="nombreCuenta" class="form-control" value="<?= $contact['Account_Name']['name']; ?>" readonly>
+                    <!--<input type="text" name="nombreCuenta" class="form-control" value="<$contact['Account_Name']['name']; ?>">-->
+                    <select name="nombreCuenta" class="form-control">
+                            <option value="">-None-</option>
+                        <?php foreach($accounts['data'] as $account){ ?>
+                            <option <?= (!empty($contact['Account_Name']['id']) && $contact['Account_Name']['id'] == $account['id']) ? 'selected' : '' ;?> value="<?= $account['id']; ?>"><?= $account['Account_Name']; ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="">Correo electrónico</label>
@@ -33,7 +44,13 @@
                 </div>
                 <div class="form-group">
                     <label for="">Empresa a la que pertenece</label>
-                    <input type="text" name="empresaPertenece" class="form-control" value="<?= $contact['Empresa_a_la_que_pertenece']; ?>" readonly>
+                    <!--<input type="text" name="empresaPertenece" class="form-control" value="<$contact['Empresa_a_la_que_pertenece']['name']; ?>">-->
+                    <select name="empresaPertenece" class="form-control">
+                            <option value="">-None-</option>
+                        <?php foreach($accounts['data'] as $account){ ?>
+                            <option <?= (!empty($contact['Empresa_a_la_que_pertenece']['id']) && $contact['Empresa_a_la_que_pertenece']['id'] == $account['id']) ? 'selected' : '' ;?> value="<?= $account['id']; ?>"><?= $account['Account_Name']; ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="">Teléfono</label>
@@ -87,18 +104,19 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="">Nombre de contacto</label>
-                    <input type="text" name="nombreContacto" class="form-control"  required value="<?= $contact['First_Name']; ?>">
-                    <div class="invalid-feedback">Campo obligatorio.</div>
-                </div>
-                <div class="form-group">
                     <label for="">Apellido de contacto</label>
                     <input type="text" name="apellidoContacto" class="form-control" required value="<?= $contact['Last_Name']; ?>">
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
                 <div class="form-group">
                     <label for="">Nombre de Proveedor</label>
-                    <input type="text" name="nombreProveedor" class="form-control"  value="<?= $contact['Vendor_Name']; ?>" readonly>
+                    <!--<input type="text" name="nombreProveedor" class="form-control"  value="<$contact['Vendor_Name']['name']; ?>" readonly>-->
+                    <select name="nombreProveedor" class="form-control">
+                            <option value="">-None-</option>
+                        <?php foreach($vendors['data'] as $vendor){ ?>
+                            <option <?= (!empty($contact['Vendor_Name']['id']) && $contact['Vendor_Name']['id'] == $vendor['id']) ? 'selected' : '' ;?> value="<?= $vendor['id']; ?>"><?= $vendor['Vendor_Name']; ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="">Título</label>
@@ -125,8 +143,9 @@
                     <input type="text" name="asst_phone" class="form-control"  value="<?= $contact['Asst_Phone']; ?>">
                 </div>
                 <div class="form-group">
-                    <label for="">No participación del correo electrónico</label>
-                    <input type="text" name="email_opt_out" class="form-control"  value="<?= $contact['Email_Opt_Out']; ?>">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="email_opt_out" value="true" <?= ($contact['Email_Opt_Out']) ? 'checked' : '';?>>No participación del correo electrónico
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="">ID de Skype</label>
