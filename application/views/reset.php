@@ -71,11 +71,12 @@
                     drag: false
                 });
     
-                setInterval(function(){
+                setTimeout(function(){
     
-                    location.replace(ruta+'login');
+                    location.replace('https://vozmia.com/mx/socios/');
     
                 },1000);
+
                 },
                 statusCode: {
                     400: function(xhr){
