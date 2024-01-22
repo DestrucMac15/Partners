@@ -118,7 +118,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Importe</label>
-                    <input type="text" class="form-control" name="importe" placeholder="MX$" required value="<?= $opportunitie['Amount']; ?>">
+                    <input type="text" class="form-control" name="importe" placeholder="MX$" id="importe" required value="<?= $opportunitie['Amount']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="">Fecha de cierre</label>
@@ -145,11 +145,11 @@
                 </div>
                 <div class="form-group">
                     <label for="">Probabilidad (%)</label>
-                    <input type="number" class="form-control" name="probabilidad" value="<?= $opportunitie['Probability']; ?>">
+                    <input type="number" class="form-control" name="probabilidad" id="probabilidad" value="<?= $opportunitie['Probability']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="">Ingresos esperados</label>
-                    <input type="number" class="form-control" name="Ingresos" placeholder="MX$" value="<?= $opportunitie['Expected_Revenue']; ?>">
+                    <input type="number" class="form-control" name="Ingresos" placeholder="MX$" id="ingresos" value="<?= $opportunitie['Expected_Revenue']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="">Fuente de Campaña</label>

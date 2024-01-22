@@ -116,7 +116,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="">Importe</label>
-                    <input type="text" class="form-control" name="importe" placeholder="MX $" required>
+                    <input type="text" class="form-control" name="importe" id="importe" placeholder="MX $" required>
                     <div class="invalid-feedback">Campo obligatorio.</div>
                 </div>
                 <div class="form-group">
@@ -139,11 +139,11 @@
                 </div>
                 <div class="form-group">
                     <label for="">Probabilidad (%)</label>
-                    <input type="number" class="form-control" name="probabilidad" value="10">
+                    <input type="number" class="form-control" name="probabilidad" id="probabilidad" value="10">
                 </div>
                 <div class="form-group">
                     <label for="">Ingresos esperados</label>
-                    <input type="number" class="form-control" name="Ingresos" placeholder="MX $" readonly>
+                    <input type="number" class="form-control" name="Ingresos" id="ingresos" placeholder="MX $" readonly>
                 </div>
                 <div class="form-group">
                     <label for="">Fuente de Campaña</label>

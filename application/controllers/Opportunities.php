@@ -194,7 +194,7 @@ class Opportunities extends CI_Controller{
 
         if($Opportunities['status'] == "success"){
 
-            echo json_encode(array('estatus' => true, 'mensaje' => 'Se a agregado correctamente.'));
+            echo json_encode(array('estatus' => true, 'mensaje' => 'Se a Actulizo correctamete.'));
 
         }else{
 

@@ -174,4 +174,28 @@ $(document).ready(function(){
 
     });
 
+    $('#importe').on('change',function(){
+
+        let importe_val = $(this).val();
+        let probabilidad_val = $('#probabilidad').val();
+
+        let percentage = probabilidad_val / 100;
+        let total = importe_val * percentage;
+
+        $('#ingresos').val(total);
+
+    });
+
+    $('#probabilidad').on('change',function(){
+
+        let probabilidad_val = $(this).val();
+        let importe_val = $('#importe').val();
+
+        let percentage = probabilidad_val / 100;
+        let total = importe_val * percentage;
+
+        $('#ingresos').val(total);
+        
+    });
+
 });
