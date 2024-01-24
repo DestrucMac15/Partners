@@ -223,8 +223,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="">Descripción</label>
-                    <textarea class="form-control" name="descripcion" rows="5" required><?= $contact['Description']; ?></textarea>
-                    <div class="invalid-feedback">Campo obligatorio.</div>
+                    <textarea class="form-control" name="descripcion" rows="5"><?= $contact['Description']; ?></textarea>
                 </div>
             </div>
         </div>

@@ -107,7 +107,6 @@ class Opportunities extends CI_Controller{
 
         $data = array(
             'Owner' => array('id' => 4768126000000300001),
-            'Layout' => array('id' => 4768126000000091055),
             'Deal_Name' => $this->input->post('nombreOportunidad'),
             'Account_Name' => $this->input->post('nombreCuenta'),
             'Ingeniero_Preventa' => $this->input->post('ingeniero'),
