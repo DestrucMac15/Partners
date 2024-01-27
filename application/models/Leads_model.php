@@ -90,7 +90,7 @@
         public function convert_lead($token, $data, $id_lead){
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.zohoapis.com/crm/v6/Leads/'.$id_lead.'/actions/convert',
+                CURLOPT_URL => 'https://www.zohoapis.com/crm/v2/Leads/'.$id_lead.'/actions/convert',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,

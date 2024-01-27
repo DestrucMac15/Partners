@@ -56,14 +56,67 @@ class Books extends CI_Controller{
             $account = $this->Accounts_model->get_account($token,$opportunitie['Account_Name']['id'])['data'][0];
             $contact = $this->Contacts_model->get_contacts($token, $opportunitie['Contact_Name']['id'])['data'][0];
             $book    = $this->Books_model->get_contactsByZcrmAccount($token,$contact['Account_Name']['id']);
-            $contactPersons = $this->Books_model->get_contactsPersonsAll($token,$book['contacts'][0]['contact_id'])['contact'];
+
+            if(empty($book['contacts'][0]['contact_id'])){
+                
+                $data_contacts = array(
+                    'contact_name' => $account['Account_Name'],
+                    'website' => $account['Website'],
+                    'contact_type' => 'customer',
+                    'crm_owner_id' => '4768126000000300001',
+                    'payment_terms' => 10,
+                    'payment_terms_label' => 'Net 10',
+                    'credit_limit' => 0.00,
+                    'currency_id' => '2511149000000072080',
+                    'currency_code' => 'MXN',
+                    'currency_symbol' => 'MXN ',
+                    'currency_symbol' => 'MXN ',
+                    'billing_address' => array(
+                        'address' => ($account['Billing_Street'] == null) ? '': $account['Billing_Street'],
+                        'state_code' => ($account['Billing_Code'] == null) ? '': $account['Billing_Code'],
+                        'city' => ($account['Billing_City'] == null) ? '': $account['Billing_City'],
+                        'state' => ($account['Billing_State'] == null) ? '': $account['Billing_State'],
+                        'country' => ($account['Billing_Country'] == null) ? '': $account['Billing_Country']
+                    ),
+                    'shipping_address' => array(
+                        'address' => ($account['Shipping_Street'] == null) ? '': $account['Shipping_Street'],
+                        'state_code' => ($account['Shipping_Code'] == null) ? '': $account['Shipping_Code'],
+                        'city' => ($account['Shipping_City'] == null) ? '': $account['Shipping_City'],
+                        'state' => ($account['Shipping_State'] == null) ? '': $account['Shipping_State'],
+                        'country' => ($account['Shipping_Country'] == null) ? '': $account['Shipping_Country']
+                    ),
+                    'notes' => 'Creado desde el portal de Partners',
+                );
+
+                $book_contact_id = $this->Books_model->insert_contactBook($token,json_encode($data_contacts))['contact']['contact_id'];
+                
+                $data_contactpersons = array(
+                    'contact_id' => $book_contact_id,
+                    //'salutation' => '',
+                    'first_name' => $contact['First_Name'],
+                    'last_name'  => ($contact['Last_Name'] == null) ? '':$contact['Last_Name'],
+                    'email'      => ($contact['Email'] == null) ? '':$contact['Email'],
+                    'phone'      => ($contact['Phone'] == null) ? '':$contact['Phone'],
+                    'mobile'     => ($contact['Mobile'] == null) ? '':$contact['Mobile'],
+                    'enable_portal' => 'false'
+                );
+                
+                $contactPersonsBook = $this->Books_model->insert_contactPersonsBook($token,json_encode($data_contactpersons));
+
+            }else{
+
+                $book_contact_id = $book['contacts'][0]['contact_id'];
+
+            }
+
+            $contactPersons = $this->Books_model->get_contactsPersonsAll($token,$book_contact_id)['contact'];
 
             $data = array(
                 'opportunitie' => $opportunitie,
                 'account' => $account,
                 'contact' => $contact,
                 'id' => $id,
-                'zcrm_account_id' => $book['contacts'][0]['contact_id'],
+                'zcrm_account_id' => $book_contact_id,
                 'customer_id' => $account['id'],
                 'contactPersons' => $contactPersons
             );
@@ -495,7 +548,7 @@ class Books extends CI_Controller{
 
         }else{
 
-            echo json_encode(array('estatus' => true, 'mensaje' => $book['message']));
+            echo json_encode(array('estatus' => false, 'mensaje' => $book['message']));
 
         }
 

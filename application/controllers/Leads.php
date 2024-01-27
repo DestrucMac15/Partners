@@ -362,6 +362,7 @@ class Leads extends CI_Controller{
                     'Stage' => $this->input->post('fase'),
                     'Description' => $this->input->post('descripcion'),
                     'Currency' => $this->input->post('moneda'),
+                    'canal' => 'Standard (Standard)',
                     'Ingeniero_Preventa' => '4768126000000300001',
                     'N_mero_de_Empleados' => $this->input->post('empleados'),
                     'Partner' => $this->session->userdata('id_company'),
@@ -388,6 +389,7 @@ class Leads extends CI_Controller{
                     'Stage' => $this->input->post('fase'),
                     'Description' => $this->input->post('descripcion'),
                     'Currency' => $this->input->post('moneda'),
+                    'canal' => 'Standard (Standard)',
                     'Ingeniero_Preventa' => '4768126000000300001',
                     'N_mero_de_Empleados' => $this->input->post('empleados'),
                     'Partner' => $this->session->userdata('id_company'),
@@ -439,7 +441,7 @@ class Leads extends CI_Controller{
                     'Stage' => $this->input->post('fase'),
                     'Description' => $this->input->post('descripcion'),
                     'Currency' => $this->input->post('moneda'),
-                    //'canal' => $this->input->post('canal'),
+                    'canal' => 'Standard (Standard)',
                     'Ingeniero_Preventa' => '4768126000000300001',
                     'N_mero_de_Empleados' => $this->input->post('empleados'),
                     'Partner' => $this->session->userdata('id_company'),
@@ -462,9 +464,6 @@ class Leads extends CI_Controller{
 
         $encode_data = json_encode($json);
 
-        //echo json_decode($encode_data);
-        //die();
-
         $token = comprobarToken();
 
         $lead = "";
@@ -481,11 +480,12 @@ class Leads extends CI_Controller{
 
             sleep(3);
         }
-        //var_dump($lead);
         /**UPD Accounts*/
         $data_account = array(
+
             'Partner' => $this->session->userdata('id_company'),
             'Contacto_Partner' => $this->session->userdata('id_partner')
+
         );
 
         $json_account = '{"data":['.json_encode($data_account).']}';
@@ -500,7 +500,7 @@ class Leads extends CI_Controller{
 
         }else{
 
-            echo json_encode(array('estatus' => false, 'mensaje' => 'Error en el campo: '.$account));
+            echo json_encode(array('estatus' => false, 'mensaje' => 'Error en el campo: '.$lead['message']));
 
         }
 
