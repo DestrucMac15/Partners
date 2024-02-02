@@ -110,7 +110,7 @@ class Opportunities extends CI_Controller{
             'Deal_Name' => $this->input->post('nombreOportunidad'),
             'Account_Name' => $this->input->post('nombreCuenta'),
             'Ingeniero_Preventa' => $this->input->post('ingeniero'),
-            'RFC' => $this->input->post('rfc'),
+            //'RFC' => $this->input->post('rfc'),
             'Type' => $this->input->post('tipo'),
             'Next_Step' => $this->input->post('paso'),
             'Lead_Source' => $this->input->post('fuente_lead'),
@@ -162,7 +162,7 @@ class Opportunities extends CI_Controller{
     public function edit(){
 
         $data = array(
-            'RFC' => $this->input->post('rfc'),
+            //'RFC' => $this->input->post('rfc'),
             'Account_Name' => $this->input->post('nombreCuenta'),
             'Contact_Name' => $this->input->post('nombreContacto'),
             'Type' => $this->input->post('tipo'),

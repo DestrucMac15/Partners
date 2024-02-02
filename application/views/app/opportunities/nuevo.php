@@ -38,7 +38,7 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" hidden>
                     <label for="">RFC</label>
                     <input type="text" class="form-control" name="rfc">
                 </div>
