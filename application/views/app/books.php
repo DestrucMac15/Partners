@@ -47,7 +47,14 @@
                                             </button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="<?php echo base_url(); ?>books_edit/editar/<?= $book['estimate_id']; ?>">Editar</a>
-                                                <button type="button" class="dropdown-item estimate_accepted" data-id="<?= $book['estimate_id']; ?>" data-estimate="<?= $book['zcrm_potential_id']; ?>">Marcar como Aceptado</button>
+                                                <?php 
+                                                    if($book['status'] == "sent"){
+                                                ?>
+                                                        <button type="button" class="dropdown-item estimate_accepted" data-id="<?= $book['estimate_id']; ?>" data-estimate="<?= $book['zcrm_potential_id']; ?>">Marcar como Aceptado</button>
+                                                <?php        
+                                                    }
+                                                ?>
+                                                
                                             </div>
                                         </div>
                                     </td>
