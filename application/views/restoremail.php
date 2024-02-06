@@ -9,7 +9,7 @@
                     <hr>
                     <div class="form-group">
                         <p class="text-center">Restaura tu contraseña</p>
-                        <p class="text-center">Escriba su dirección de correo electrónico registrada</p>
+                        <p class="text-center">Escriba su dirección de correo electrónico registrada, número de teléfono móvil o nombre de usuario para cambiar la contraseña de su cuenta de TravelCloud.</p>
                     </div>
 
                     <div class="d-flex justify-content-between">
@@ -60,7 +60,8 @@
     
                 setTimeout(function(){
     
-                    location.href = ruta+"login/reset?"+datos;
+                    //location.href = ruta+"login";
+                    location.replace('https://vozmia.com/mx/socios/');
     
                 },1000);
 

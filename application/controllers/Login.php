@@ -185,7 +185,6 @@ class Login extends CI_Controller {
 
         $token = comprobarToken();
         $correo = $this->input->post('correo');
-        //Validar el correo ingresado
 
         if(empty($data_email = $this->Partners_model->get_email($token, $correo))){
 
@@ -196,46 +195,10 @@ class Login extends CI_Controller {
 
             $this->output->set_status_header(200);
             echo json_encode(array('estatus' => true, 'mensaje' => 'Correcto'));
+            
+            $data = $this->Partners_model->upd_password($token,$data_email['data'][0]['id'],'reset')['data'][0];
 
         }
-
-
-        /*$correo = $this->input->post('correo');
-
-        $config['protocol']     = 'sendmail';
-        $config['smtp_port']    = 587; // Puedes usar 465 para SSL o 587 para TLS
-        $config['smtp_crypto']  = 'tls'; // Puedes usar 'ssl' o 'tls'
-        $config['mailtype']     = 'html';
-        $config['charset']      = 'utf-8';
-        $config['newline']      = "\r\n";
-
-        $this->load->library('email');
-
-        $this->email->initialize($config);
-        $this->email->from('admin@vocom.com', 'Zoho Partners Vocom');
-        $this->email->to($correo);
-
-        $this->email->subject('Creación de Lead');
-
-        $data = array(
-            'lead' => urlencode($correo)
-        );
-
-        $body = $this->load->view('emails/restorePassword',$data,TRUE);
-
-        $this->email->message($body);
-
-        if($this->email->send()){
-
-            echo true;
-            //echo "Se envio correctamente";
-
-        }else{
-
-            echo false;
-            //echo $this->email->print_debugger();
-
-        }*/
 
     }
 
