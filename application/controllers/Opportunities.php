@@ -132,7 +132,8 @@ class Opportunities extends CI_Controller{
             'Necesidad' => $this->input->post('necesidad'),
             'N_mero_de_Empleados' => $this->input->post('numEmpleados'),
             'Forecast_Category__s' => $this->input->post('prevision'),
-            'Description' => $this->input->post('descripcion')
+            'Description' => $this->input->post('descripcion'),
+            'Currency' => $this->input->post('moneda')
         );
 
         $json_insert = '{"data":['.json_encode($data).']}';
@@ -181,7 +182,8 @@ class Opportunities extends CI_Controller{
             'Necesidad' => $this->input->post('necesidad'),
             'N_mero_de_Empleados' => $this->input->post('numEmpleados'),
             'Forecast_Category__s' => $this->input->post('prevision'),
-            'Description' => $this->input->post('descripcion')
+            'Description' => $this->input->post('descripcion'),
+            'Currency' => $this->input->post('moneda')
         ); 
 
         $json = '{"data":['.json_encode($data).']}';

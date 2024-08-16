@@ -80,12 +80,12 @@
                             <input type="text" class="form-control" name="oportunidadNombre" value="<?= $opportunitie['Deal_Name']; ?>" readonly>
                         </div>
                     </div>
-                    <div class="col-md-6" hidden>
+                    <!--<div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Número del presupuesto</label>
                             <input type="text" name="numeroPresupuesto" class="form-control">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">No. de referencia</label>
@@ -105,7 +105,7 @@
                             <div class="invalid-feedback">Campo obligatorio.</div>
                         </div>
                     </div>
-                    <div class="col-md-6" hidden>
+                    <!--<div class="col-md-6" hidden>
                         <div class="form-group">
                             <label for="">Nombre del proyecto</label>
                             <input type="text" name="nombreProyecto" class="form-control">
@@ -116,12 +116,18 @@
                             <label for="">Lista de precios</label>
                             <input type="text" name="listaPrecios" class="form-control">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Descripción del proyecto</label>
                             <input type="text" name="descripcionProyecto" class="form-control" id="descripcionProyecto" required>
                             <div class="invalid-feedback">Campo obligatorio.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Tipo de cambio</label>
+                            <input type="text" name="tipoCambio" class="form-control" id="tipoCambio" value="<?= $dolar['dato'];?>">
                         </div>
                     </div>
                     <div class="col-md-12">

@@ -38,10 +38,10 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="form-group" hidden>
+                <!--<div class="form-group" hidden>
                     <label for="">RFC</label>
                     <input type="text" class="form-control" name="rfc">
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label for="">Tipo</label>
                     <select name="tipo" id="" class="form-control">

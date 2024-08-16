@@ -257,6 +257,31 @@
             return json_decode($response,true);
         }
 
+        public function upd_contactCurrency($token, $contact_id, $currency){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://www.zohoapis.com/books/v3/contacts/'.$contact_id.'?organization_id=737962647',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'PUT',
+                CURLOPT_POSTFIELDS =>'{
+                    "currency_id": '.$currency.'
+                }',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Zoho-oauthtoken '.$token,
+                    'content-type: application/json'
+                ),
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return json_decode($response,true);
+
+        }
+
         public function insert_contactBook($token,$data){
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -330,6 +355,31 @@
             $response = curl_exec($curl);
             curl_close($curl);
             return json_decode($response,true);
+        }
+
+        /**
+         * API BANXICO precio del Dolar
+         */
+        public function get_priceDolar(){
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Bmx-Token: 62541d19bc34d3255d7e3bcbaadf058fd0f9b31dbf78f665b7f33ba2d21bcc03'
+                )
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            return json_decode($response,true);
+            
         }
 
     }

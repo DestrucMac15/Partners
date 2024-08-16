@@ -42,10 +42,10 @@
                         <?php } ?>
                     </select>
                 </div>
-                <div class="form-group" hidden>
+                <!--<div class="form-group" hidden>
                     <label for="">RFC</label>
-                    <input type="text" class="form-control" name="rfc" value="<?= $opportunitie['RFC']; ?>">
-                </div>
+                    <input type="text" class="form-control" name="rfc" value="//$opportunitie['RFC']; ?>">
+                </div>-->
                 <div class="form-group">
                     <label for="">Tipo</label>
                     <select name="tipo" id="" class="form-control">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Moneda</label>
-                    <select name="" id="" class="form-control">
+                    <select name="moneda" id="" class="form-control">
                         <option <?= ($opportunitie['Currency'] == 'MXN') ? 'selected' : ''; ?> value="MXN">MXN</option>
                         <option <?= ($opportunitie['Currency'] == 'USD') ? 'selected' : ''; ?> value="USD">USD</option>
                     </select>

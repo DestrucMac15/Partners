@@ -111,6 +111,8 @@ class Books extends CI_Controller{
 
             $contactPersons = $this->Books_model->get_contactsPersonsAll($token,$book_contact_id)['contact'];
 
+            $dolar = $this->Books_model->get_priceDolar()['bmx']['series'][0]['datos'][0];
+
             $data = array(
                 'opportunitie' => $opportunitie,
                 'account' => $account,
@@ -118,7 +120,8 @@ class Books extends CI_Controller{
                 'id' => $id,
                 'zcrm_account_id' => $book_contact_id,
                 'customer_id' => $account['id'],
-                'contactPersons' => $contactPersons
+                'contactPersons' => $contactPersons,
+                'dolar' => $dolar
             );
     
             $this->template->content->view('app/books/nuevo', $data);
